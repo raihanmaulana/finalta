@@ -1,18 +1,5 @@
 <?php
 
-use App\Http\Controllers\auth\LoginController;
-use App\Http\Controllers\AutherController;
-use App\Http\Controllers\BookController;
-use App\Http\Controllers\BookIssueController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\dashboardController;
-use App\Http\Controllers\PublisherController;
-use App\Http\Controllers\ReportsController;
-use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\StudentController;
-use Illuminate\Support\Facades\Route;
-use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,77 +13,149 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware('guest');
-Route::post('/', [LoginController::class, 'login'])->name('login');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::post('/Change-password', [LoginController::class, 'changePassword'])->name('change_password');
+});
 
+// Unauthenticated group 
+Route::group(array('before' => 'guest'), function() {
+ 
+	// CSRF protection 
+	Route::group(array('before' => 'csrf'), function() {
 
-Route::middleware('auth')->group(function () {
-    Route::get('change-password',[dashboardController::class,'change_password_view'])->name('change_password_view');
-    Route::post('change-password',[dashboardController::class,'change_password'])->name('change_password');
-    Route::get('/dashboard', [dashboardController::class, 'index'])->name('dashboard');
+		// Create an account (POST) 
+		Route::post('/create', array(
+			'as' => 'account-create-post',
+			'uses' => 'AccountController@postCreate'
+		));
 
-    // author CRUD
-    Route::get('/authors', [AutherController::class, 'index'])->name('authors');
-    Route::get('/authors/create', [AutherController::class, 'create'])->name('authors.create');
-    Route::get('/authors/edit/{auther}', [AutherController::class, 'edit'])->name('authors.edit');
-    Route::post('/authors/update/{id}', [AutherController::class, 'update'])->name('authors.update');
-    Route::post('/authors/delete/{id}', [AutherController::class, 'destroy'])->name('authors.destroy');
-    Route::post('/authors/create', [AutherController::class, 'store'])->name('authors.store');
+		// Sign in (POST) 
+		Route::post('/sign-in', array(
+			'as' => 'account-sign-in-post',
+			'uses' => 'AccountController@postSignIn'
+		));
 
-    // publisher crud
-    Route::get('/publishers', [PublisherController::class, 'index'])->name('publishers');
-    Route::get('/publisher/create', [PublisherController::class, 'create'])->name('publisher.create');
-    Route::get('/publisher/edit/{publisher}', [PublisherController::class, 'edit'])->name('publisher.edit');
-    Route::post('/publisher/update/{id}', [PublisherController::class, 'update'])->name('publisher.update');
-    Route::post('/publisher/delete/{id}', [PublisherController::class, 'destroy'])->name('publisher.destroy');
-    Route::post('/publisher/create', [PublisherController::class, 'store'])->name('publisher.store');
+		// Sign in (POST) 
+		Route::post('/student-registration', array(
+			'as' => 'student-registration-post',
+			'uses' => 'StudentController@postRegistration'
+		));		
 
-    // Category CRUD
-    Route::get('/categories', [CategoryController::class, 'index'])->name('categories');
-    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
-    Route::get('/category/edit/{category}', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::post('/category/update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::post('/category/delete/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
-    Route::post('/category/create', [CategoryController::class, 'store'])->name('category.store');
+	});
 
+	// Sign in (GET) 
+	Route::get('/', array(
+		'as' 	=> 'account-sign-in',
+		'uses'	=> 'AccountController@getSignIn'
+	));
 
+	// Create an account (GET) 
+	Route::get('/create', array(
+		'as' 	=> 'account-create',
+		'uses' 	=> 'AccountController@getCreate'
+	));
 
+	// Student Registeration form 
+	Route::get('/student-registration', array(
+		'as' 	=> 'student-registration',
+		'uses' 	=> 'StudentController@getRegistration'
+	));
+    
+    // Render search books panel
+    Route::get('/book', array(
+        'as' => 'search-book',
+        'uses' => 'BooksController@searchBook'
+    ));    
+	
+});
 
-    // books CRUD
-    Route::get('/books', [BookController::class, 'index'])->name('books');
-    Route::get('/book/create', [BookController::class, 'create'])->name('book.create');
-    Route::get('/book/edit/{book}', [BookController::class, 'edit'])->name('book.edit');
-    Route::post('/book/update/{id}', [BookController::class, 'update'])->name('book.update');
-    Route::post('/book/delete/{id}', [BookController::class, 'destroy'])->name('book.destroy');
-    Route::post('/book/create', [BookController::class, 'store'])->name('book.store');
+// Main books Controlller left public so that it could be used without logging in too
+Route::resource('/books', 'BooksController');
 
-    // students CRUD
-    Route::get('/students', [StudentController::class, 'index'])->name('students');
-    Route::get('/student/create', [StudentController::class, 'create'])->name('student.create');
-    Route::get('/student/edit/{student}', [StudentController::class, 'edit'])->name('student.edit');
-    Route::post('/student/update/{id}', [StudentController::class, 'update'])->name('student.update');
-    Route::post('/student/delete/{id}', [StudentController::class, 'destroy'])->name('student.destroy');
-    Route::post('/student/create', [StudentController::class, 'store'])->name('student.store');
-    Route::get('/student/show/{id}', [StudentController::class, 'show'])->name('student.show');
+// Authenticated group 
+// Route::group(array('before' => 'auth'), function() {
+Route::group(['middleware' => ['auth']] , function() {
 
+	// Home Page of Control Panel
+	Route::get('/home',array(
+		'as' 	=> 'home',
+		'uses'	=> 'HomeController@home'
+	));	
 
+	// Render Add Books panel
+    Route::get('/add-books', array(
+        'as' => 'add-books',
+        'uses' => 'BooksController@renderAddBooks'
+	));
 
-    Route::get('/book_issue', [BookIssueController::class, 'index'])->name('book_issued');
-    Route::get('/book-issue/create', [BookIssueController::class, 'create'])->name('book_issue.create');
-    Route::get('/book-issue/edit/{id}', [BookIssueController::class, 'edit'])->name('book_issue.edit');
-    Route::post('/book-issue/update/{id}', [BookIssueController::class, 'update'])->name('book_issue.update');
-    Route::post('/book-issue/delete/{id}', [BookIssueController::class, 'destroy'])->name('book_issue.destroy');
-    Route::post('/book-issue/create', [BookIssueController::class, 'store'])->name('book_issue.store');
+	Route::get('/add-book-category', array(
+        'as' => 'add-book-category',
+        'uses' => 'BooksController@renderAddBookCategory'
+	));
+	
+	Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
+	
 
-    Route::get('/reports', [ReportsController::class, 'index'])->name('reports');
-    Route::get('/reports/Date-Wise', [ReportsController::class, 'date_wise'])->name('reports.date_wise');
-    Route::post('/reports/Date-Wise', [ReportsController::class, 'generate_date_wise_report'])->name('reports.date_wise_generate');
-    Route::get('/reports/monthly-Wise', [ReportsController::class, 'month_wise'])->name('reports.month_wise');
-    Route::post('/reports/monthly-Wise', [ReportsController::class, 'generate_month_wise_report'])->name('reports.month_wise_generate');
-    Route::get('/reports/not-returned', [ReportsController::class, 'not_returned'])->name('reports.not_returned');
+	// Render All Books panel
+    Route::get('/all-books', array(
+        'as' => 'all-books',
+        'uses' => 'BooksController@renderAllBooks'
+	));
+	
+	Route::get('/bookBycategory/{cat_id}', array(
+        'as' => 'bookBycategory',
+        'uses' => 'BooksController@BookByCategory'
+    ));
 
-    Route::get('/settings', [SettingsController::class, 'index'])->name('settings');
-    Route::post('/settings', [SettingsController::class, 'update'])->name('settings');
+	// Students
+    Route::get('/registered-students', array(
+        'as' => 'registered-students',
+        'uses' => 'StudentController@renderStudents'
+    ));
+
+    // Render students approval panel
+    Route::get('/students-for-approval', array(
+        'as' => 'students-for-approval',
+        'uses' => 'StudentController@renderApprovalStudents'
+	));
+	
+	  // Render students approval panel
+	  Route::get('/settings', array(
+        'as' => 'settings',
+        'uses' => 'StudentController@Setting'
+	));
+	
+	  // Render students approval panel
+	  Route::post('/setting', array(
+        'as' => 'settings.store',
+        'uses' => 'StudentController@StoreSetting'
+    ));
+
+    // Main students Controlller resource
+	Route::resource('/student', 'StudentController');
+	
+	Route::post('/studentByattribute', array(
+        'as' => 'studentByattribute',
+        'uses' => 'StudentController@StudentByAttribute'
+    ));
+
+    // Issue Logs
+    Route::get('/issue-return', array(
+        'as' => 'issue-return',
+        'uses' => 'LogController@renderIssueReturn'
+    ));
+
+    // Render logs panel
+    Route::get('/currently-issued', array(
+        'as' => 'currently-issued',
+        'uses' => 'LogController@renderLogs'
+    ));
+
+    // Main Logs Controlller resource
+    Route::resource('/issue-log', 'LogController');
+
+	// Sign out (GET) 
+    Route::get('/sign-out', array(
+    	'as' => 'account-sign-out',
+		'uses' => 'AccountController@getSignOut'
+    ));
+
 });

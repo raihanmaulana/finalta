@@ -1,34 +1,36 @@
 <?php
 
-namespace App\Models;
+use Illuminate\Auth\UserTrait;
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableTrait;
+use Illuminate\Auth\Reminders\RemindableInterface;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+class User extends Eloquent implements UserInterface, RemindableInterface {
 
-class User extends Authenticatable
-{
-    use HasApiTokens, HasFactory, Notifiable;
+	/* Alowing Eloquent to insert data into our database */
+	protected $fillable = array('name', 'username', 'password', 'verification_status');
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'password',
-    ];
+        public $timestamps = false;
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-    ];
+	use UserTrait, RemindableTrait;
+
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'users';
+	protected $primaryKey = 'id';
+
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = array('password');
+
+	public function getAuthPassword() {
+	    return $this->password;
+	}
 
 }
