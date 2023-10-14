@@ -11,9 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\GuestbookController;
+
+Route::get('/', [GuestbookController::class, 'index'])->name('guestbook.index'); // This sets the guestbook page as the default route
+Route::get('/guestbook', [GuestbookController::class, 'index'])->name('guestbook.index'); // Keep the original guestbook route
+Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // Unauthenticated group 
 Route::group(array('before' => 'guest'), function() {
@@ -42,7 +48,7 @@ Route::group(array('before' => 'guest'), function() {
 	});
 
 	// Sign in (GET) 
-	Route::get('/', array(
+	Route::get('/signin', array(
 		'as' 	=> 'account-sign-in',
 		'uses'	=> 'AccountController@getSignIn'
 	));
@@ -160,5 +166,7 @@ Route::group(['middleware' => ['auth']] , function() {
 
 });
 Auth::routes();
+
+
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
