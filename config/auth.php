@@ -46,6 +46,11 @@ return [
             'provider' => 'users',
             'hash' => false,
         ],
+
+        'anggota' => [ // Guard untuk anggota perpustakaan
+            'driver' => 'session',
+            'provider' => 'anggota',
+        ],
     ],
 
     /*
@@ -75,6 +80,10 @@ return [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
+        'anggota' => [ // Provider untuk anggota perpustakaan
+            'driver' => 'eloquent',
+            'model' => App\Models\AnggotaPerpustakaan::class,
+        ],
     ],
 
     /*
@@ -95,6 +104,12 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        'anggota_perpustakaan' => [
+            'provider' => 'anggota_perpustakaan',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

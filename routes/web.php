@@ -11,21 +11,50 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestbookController;
+use App\Http\Controllers\AnggotaAuthController;
+use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [GuestbookController::class, 'index'])->name('guestbook.index'); // This sets the guestbook page as the default route
-Route::get('/guestbook', [GuestbookController::class, 'index'])->name('guestbook.index'); // Keep the original guestbook route
+Route::get('/', [GuestbookController::class, 'viewbook'])->name('guestbook.view'); // This sets the guestbook page as the default route
+Route::get('/guestbook', [GuestbookController::class, 'viewbook'])->name('guestbook.view'); // Keep the original guestbook route
 Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
 
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
+// use App\Http\Controllers\AnggotaController;
+
+//Halaman Anggota
+Route::get('/anggota/dashboard', [AnggotaAuthController::class, 'dashboard'])->name('anggota.dashboard');
+
+// Pencarian Buku
+Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
+Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');
+
+// Formulir Permintaan Peminjaman Buku
+Route::get('/anggota/buat-permintaan', [AnggotaController::class, 'buatPermintaan'])->name('anggota.buat-permintaan');
+Route::post('/anggota/simpan-permintaan', [AnggotaController::class, 'simpanPermintaan'])->name('anggota.simpan-permintaan');
+
+
+//Anggota Register
+Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
+Route::post('/anggota/register', 'AnggotaAuthController@register');
+
+//Anggota Login
+Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
+Route::post('/anggota/login', 'AnggotaAuthController@login');
+
+//Middleware Anggota
+Route::middleware(['auth:anggota', 'anggota'])->group(function () {
+	Route::get('/anggota/dashboard', 'AnggotaController@dashboard')->name('anggota.dashboard');
+});
 // Unauthenticated group 
-Route::group(array('before' => 'guest'), function() {
- 
+Route::group(array('before' => 'guest'), function () {
+
 	// CSRF protection 
-	Route::group(array('before' => 'csrf'), function() {
+	Route::group(array('before' => 'csrf'), function () {
 
 		// Create an account (POST) 
 		Route::post('/create', array(
@@ -43,8 +72,7 @@ Route::group(array('before' => 'guest'), function() {
 		Route::post('/student-registration', array(
 			'as' => 'student-registration-post',
 			'uses' => 'StudentController@postRegistration'
-		));		
-
+		));
 	});
 
 	// Sign in (GET) 
@@ -64,13 +92,12 @@ Route::group(array('before' => 'guest'), function() {
 		'as' 	=> 'student-registration',
 		'uses' 	=> 'StudentController@getRegistration'
 	));
-    
-    // Render search books panel
-    Route::get('/book', array(
-        'as' => 'search-book',
-        'uses' => 'BooksController@searchBook'
-    ));    
-	
+
+	// Render search books panel
+	Route::get('/book', array(
+		'as' => 'search-book',
+		'uses' => 'BooksController@searchBook'
+	));
 });
 
 // Main books Controlller left public so that it could be used without logging in too
@@ -78,92 +105,91 @@ Route::resource('/books', 'BooksController');
 
 // Authenticated group 
 // Route::group(array('before' => 'auth'), function() {
-Route::group(['middleware' => ['auth']] , function() {
+Route::group(['middleware' => ['auth']], function () {
 
 	// Home Page of Control Panel
-	Route::get('/home',array(
+	Route::get('/home', array(
 		'as' 	=> 'home',
 		'uses'	=> 'HomeController@home'
-	));	
+	));
 
 	// Render Add Books panel
-    Route::get('/add-books', array(
-        'as' => 'add-books',
-        'uses' => 'BooksController@renderAddBooks'
+	Route::get('/add-books', array(
+		'as' => 'add-books',
+		'uses' => 'BooksController@renderAddBooks'
 	));
 
 	Route::get('/add-book-category', array(
-        'as' => 'add-book-category',
-        'uses' => 'BooksController@renderAddBookCategory'
+		'as' => 'add-book-category',
+		'uses' => 'BooksController@renderAddBookCategory'
 	));
-	
+
 	Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
-	
+
 
 	// Render All Books panel
-    Route::get('/all-books', array(
-        'as' => 'all-books',
-        'uses' => 'BooksController@renderAllBooks'
+	Route::get('/all-books', array(
+		'as' => 'all-books',
+		'uses' => 'BooksController@renderAllBooks'
 	));
-	
+
 	Route::get('/bookBycategory/{cat_id}', array(
-        'as' => 'bookBycategory',
-        'uses' => 'BooksController@BookByCategory'
-    ));
+		'as' => 'bookBycategory',
+		'uses' => 'BooksController@BookByCategory'
+	));
 
 	// Students
-    Route::get('/registered-students', array(
-        'as' => 'registered-students',
-        'uses' => 'StudentController@renderStudents'
-    ));
-
-    // Render students approval panel
-    Route::get('/students-for-approval', array(
-        'as' => 'students-for-approval',
-        'uses' => 'StudentController@renderApprovalStudents'
+	Route::get('/registered-students', array(
+		'as' => 'registered-students',
+		'uses' => 'StudentController@renderStudents'
 	));
-	
-	  // Render students approval panel
-	  Route::get('/settings', array(
-        'as' => 'settings',
-        'uses' => 'StudentController@Setting'
-	));
-	
-	  // Render students approval panel
-	  Route::post('/setting', array(
-        'as' => 'settings.store',
-        'uses' => 'StudentController@StoreSetting'
-    ));
 
-    // Main students Controlller resource
+	// Render students approval panel
+	Route::get('/students-for-approval', array(
+		'as' => 'students-for-approval',
+		'uses' => 'StudentController@renderApprovalStudents'
+	));
+
+	// Render students approval panel
+	Route::get('/settings', array(
+		'as' => 'settings',
+		'uses' => 'StudentController@Setting'
+	));
+
+	// Render students approval panel
+	Route::post('/setting', array(
+		'as' => 'settings.store',
+		'uses' => 'StudentController@StoreSetting'
+	));
+
+	// Main students Controlller resource
 	Route::resource('/student', 'StudentController');
-	
+
 	Route::post('/studentByattribute', array(
-        'as' => 'studentByattribute',
-        'uses' => 'StudentController@StudentByAttribute'
-    ));
+		'as' => 'studentByattribute',
+		'uses' => 'StudentController@StudentByAttribute'
+	));
 
-    // Issue Logs
-    Route::get('/issue-return', array(
-        'as' => 'issue-return',
-        'uses' => 'LogController@renderIssueReturn'
-    ));
+	// Issue Logs
+	Route::get('/issue-return', array(
+		'as' => 'issue-return',
+		'uses' => 'LogController@renderIssueReturn'
+	));
 
-    // Render logs panel
-    Route::get('/currently-issued', array(
-        'as' => 'currently-issued',
-        'uses' => 'LogController@renderLogs'
-    ));
+	// Render logs panel
+	Route::get('/currently-issued', array(
+		'as' => 'currently-issued',
+		'uses' => 'LogController@renderLogs'
+	));
 
-    // Main Logs Controlller resource
-    Route::resource('/issue-log', 'LogController');
+	// Main Logs Controlller resource
+	Route::resource('/issue-log', 'LogController');
 
 	// Sign out (GET) 
-    Route::get('/sign-out', array(
-    	'as' => 'account-sign-out',
+	Route::get('/sign-out', array(
+		'as' => 'account-sign-out',
 		'uses' => 'AccountController@getSignOut'
-    ));
-
+	));
 });
 Auth::routes();
 

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,7 +13,7 @@
     <link rel="image_src" href="" />
     <link rel="canonical" href="" />
 
-    <title>Online Library Management System</title>
+    <title>SMA NEGERI 1 TUNJUNGAN</title>
 
     <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
@@ -23,30 +24,33 @@
     @include('common.script_top')
 
 </head>
+
 <body>
 
     <style>
-        .module-head{
+        .module-head {
             background-color: #9400D3;
-            color:#fff;
+            color: #fff;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             text-transform: uppercase;
             font-style: bold;
-        }
-        .module-head h3{
-            color:#fff;
         }
 
-        .widget-menu{
+        .module-head h3 {
+            color: #fff;
+        }
+
+        .widget-menu {
             background: #9400D3 !important;
-            color:#fff;
+            color: #fff;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             text-transform: uppercase;
             font-style: bold;
         }
-        .navbar-inner{
+
+        .navbar-inner {
             background: #9400D3 !important;
-            color:#fff;
+            color: #fff;
             font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
             text-transform: uppercase;
             font-style: bold;
@@ -59,26 +63,27 @@
     @yield('content')
     @include('account.navigation_bottom')
 
-<script src="{{ asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('static/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
-<script src="{{ asset('static/scripts/underscore-min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/scripts/jquery-1.9.1.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/scripts/jquery-ui-1.10.1.custom.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/bootstrap/js/bootstrap.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/scripts/underscore-min.js') }}" type="text/javascript"></script>
 
-<script src="{{ asset('static/custom/js/script.common.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('static/custom/js/script.common.js') }}" type="text/javascript"></script>
 
-@include('common.script_bottom')
+    @include('common.script_bottom')
 
-<script type="text/template" id="alert_box">
-    @include('underscore.alert_box')
+    <script type="text/template" id="alert_box">
+        @include('underscore.alert_box')
 
 
 </script>
 
-<script>
-        $(document).ready(function(){ 
-        $("input").attr("autocomplete", "off");
-    });
-</script>
+    <script>
+        $(document).ready(function() {
+            $("input").attr("autocomplete", "off");
+        });
+    </script>
 
 </body>
+
 </html>

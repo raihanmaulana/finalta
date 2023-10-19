@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guest; 
+use App\Models\Guest;
 use Illuminate\Http\Request;
+use Log;
 
 class GuestbookController extends Controller
 {
     // Display the guestbook entries
-    public function index()
+    public function viewbook()
     {
         $guests = Guest::all();
-        return view('guestbook.index', compact('guests'));
+        return view('guestbook.view', compact('guests'));
     }
 
     // Store a new guestbook entry
@@ -29,12 +30,11 @@ class GuestbookController extends Controller
             ]);
         } catch (\Exception $e) {
             // Log the error
-            \Log::error('Error saving guestbook entry: ' . $e->getMessage());
+            \Illuminate\Support\Facades\Log::error('Error saving guestbook entry: ' . $e->getMessage());
             // Return an error response or redirect back with an error message
             return redirect()->back()->with('error', 'Failed to save the guestbook entry.');
         }
-        
+
         return redirect()->route('account-sign-in');
     }
-    
 }

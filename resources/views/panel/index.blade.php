@@ -22,7 +22,7 @@
 
             <button class="btn-box big span4 homepage-form-box" id="findstudentbox">
                 <i class="icon-user"></i>
-                <b>Find Student</b>
+                <b>Cari Siswa</b>
             </button>
         </div>
 
