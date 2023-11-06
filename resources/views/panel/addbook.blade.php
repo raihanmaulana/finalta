@@ -12,43 +12,56 @@
         <div class="module-body">
             <form class="form-horizontal row-fluid">
                 <div class="control-group">
-                    <label class="control-label">Title Of Book</label>
+                    <label class="control-label">Judul Buku</label>
                     <div class="controls">
-                        <input type="text" id="title" data-form-field="title" placeholder="Enter the title of the book here..." class="span8">
-                        <input type="hidden"  data-form-field="token"  value="{{ csrf_token() }}">
-                        <input type="hidden"  data-form-field="auth_user"  value="{{ auth()->user()->id }}">
+                        <input type="text" id="judul_buku" data-form-field="judul_buku" placeholder="Masukkan Judul Buku" class="span8">
+                        <input type="hidden" data-form-field="token" value="{{ csrf_token() }}">
+                        <input type="hidden" data-form-field="auth_user" value="{{ auth()->user()->id }}">
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">Author Name</label>
+                    <label class="control-label">Penerbit</label>
                     <div class="controls">
-                        <input type="text" id="author" data-form-field="author" placeholder="Enter the name of author for the book here..." class="span8">
+                        <input type="text" id="penerbit" data-form-field="penerbit" placeholder="Masukkan Nama Penerbit" class="span8">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label">Pengarang</label>
+                    <div class="controls">
+                        <input type="text" id="pengarang" data-form-field="pengarang" placeholder="Masukkan Nama Pengarang" class="span8">
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="basicinput">Description of Book</label>
+                    <label class="control-label">Tahun Terbit</label>
                     <div class="controls">
-                        <textarea class="span8" id="description" data-form-field="description" rows="5" placeholder="Enter few lines about the book here"></textarea>
+                        <input type="text" id="tahun_terbit" data-form-field="tahun_terbit" placeholder="Masukkan Tahun Terbit" class="span8">
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="basicinput">Category</label>
+                    <label class="control-label" for="basicinput">Kategori</label>
                     <div class="controls">
-                        <select tabindex="1" id="category" data-form-field="category" data-placeholder="Select category.." class="span8">
-                            @foreach($categories_list as $category)
-                                <option value="{{ $category->id }}">{{ $category->category }}</option>
+                        <select tabindex="1" id="kategori" data-form-field="kategori" data-placeholder="Select kategori.." class="span8">
+                            @foreach($kategori_list as $kategori)
+                            <option value="{{ $kategori->id }}">{{ $kategori->kategori }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label">Number of issues</label>
+                    <label class="control-label">Stok</label>
                     <div class="controls">
-                        <input type="number" id="number" data-form-field="number" placeholder="How many issues are there?" class="span8">
+                        <input type="number" id="stok" data-form-field="stok" placeholder="How many issues are there?" class="span8">
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label">Tersedia</label>
+                    <div class="controls">
+                        <input type="number" id="tersedia" data-form-field="tersedia" placeholder="How many issues are there?" class="span8">
                     </div>
                 </div>
                 <div class="control-group">
@@ -58,12 +71,12 @@
                 </div>
             </form>
         </div>
-    </div>    
+    </div>
 </div>
 @stop
 
 @section('custom_bottom_script')
 
-    <script type="text/javascript" src="{{ asset('static/custom/js/script.addbook.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/custom/js/script.addbook.js') }}"></script>
 
 @stop

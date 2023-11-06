@@ -2338,7 +2338,7 @@ input[type="button"].btn-block {
 .btn-inverse.disabled,
 .btn-inverse[disabled] {
     color: #ffffff;
-    background-color: #025e9b51;
+    background-color: #c8dff5;
     *background-color: #151515;
 }
 .btn-inverse:active,

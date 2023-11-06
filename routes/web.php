@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth']], function () {
 		'uses' => 'BooksController@renderAddBookCategory'
 	));
 
-	Route::post('/bookcategory', 'BooksController@BookCategoryStore')->name('bookcategory.store');
+	Route::post('/kategoribuku', 'BooksController@BookCategoryStore')->name('bookcategory.store');
 
 
 	// Render All Books panel

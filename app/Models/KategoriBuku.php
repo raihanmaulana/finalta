@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BookCategories extends Model
+class KategoriBuku extends Model
 {
-    protected $fillable = ['category'];
+    protected $fillable = ['kategori'];
 }

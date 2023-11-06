@@ -2,27 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Logs;
-use App\Models\Books;
-use App\Models\Issue;
-use App\Models\Branch;
-use App\Models\Student;
-use App\Models\Categories;
-use Illuminate\Http\Request;
-use App\Models\BookCategories;
-use App\Models\StudentCategories;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
-use Exception;
+use App\Models\Buku;
+use App\Models\Branch;
+use App\Models\Issue;
+use App\Models\Kategori;
+use App\Models\Logs;
+use App\Models\Student;
+use App\Models\KategoriBuku;
+use App\Models\StudentCategories;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Mockery\Matcher\Type;
 
 class BooksController extends Controller
 {
+	protected $filter_params;
+
 	public function __construct()
 	{
 
-		$this->filter_params = array('category_id');
+		$this->filter_params = array('kategori_id');
 	}
 
 	/**
@@ -33,32 +33,32 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
-			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
-			->orderBy('book_id')->get();
-		// dd($book_list);
-		// $this->filterQuery($book_list);
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori')
+			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
+			->orderBy('id_buku')->get();
+		// dd($list_buku);
+		// $this->filterQuery($list_buku);
 
-		// $book_list = $book_list->get();
+		// $list_buku = $list_buku->get();
 
-		for ($i = 0; $i < count($book_list); $i++) {
+		for ($i = 0; $i < count($list_buku); $i++) {
 
-			$id = $book_list[$i]['book_id'];
+			$id = $list_buku[$i]['id_buku'];
 			$conditions = array(
-				'book_id'			=> $id,
+				'id_buku'			=> $id,
 				'available_status'	=> 1
 			);
 
-			$book_list[$i]['total_books'] = Issue::select()
-				->where('book_id', '=', $id)
+			$list_buku[$i]['total_buku'] = Issue::select()
+				->where('id_buku', '=', $id)
 				->count();
 
-			$book_list[$i]['avaliable'] = Issue::select()
+			$list_buku[$i]['available'] = Issue::select()
 				->where($conditions)
 				->count();
 		}
 
-		return $book_list;
+		return $list_buku;
 	}
 
 
@@ -86,17 +86,19 @@ class BooksController extends Controller
 		// dd($books);
 		$db_flag = false;
 		$user_id = Auth::id();
-		$book_title = Books::create([
-			'title'			=> $books['title'],
-			'author'		=> $books['author'],
-			'description' 	=> $books['description'],
-			'category_id'	=> $books['category_id'],
+		$book_title = Buku::create([
+			'nomor_buku'			=> $books['nomor_buku'],
+			'judul_buku'		=> $books['judul_buku'],
+			'penerbit' 	=> $books['penerbit'],
+			'pengarang'	=> $books['pengarang'],
+			'tahun_terbit'	=> $books['tahun_terbit'],
+			'kategori_id' => $books['kategori_id'],
 			'added_by'		=> $user_id
 		]);
 		// dd($book_title);
-		$newId = $book_title->book_id;
+		$newId = $judul_buku->id_buku;
 		// dd($newId);
-		if (!$book_title) {
+		if (!$judul_buku) {
 			$db_flag = true;
 		} else {
 			$number_of_issues = $books['number'];
@@ -104,8 +106,8 @@ class BooksController extends Controller
 			for ($i = 0; $i < $number_of_issues; $i++) {
 
 				$issues = Issue::create([
-					'book_id'	=> $newId,
-					'added_by'	=> $user_id
+					'id_buku'	=> $newId,
+					// 'added_by'	=> $user_id
 				]);
 
 				if (!$issues) {
@@ -123,11 +125,11 @@ class BooksController extends Controller
 	}
 
 
-	public function BookCategoryStore(Request $request)
+	public function KategoriBukuStore(Request $request)
 	{
-		$bookcategory = BookCategories::create($request->all());
+		$kategori = KategoriBuku::create($request->all());
 
-		if (!$bookcategory) {
+		if (!$kategori) {
 
 			return 'Book Category fail to save!';
 		} else {
@@ -145,17 +147,17 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
-			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
-			->where('title', 'like', '%' . $string . '%')
-			->orWhere('author', 'like', '%' . $string . '%')
-			->orderBy('book_id');
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori')
+			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
+			->where('judul_buku', 'like', '%' . $string . '%')
+			->orWhere('pengarang', 'like', '%' . $string . '%')
+			->orderBy('id_buku');
 
-		$book_list = $book_list->get();
+		$list_buku = $list_buku->get();
 
-		foreach ($book_list as $book) {
+		foreach ($list_buku as $book) {
 			$conditions = array(
-				'book_id'			=> $book->book_id,
+				'id_buku'			=> $book->id_buku,
 				'available_status'	=> 1
 			);
 
@@ -165,7 +167,7 @@ class BooksController extends Controller
 			$book->avaliability = ($count > 0) ? true : false;
 		}
 
-		return $book_list;
+		return $list_buku;
 	}
 
 
@@ -182,13 +184,13 @@ class BooksController extends Controller
 			return 'Invalid Book ID';
 		}
 
-		$book = Books::find($issue->book_id);
+		$book = Buku::find($issue->book_id);
 
 		$issue->book_name = $book->title;
 		$issue->author = $book->author;
 
-		$issue->category = Categories::find($book->category_id)
-			->category;
+		$issue->kategori = Kategori::find($book->kategori_id)
+			->kategori;
 
 		$issue->available_status = (bool)$issue->available_status;
 		if ($issue->available_status == 1) {
@@ -224,8 +226,8 @@ class BooksController extends Controller
 
 		$student_data->roll_num = $roll_num;
 
-		$student_data->category = StudentCategories::find($student_data->category)
-			->category;
+		$student_data->kategori = StudentCategories::find($student_data->category)
+			->kategori;
 		$issue->student = $student_data;
 
 
@@ -266,7 +268,7 @@ class BooksController extends Controller
 		$db_control = new HomeController();
 
 		return view('panel.addbook')
-			->with('categories_list', $db_control->categories_list);
+			->with('kategori_list', $db_control->kategori_list);
 	}
 
 	public function renderAllBooks()
@@ -274,35 +276,35 @@ class BooksController extends Controller
 		$db_control = new HomeController();
 
 		return view('panel.allbook')
-			->with('categories_list', $db_control->categories_list);
+			->with('kategori_list', $db_control->kategori_list);
 	}
 
 	public function BookByCategory($cat_id)
 	{
-		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
-			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
-			->where('category_id', $cat_id)->orderBy('book_id');
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
+			->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
+			->where('kategori_id', $cat_id)->orderBy('id_buku');
 
-		$book_list = $book_list->get();
+		$list_buku = $list_buku->get();
 
-		for ($i = 0; $i < count($book_list); $i++) {
+		for ($i = 0; $i < count($list_buku); $i++) {
 
-			$id = $book_list[$i]['book_id'];
+			$id = $list_buku[$i]['id_buku'];
 			$conditions = array(
-				'book_id'			=> $id,
+				'id_buku'			=> $id,
 				'available_status'	=> 1
 			);
 
-			$book_list[$i]['total_books'] = Issue::select()
+			$list_buku[$i]['total_buku'] = Issue::select()
 				->where('book_id', '=', $id)
 				->count();
 
-			$book_list[$i]['avaliable'] = Issue::select()
+			$list_buku[$i]['avaliable'] = Issue::select()
 				->where($conditions)
 				->count();
 		}
 
-		return $book_list;
+		return $list_buku;
 	}
 
 	public function searchBook()
@@ -310,6 +312,6 @@ class BooksController extends Controller
 		$db_control = new HomeController();
 
 		return view('public.book-search')
-			->with('categories_list', $db_control->categories_list);
+			->with('kategori_list', $db_control->kategori_list);
 	}
 }

@@ -1,89 +1,101 @@
-function loadResults(){
+function loadResults() {
+    var url =
+        config.path.ajax + "/buku?kategori_id=" + $("#kategori_fill").val();
 
-    var url = config.path.ajax 
-            + "/books?category_id=" + $('#category_fill').val();
+    var table = $("#all-books");
 
-    var table = $('#all-books');
-    
-    var default_tpl = _.template($('#allbooks_show').html());
+    var default_tpl = _.template($("#allbook_show").html());
 
     $.ajax({
-        url : url,
-        success : function(data){
-            if($.isEmptyObject(data)){
-                table.html('<tr><td colspan="99">No Books in this category</td></tr>');
+        url: url,
+        success: function (data) {
+            if ($.isEmptyObject(data)) {
+                table.html(
+                    '<tr><td colspan="99">No Books in this kategori</td></tr>'
+                );
             } else {
-                table.html('');
+                table.html("");
                 for (var book in data) {
                     table.append(default_tpl(data[book]));
                 }
             }
         },
-        beforeSend : function(){
-            table.css({'opacity' : 0.4});
+        beforeSend: function () {
+            table.css({ opacity: 0.4 });
         },
-        complete : function() {
-            table.css({'opacity' : 1.0});
-        }
+        complete: function () {
+            table.css({ opacity: 1.0 });
+        },
     });
 }
 
-$(document).ready(function(){
-
-    $("#category_fill").change(function(){
+$(document).ready(function () {
+    $("#kategori_fill").change(function () {
         loadResults();
     });
 
-    $(document).on("click","#addbookcategory",function(){
-
-        var form = $(this).parents('form'),
-            module_body = $(this).parents('.module-body'),
-            sendJSON ={},
+    $(document).on("click", "#addbookcategory", function () {
+        var form = $(this).parents("form"),
+            module_body = $(this).parents(".module-body"),
+            sendJSON = {},
             send_flag = true,
-            f$ = function(selector) {
+            f$ = function (selector) {
                 return form.find(selector);
             };
 
-        category = f$('input[data-form-field~=category]').val();
-        _token = f$('input[data-form-field~=token]').val();
+        kategori = f$("input[data-form-field~=kategori]").val();
+        _token = f$("input[data-form-field~=token]").val();
 
-        if(category == ""){
-            module_body.prepend(templates.alert_box( {type: 'danger', message: 'Category Field is Required'} ));
+        if (kategori == "") {
+            module_body.prepend(
+                templates.alert_box({
+                    type: "danger",
+                    message: "kategori Field is Required",
+                })
+            );
             send_flag = false;
         }
-        
-        if(send_flag == true){
 
+        if (send_flag == true) {
             $.ajax({
-                type : 'POST',
-                data : {
-                    category : category, _token:_token
+                type: "POST",
+                data: {
+                    kategori: kategori,
+                    _token: _token,
                 },
-                url : '/bookcategory',
-                success: function(data) {                    
-                    module_body.prepend(templates.alert_box( {type: 'success', message: data} ));
+                url: "/kategoribuku",
+                success: function (data) {
+                    module_body.prepend(
+                        templates.alert_box({ type: "success", message: data })
+                    );
                     clearform();
                 },
-                error: function(xhr,status,error){
+                error: function (xhr, status, error) {
                     var err = eval("(" + xhr.responseText + ")");
-                    module_body.prepend(templates.alert_box( {type: 'danger', message: err.error.message} ));
+                    module_body.prepend(
+                        templates.alert_box({
+                            type: "danger",
+                            message: err.error.message,
+                        })
+                    );
                 },
-                beforeSend: function() {
-                    form.css({'opacity' : '0.4'});
+                beforeSend: function () {
+                    form.css({ opacity: "0.4" });
                 },
-                complete: function() {
-                    form.css({'opacity' : '1.0'});
-                }
+                complete: function () {
+                    form.css({ opacity: "1.0" });
+                },
             });
         }
-    }); // add books to database
+    });
+
+    // add books to database
 
     $(".alert_box").hide().delay(5000).fadeOut();
 
     loadResults();
-
 });
 
-function clearform(){
-    $('#category').val('');
+function clearform() {
+    $("#kategori").val("");
 }

@@ -7,15 +7,15 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Add Books Category</h3>
+            <h3>Add Books kategori</h3>
         </div>
         <div class="module-body">
             <form class="form-horizontal row-fluid">
                 <div class="control-group">
-                    <label class="control-label">Category</label>
+                    <label class="control-label">Kategori</label>
                     <div class="controls">
-                        <input type="text" id="category" data-form-field="category" placeholder="Enter the category of the book here..." class="span8">
-                        <input type="hidden"  data-form-field="token"  value="{{ csrf_token() }}">
+                        <input type="text" id="kategori" data-form-field="kategori" placeholder="Enter the kategori of the book here..." class="span8">
+                        <input type="hidden" data-form-field="token" value="{{ csrf_token() }}">
                     </div>
                 </div>
 
@@ -26,12 +26,12 @@
                 </div>
             </form>
         </div>
-    </div>    
+    </div>
 </div>
 @stop
 
 @section('custom_bottom_script')
 
-    <script type="text/javascript" src="{{ asset('static/custom/js/script.addbookcategory.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/custom/js/script.addbookcategory.js') }}"></script>
 
 @stop
