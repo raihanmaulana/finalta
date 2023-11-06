@@ -23,12 +23,21 @@ class AnggotaAuthController extends Controller
     {
         $credentials = $request->only('username', 'password');
 
+        // Validasi data langsung dalam metode validate
+        $request->validate([
+            'username' => 'required|string',
+            'password' => 'required|string|min:8', // Kata sandi harus minimal 8 karakter
+        ], [
+            'password.min' => 'Password must be at least 8 characters.', // Pesan kesalahan khusus
+        ]);
+
         if (Auth::guard('anggota')->attempt($credentials)) {
             return redirect()->intended('/anggota/dashboard');
         }
 
         return back()->withErrors(['username' => 'Login failed.']);
     }
+
 
     public function showRegisterForm()
     {

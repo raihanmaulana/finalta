@@ -4,10 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Selamat datang di Halaman Anggota</h1>
-            <p>Selamat datang, {{ auth()->user()->name }}!</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <h1>Selamat datang di Halaman Anggota</h1>
+                <a href="{{ route('anggota.logout') }}" class="btn btn-danger">Logout</a>
+            </div>
 
-            <!-- Tambahkan konten tambahan untuk halaman anggota di sini -->
+            <div class="module-body">
+                <p><a href="{{ URL::route('search-book') }}"><strong>Cari Buku</strong></a></p>
+            </div>
         </div>
     </div>
 </div>

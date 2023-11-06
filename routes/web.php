@@ -33,9 +33,7 @@ Route::get('/anggota/dashboard', [AnggotaAuthController::class, 'dashboard'])->n
 Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
 Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');
 
-// Formulir Permintaan Peminjaman Buku
-Route::get('/anggota/buat-permintaan', [AnggotaController::class, 'buatPermintaan'])->name('anggota.buat-permintaan');
-Route::post('/anggota/simpan-permintaan', [AnggotaController::class, 'simpanPermintaan'])->name('anggota.simpan-permintaan');
+
 
 
 //Anggota Register
@@ -46,10 +44,30 @@ Route::post('/anggota/register', 'AnggotaAuthController@register');
 Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
+//Peminjaman Buku Anggota
+Route::get('/anggota/peminjaman', 'AnggotaController@showPeminjamanForm')->name('anggota.peminjaman.form');
+Route::post('/anggota/peminjaman', 'AnggotaController@submitPeminjaman')->name('anggota.peminjaman.submit');
+
 //Middleware Anggota
 Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/dashboard', 'AnggotaController@dashboard')->name('anggota.dashboard');
 });
+// Formulir Permintaan Peminjaman Buku
+Route::get('/anggota/buat-permintaan', [AnggotaController::class, 'buatPermintaan'])->name('anggota.buat-permintaan');
+Route::post('/anggota/simpan-permintaan', [AnggotaController::class, 'submitPermintaan'])->name('anggota.simpan-permintaan');
+
+//Logout Anggota
+Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');
+
+//Admin untuk kelola peminjaman buku
+// Route::middleware(['auth', 'guest'])->group(function () {
+// 	Route::get('/admin/peminjaman', 'StudentController@listPeminjaman')->name('admin.peminjaman.list');
+// 	Route::get('/admin/peminjaman/approve/{id}', 'Student@approvePeminjaman')->name('admin.peminjaman.approve');
+// });
+
+Route::get('/admin/peminjaman', 'StudentController@listPeminjaman')->name('admin.peminjaman.list');
+
+
 // Unauthenticated group 
 Route::group(array('before' => 'guest'), function () {
 

@@ -14,17 +14,17 @@
 					<div class="module-body">
 						<div class="control-group">
 							<div class="controls row-fluid">
-								<input class="span12" type="text" placeholder="Username" name="username" value="{{ Request::old('login') }}"> 
+								<input class="span12" type="text" placeholder="Username" name="username" value="{{ Request::old('login') }}">
 								@if($errors->has('login'))
-									{{ $errors->first('login')}}
-								@endif								
+								{{ $errors->first('login')}}
+								@endif
 							</div>
 						</div>
 						<div class="control-group">
 							<div class="controls row-fluid">
 								<input class="span12" type="password" name="password" placeholder="Password">
 								@if($errors->has('password'))
-									{{ $errors->first('password')}}
+								{{ $errors->first('password')}}
 								@endif
 							</div>
 						</div>
@@ -32,7 +32,7 @@
 							<div class="controls row-fluid">
 								<input class="span12" type="password" name="password_again" placeholder="Confirm Password">
 								@if($errors->has('password_again'))
-									{{ $errors->first('password_again')}}
+								{{ $errors->first('password_again')}}
 								@endif
 							</div>
 						</div>

@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\HomeController;
 use Exception;
+use Mockery\Matcher\Type;
 
 class BooksController extends Controller
 {
-    public function __construct(){
+	public function __construct()
+	{
 
 		$this->filter_params = array('category_id');
-
 	}
 
 	/**
@@ -32,32 +33,32 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
+			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->orderBy('book_id')->get();
 		// dd($book_list);
 		// $this->filterQuery($book_list);
 
 		// $book_list = $book_list->get();
 
-		for($i=0; $i<count($book_list); $i++){
+		for ($i = 0; $i < count($book_list); $i++) {
 
-	        $id = $book_list[$i]['book_id'];
-	        $conditions = array(
-	        	'book_id'			=> $id,
-	        	'available_status'	=> 1
-        	);
+			$id = $book_list[$i]['book_id'];
+			$conditions = array(
+				'book_id'			=> $id,
+				'available_status'	=> 1
+			);
 
-	        $book_list[$i]['total_books'] = Issue::select()
-	        	->where('book_id','=',$id)
-	        	->count();
+			$book_list[$i]['total_books'] = Issue::select()
+				->where('book_id', '=', $id)
+				->count();
 
-	        $book_list[$i]['avaliable'] = Issue::select()
-	        	->where($conditions)
-	        	->count();
+			$book_list[$i]['avaliable'] = Issue::select()
+				->where($conditions)
+				->count();
 		}
 
-        return $book_list;
+		return $book_list;
 	}
 
 
@@ -80,57 +81,56 @@ class BooksController extends Controller
 	public function store(Request $request)
 	{
 		$books = $request->all();
-		
+
 		// DB::transaction( function() use($books) {
-			// dd($books);
-			$db_flag = false;
-			$user_id = Auth::id();
-			$book_title = Books::create([
-				'title'			=> $books['title'],
-				'author'		=> $books['author'],
-				'description' 	=> $books['description'],
-				'category_id'	=> $books['category_id'],
-				'added_by'		=> $user_id
-			]);
-			// dd($book_title);
-			$newId = $book_title->book_id;
-			// dd($newId);
-			if(!$book_title){
-				$db_flag = true;
-			} else {
-				$number_of_issues = $books['number'];
+		// dd($books);
+		$db_flag = false;
+		$user_id = Auth::id();
+		$book_title = Books::create([
+			'title'			=> $books['title'],
+			'author'		=> $books['author'],
+			'description' 	=> $books['description'],
+			'category_id'	=> $books['category_id'],
+			'added_by'		=> $user_id
+		]);
+		// dd($book_title);
+		$newId = $book_title->book_id;
+		// dd($newId);
+		if (!$book_title) {
+			$db_flag = true;
+		} else {
+			$number_of_issues = $books['number'];
 
-				for($i=0; $i<$number_of_issues; $i++){
+			for ($i = 0; $i < $number_of_issues; $i++) {
 
-					$issues = Issue::create([
-						'book_id'	=> $newId,
-						'added_by'	=> $user_id
-					]);
+				$issues = Issue::create([
+					'book_id'	=> $newId,
+					'added_by'	=> $user_id
+				]);
 
-					if(!$issues){
-						$db_flag = true;
-					}
+				if (!$issues) {
+					$db_flag = true;
 				}
 			}
+		}
 
-			if($db_flag)
-				return'Invalid update data provided';
+		if ($db_flag)
+			return 'Invalid update data provided';
 
 		// });
 
 		return "Books Added successfully to Database";
-
 	}
 
 
 	public function BookCategoryStore(Request $request)
 	{
 		$bookcategory = BookCategories::create($request->all());
-		
+
 		if (!$bookcategory) {
 
 			return 'Book Category fail to save!';
-		}else {
+		} else {
 
 			return "Book Category Added successfully to Database";
 		}
@@ -145,15 +145,15 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
+			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('title', 'like', '%' . $string . '%')
 			->orWhere('author', 'like', '%' . $string . '%')
 			->orderBy('book_id');
 
 		$book_list = $book_list->get();
 
-		foreach($book_list as $book){
+		foreach ($book_list as $book) {
 			$conditions = array(
 				'book_id'			=> $book->book_id,
 				'available_status'	=> 1
@@ -165,7 +165,7 @@ class BooksController extends Controller
 			$book->avaliability = ($count > 0) ? true : false;
 		}
 
-        return $book_list;
+		return $book_list;
 	}
 
 
@@ -178,7 +178,7 @@ class BooksController extends Controller
 	public function edit($id)
 	{
 		$issue = Issue::find($id);
-		if($issue == NULL){
+		if ($issue == NULL) {
 			return 'Invalid Book ID';
 		}
 
@@ -191,7 +191,7 @@ class BooksController extends Controller
 			->category;
 
 		$issue->available_status = (bool)$issue->available_status;
-		if($issue->available_status == 1){
+		if ($issue->available_status == 1) {
 			return $issue;
 		}
 
@@ -203,7 +203,7 @@ class BooksController extends Controller
 			->take(1)
 			->get();
 
-		foreach($book_issue_log as $log){
+		foreach ($book_issue_log as $log) {
 			$student_id = $log->student_id;
 		}
 
@@ -229,7 +229,7 @@ class BooksController extends Controller
 		$issue->student = $student_data;
 
 
-        return $issue;
+		return $issue;
 	}
 
 	/**
@@ -257,56 +257,59 @@ class BooksController extends Controller
 
 	public function renderAddBookCategory(Type $var = null)
 	{
-        return view('panel.addbookcategory');
+		return view('panel.addbookcategory');
 	}
 
 
-    public function renderAddBooks() {
-        $db_control = new HomeController();
+	public function renderAddBooks()
+	{
+		$db_control = new HomeController();
 
-        return view('panel.addbook')
-            ->with('categories_list', $db_control->categories_list);
-    }
+		return view('panel.addbook')
+			->with('categories_list', $db_control->categories_list);
+	}
 
-    public function renderAllBooks() {
-        $db_control = new HomeController();
+	public function renderAllBooks()
+	{
+		$db_control = new HomeController();
 
 		return view('panel.allbook')
-            ->with('categories_list', $db_control->categories_list);
+			->with('categories_list', $db_control->categories_list);
 	}
-	
+
 	public function BookByCategory($cat_id)
 	{
-		$book_list = Books::select('book_id','title','author','description','book_categories.category')
-		->join('book_categories', 'book_categories.id', '=', 'books.category_id')
+		$book_list = Books::select('book_id', 'title', 'author', 'description', 'book_categories.category')
+			->join('book_categories', 'book_categories.id', '=', 'books.category_id')
 			->where('category_id', $cat_id)->orderBy('book_id');
 
-			$book_list = $book_list->get();
+		$book_list = $book_list->get();
 
-			for($i=0; $i<count($book_list); $i++){
+		for ($i = 0; $i < count($book_list); $i++) {
 
-				$id = $book_list[$i]['book_id'];
-				$conditions = array(
-					'book_id'			=> $id,
-					'available_status'	=> 1
-				);
-	
-				$book_list[$i]['total_books'] = Issue::select()
-					->where('book_id','=',$id)
-					->count();
-	
-				$book_list[$i]['avaliable'] = Issue::select()
-					->where($conditions)
-					->count();
-			}
-	
-			return $book_list;
+			$id = $book_list[$i]['book_id'];
+			$conditions = array(
+				'book_id'			=> $id,
+				'available_status'	=> 1
+			);
+
+			$book_list[$i]['total_books'] = Issue::select()
+				->where('book_id', '=', $id)
+				->count();
+
+			$book_list[$i]['avaliable'] = Issue::select()
+				->where($conditions)
+				->count();
+		}
+
+		return $book_list;
 	}
 
-    public function searchBook(){
-    	$db_control = new HomeController();
+	public function searchBook()
+	{
+		$db_control = new HomeController();
 
 		return view('public.book-search')
 			->with('categories_list', $db_control->categories_list);
-    }
+	}
 }

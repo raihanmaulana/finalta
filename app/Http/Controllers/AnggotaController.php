@@ -2,16 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
 use App\Models\AnggotaPerpustakaan;
-use App\Models\Buku;
-use App\Models\PermintaanPeminjaman;
+use App\Models\Books;
+use App\Models\PeminjamanBuku;
 
 class AnggotaController extends Controller
 {
     public function dashboard()
     {
         return view('anggota.dashboard');
+    }
+    public function showPeminjamanForm()
+    {
+        return view('anggota.peminjaman');
+    }
+
+    public function submitPeminjaman(Request $request)
+    {
+        // Validasi data peminjaman
+        $request->validate([
+            'book_id' => 'required|numeric',
+            'username' => 'required|string',
+        ]);
+
+        // Logika untuk menyimpan permintaan peminjaman ke dalam basis data
+        // Anda dapat menggunakan model Peminjaman
+        PeminjamanBuku::create([
+            'anggota_id' => auth()->user()->id,
+            'username' => $request->username,
+            'book_id' => $request->input('book_id'),
+            'status' => 'menunggu', // Status awal
+        ]);
+
+        // Redirect atau tampilkan pesan sukses
+        return redirect()->route('anggota.dashboard');
     }
 
     // public function cariBuku()

@@ -17,8 +17,9 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('guestbook.view') }}">Sistem Informasi Perpustakaan SMA Negeri 1 Tunjungan</a>
+                    Sistem Informasi Perpustakaan SMA Negeri 1 Tunjungan
                 </li>
+
                 <!-- Add more navigation links as needed -->
             </ul>
         </div>
