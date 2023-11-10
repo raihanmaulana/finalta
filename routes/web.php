@@ -11,6 +11,7 @@
 |
 */
 
+use App\Http\Controllers\BooksController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\AnggotaAuthController;
@@ -116,6 +117,8 @@ Route::group(array('before' => 'guest'), function () {
 		'as' => 'search-book',
 		'uses' => 'BooksController@searchBook'
 	));
+
+	Route::post('book/create', [BooksController::class, 'store'])->name('book.store');
 });
 
 // Main books Controlller left public so that it could be used without logging in too
@@ -142,7 +145,7 @@ Route::group(['middleware' => ['auth']], function () {
 		'uses' => 'BooksController@renderAddBookCategory'
 	));
 
-	Route::post('/kategoribuku', 'BooksController@BookCategoryStore')->name('bookcategory.store');
+	Route::post('/kategoribuku', 'BooksController@KategoriBukuStore')->name('bookcategory.store');
 
 
 	// Render All Books panel

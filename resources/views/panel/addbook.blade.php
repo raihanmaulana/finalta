@@ -7,31 +7,38 @@
     <div class="content">
         <div class="module">
             <div class="module-head">
-                <h3>Add Books</h3>
+                <h3>Tambah Buku</h3>
             </div>
             <div class="module-body">
-                <form class="form-horizontal row-fluid">
+                <form class="form-horizontal row-fluid" method="POST" action="{{ route('book.store') }}">
+                    @csrf
                     <div class="control-group">
                         <label class="control-label">Judul Buku</label>
                         <div class="controls">
-                            <input type="text" id="judul_buku" data-form-field="judul_buku"
+                            <input type="text" name="judul_buku" id="judul_buku" data-form-field="judul_buku"
                                 placeholder="Masukkan Judul Buku" class="span8">
-                            <input type="hidden" data-form-field="token" value="{{ csrf_token() }}">
-                            <input type="hidden" data-form-field="auth_user" value="{{ auth()->user()->id }}">
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">ISBN</label>
+                        <div class="controls">
+                            <input type="text" name="nomor_buku" id="nomor_buku" data-form-field="nomor_buku"
+                                placeholder="Masukkan ISBN" class="span8">
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label">Penerbit</label>
                         <div class="controls">
-                            <input type="text" id="penerbit" data-form-field="penerbit"
+                            <input type="text" name="penerbit" id="penerbit" data-form-field="penerbit"
                                 placeholder="Masukkan Nama Penerbit" class="span8">
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label">Pengarang</label>
                         <div class="controls">
-                            <input type="text" id="pengarang" data-form-field="pengarang"
+                            <input type="text" name="pengarang" id="pengarang" data-form-field="pengarang"
                                 placeholder="Masukkan Nama Pengarang" class="span8">
                         </div>
                     </div>
@@ -39,7 +46,7 @@
                     <div class="control-group">
                         <label class="control-label">Tahun Terbit</label>
                         <div class="controls">
-                            <input type="text" id="tahun_terbit" data-form-field="tahun_terbit"
+                            <input type="text" name="tahun_terbit" id="tahun_terbit" data-form-field="tahun_terbit"
                                 placeholder="Masukkan Tahun Terbit" class="span8">
                         </div>
                     </div>
@@ -47,7 +54,7 @@
                     <div class="control-group">
                         <label class="control-label" for="basicinput">Kategori</label>
                         <div class="controls">
-                            <select tabindex="1" id="kategori" data-form-field="kategori"
+                            <select tabindex="1" name="kategori_id" id="kategori_id" data-form-field="kategori_id"
                                 data-placeholder="Select kategori.." class="span8">
                                 @foreach ($kategori_list as $kategori)
                                     <option value="{{ $kategori->id }}">{{ $kategori->kategori }}</option>
@@ -71,7 +78,7 @@
                 </div> --}}
                     <div class="control-group">
                         <div class="controls">
-                            <button type="button" class="btn btn-inverse" id="addbooks">Add Books</button>
+                            <button type="submit" class="btn btn-inverse" id = "addbooks">Add Books</button>
                         </div>
                     </div>
                 </form>

@@ -79,63 +79,65 @@ class BooksController extends Controller
 	 * @return Response
 	 */
 	public function store(Request $request)
-	{
-		$books = $request->all();
+{
+    $books = $request->all();
+    $db_flag = false;
+    $user_id = Auth::id();
 
-		// DB::transaction( function() use($books) {
-		// dd($books);
-		$db_flag = false;
-		$user_id = Auth::id();
-		$book_title = Buku::create([
-			'nomor_buku'			=> $books['nomor_buku'],
-			'judul_buku'		=> $books['judul_buku'],
-			'penerbit' 	=> $books['penerbit'],
-			'pengarang'	=> $books['pengarang'],
-			'tahun_terbit'	=> $books['tahun_terbit'],
-			'kategori_id' => $books['kategori_id'],
-			'added_by'		=> $user_id
-		]);
-		// dd($book_title);
-		$newId = $judul_buku->id_buku;
-		// dd($newId);
-		if (!$judul_buku) {
-			$db_flag = true;
-		} else {
-			$number_of_issues = $books['number'];
+    // Create the book
+    $book = Buku::create([
+        'nomor_buku'    => $books['nomor_buku'] ?? null,
+        'judul_buku'    => $books['judul_buku'] ?? null,
+        'penerbit'      => $books['penerbit'] ?? null,
+        'pengarang'     => $books['pengarang'] ?? null,
+        'tahun_terbit'  => $books['tahun_terbit'] ?? null,
+        'kategori_id'   => $books['kategori_id'] ?? null,
+        'added_by'      => $user_id,
+    ]);
 
-			for ($i = 0; $i < $number_of_issues; $i++) {
+    if (!$book) {
+        $db_flag = true;
+    } else {
+        // Check if 'number' key exists in $books array
+        $number_of_issues = isset($books['number']) ? $books['number'] : 0;
 
-				$issues = Issue::create([
-					'id_buku'	=> $newId,
-					// 'added_by'	=> $user_id
-				]);
+        $newId = $book->id_buku;
 
-				if (!$issues) {
-					$db_flag = true;
-				}
-			}
-		}
+        // Create the issues
+        for ($i = 0; $i < $number_of_issues; $i++) {
+            $issue = Issue::create([
+                'id_buku'  => $newId,
+                'added_by' => $user_id,
+            ]);
 
-		if ($db_flag)
-			return 'Invalid update data provided';
+            if (!$issue) {
+                $db_flag = true;
+            }
+        }
+    }
 
-		// });
+    // Handle $db_flag accordingly, e.g., redirect with error message
+    if ($db_flag) {
+        return redirect('/add-books')->with('error', 'Failed to add book or issues to the database.');
+    } else {
+        return redirect('/add-books')->with('success', 'Book and issues added successfully.');
+    }
+}
 
-		return "Books Added successfully to Database";
-	}
+
 
 
 	public function KategoriBukuStore(Request $request)
 	{
-		$kategori = KategoriBuku::create($request->all());
+		$kategoris = $request->all();
+		
+		// Create the book
+		$kategori = Kategori::create([
+			'kategori'    => $kategoris['kategori'] ?? null,
+		]);		
 
-		if (!$kategori) {
-
-			return 'Book Category fail to save!';
-		} else {
-
-			return "Book Category Added successfully to Database";
-		}
+			return redirect('/add-book-category')->with('success', 'Book and issues added successfully.');
+		
 	}
 
 

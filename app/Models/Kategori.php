@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Kategori extends Model
 {
-	protected $fillable = array('kategori');
+	protected $fillable = array('id', 'kategori');
 
 	public $timestamps = false;
 
