@@ -31,13 +31,18 @@
                     <i class="menu-icon icon-signout"></i>Pengembalian Buku
                 </a>
             </li>
+            <li>
+                <a href="{{ URL::route('issue-return') }}">
+                    <i class="menu-icon icon-signout"></i>Daftar Buku Tamu
+                </a>
+            </li>
 
 
 
             {{-- <li>
                 <a href="{{ URL::route('add-book-category') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
-                </a>
+            <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
+            </a>
             </li>
             <li>
                 <a href="{{ URL::route('add-books') }}">

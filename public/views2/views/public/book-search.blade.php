@@ -32,24 +32,24 @@
 		<div class="row" style="display: none;">
 			<div class="module span12">
 				<div class="module-body">
-		            <table class="table table-striped table-bordered table-condensed">
-		                <thead>
-		                    <tr>
-		                        <th>Book ID</th>
-		                        <th>Book Title</th>
-		                        <th>Author</th>
-		                        <th>Description</th>
-		                        <th>Category</th>
-		                        <th>Status</th>
-		                    </tr>
-		                </thead>
-		                <tbody id="book-results"></tbody>
-		            </table>
+					<table class="table table-striped table-bordered table-condensed">
+						<thead>
+							<tr>
+								<th>Book ID</th>
+								<th>Book Title</th>
+								<th>Author</th>
+								<th>Description</th>
+								<th>Category</th>
+								<th>Status</th>
+							</tr>
+						</thead>
+						<tbody id="book-results"></tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
-	<input type="hidden" name="categories_list" id="categories_list" value="{{ json_encode($categories_list) }}">
+	<input type="hidden" name="kategori" id="kategori_list" value="{{ json_encode($kategori_list) }}">
 </div>
 
 
@@ -58,11 +58,11 @@
 
 @section('custom_bottom_script')
 <script type="text/javascript">
-    var categories_list = $('#categories_list').val();
+	var kategori_list = $('#kategori_list').val();
 </script>
 <script type="text/javascript" src="{{  asset('static/custom/js/script.searchbook.js') }}"></script>
 
 <script type="text/template" id="search_book">
-    @include('underscore.search_book')
+	@include('underscore.search_book')
 </script>
 @stop

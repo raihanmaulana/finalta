@@ -9,10 +9,20 @@ use Log;
 class GuestbookController extends Controller
 {
     // Display the guestbook entries
+    // public function adminView()
+    // {
+    //     $guests = Guest::all();
+    //     return view('guestbook.admin-view', compact('guests'));
+    // }
     public function viewbook()
     {
         $guests = Guest::all();
-        return view('guestbook.view', compact('guests'));
+        return view('guestbook.adminview', compact('guests'));
+    }
+
+    public function viewform()
+    {
+        return view('guestbook.view');
     }
 
     // Store a new guestbook entry

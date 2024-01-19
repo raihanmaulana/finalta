@@ -31,7 +31,11 @@
                     <i class="menu-icon icon-signout"></i>Pengembalian Buku
                 </a>
             </li>
-
+            <li>
+                <a href="{{ URL::route('guestbook.view') }}">
+                    <i class="menu-icon icon-akar-eos-person"></i>Daftar Buku Tamu
+                </a>
+            </li>
 
 
             {{-- <li>

@@ -34,10 +34,11 @@
 
 
 
+
             {{-- <li>
                 <a href="{{ URL::route('add-book-category') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
-                </a>
+            <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
+            </a>
             </li>
             <li>
                 <a href="{{ URL::route('add-books') }}">

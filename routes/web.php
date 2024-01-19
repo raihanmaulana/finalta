@@ -17,8 +17,8 @@ use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\AnggotaAuthController;
 use Illuminate\Support\Facades\Auth;
 
-Route::get('/', [GuestbookController::class, 'viewbook'])->name('guestbook.view'); // This sets the guestbook page as the default route
-Route::get('/guestbook', [GuestbookController::class, 'viewbook'])->name('guestbook.view'); // Keep the original guestbook route
+Route::get('/', [GuestbookController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
+// Keep the original guestbook route
 Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
 
 // Route::get('/', function () {
@@ -202,6 +202,9 @@ Route::group(['middleware' => ['auth']], function () {
 		'as' => 'currently-issued',
 		'uses' => 'LogController@renderLogs'
 	));
+
+	// Render Guestbook View
+	Route::get('/guestbook-view', [GuestbookController::class, 'viewbook'])->name('guestbook.view');
 
 	// Main Logs Controlller resource
 	Route::resource('/issue-log', 'LogController');
