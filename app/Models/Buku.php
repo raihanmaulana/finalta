@@ -8,7 +8,7 @@ class Buku extends Model
 {
     protected $fillable = array('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by');
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     protected $table = 'buku';
     protected $primaryKey = 'id_buku';

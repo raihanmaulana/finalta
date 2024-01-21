@@ -79,50 +79,50 @@ class BooksController extends Controller
 	 * @return Response
 	 */
 	public function store(Request $request)
-{
-    $books = $request->all();
-    $db_flag = false;
-    $user_id = Auth::id();
+	{
+		$books = $request->all();
+		$db_flag = false;
+		$user_id = Auth::id();
 
-    // Create the book
-    $book = Buku::create([
-        'nomor_buku'    => $books['nomor_buku'] ?? null,
-        'judul_buku'    => $books['judul_buku'] ?? null,
-        'penerbit'      => $books['penerbit'] ?? null,
-        'pengarang'     => $books['pengarang'] ?? null,
-        'tahun_terbit'  => $books['tahun_terbit'] ?? null,
-        'kategori_id'   => $books['kategori_id'] ?? null,
-        'added_by'      => $user_id,
-    ]);
+		// Create the book
+		$book = Buku::create([
+			'nomor_buku'    => $books['nomor_buku'] ?? null,
+			'judul_buku'    => $books['judul_buku'] ?? null,
+			'penerbit'      => $books['penerbit'] ?? null,
+			'pengarang'     => $books['pengarang'] ?? null,
+			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
+			'kategori_id'   => $books['kategori_id'] ?? null,
+			'added_by'      => $user_id,
+		]);
 
-    if (!$book) {
-        $db_flag = true;
-    } else {
-        // Check if 'number' key exists in $books array
-        $number_of_issues = isset($books['number']) ? $books['number'] : 0;
+		if (!$book) {
+			$db_flag = true;
+		} else {
+			// Check if 'number' key exists in $books array
+			$number_of_issues = isset($books['number']) ? $books['number'] : 0;
 
-        $newId = $book->id_buku;
+			$newId = $book->id_buku;
 
-        // Create the issues
-        for ($i = 0; $i < $number_of_issues; $i++) {
-            $issue = Issue::create([
-                'id_buku'  => $newId,
-                'added_by' => $user_id,
-            ]);
+			// Create the issues
+			for ($i = 0; $i < $number_of_issues; $i++) {
+				$issue = Issue::create([
+					'id_buku'  => $newId,
+					'added_by' => $user_id,
+				]);
 
-            if (!$issue) {
-                $db_flag = true;
-            }
-        }
-    }
+				if (!$issue) {
+					$db_flag = true;
+				}
+			}
+		}
 
-    // Handle $db_flag accordingly, e.g., redirect with error message
-    if ($db_flag) {
-        return redirect('/add-books')->with('error', 'Failed to add book or issues to the database.');
-    } else {
-        return redirect('/add-books')->with('success', 'Book and issues added successfully.');
-    }
-}
+		// Handle $db_flag accordingly, e.g., redirect with error message
+		if ($db_flag) {
+			return redirect('/add-books')->with('error', 'Failed to add book or issues to the database.');
+		} else {
+			return redirect('/add-books')->with('success', 'Book and issues added successfully.');
+		}
+	}
 
 
 
@@ -130,14 +130,13 @@ class BooksController extends Controller
 	public function KategoriBukuStore(Request $request)
 	{
 		$kategoris = $request->all();
-		
+
 		// Create the book
 		$kategori = Kategori::create([
 			'kategori'    => $kategoris['kategori'] ?? null,
-		]);		
+		]);
 
-			return redirect('/add-book-category')->with('success', 'Book and issues added successfully.');
-		
+		return redirect('/add-book-category')->with('success', 'Book and issues added successfully.');
 	}
 
 
@@ -173,79 +172,43 @@ class BooksController extends Controller
 	}
 
 
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
+	// File: BooksController.php
+
 	public function edit($id)
 	{
-		$issue = Issue::find($id);
-		if ($issue == NULL) {
-			return 'Invalid Book ID';
+		$book = Buku::find($id);
+
+		if ($book == NULL) {
+			return view('error')->with('message', 'Invalid Book ID');
 		}
 
-		$book = Buku::find($issue->book_id);
+		// Ambil data kategori untuk dropdown
+		$categories_list = Kategori::all();
 
-		$issue->book_name = $book->title;
-		$issue->author = $book->author;
-
-		$issue->kategori = Kategori::find($book->kategori_id)
-			->kategori;
-
-		$issue->available_status = (bool)$issue->available_status;
-		if ($issue->available_status == 1) {
-			return $issue;
-		}
-
-		$conditions = array(
-			'return_time'	=> 0,
-			'book_issue_id'	=> $id,
-		);
-		$book_issue_log = Logs::where($conditions)
-			->take(1)
-			->get();
-
-		foreach ($book_issue_log as $log) {
-			$student_id = $log->student_id;
-		}
-
-		$student_data = Student::find($student_id);
-
-		unset($student_data->email_id);
-		unset($student_data->books_issued);
-		unset($student_data->approved);
-		unset($student_data->rejected);
-
-		$student_branch = Branch::find($student_data->branch)
-			->branch;
-		$roll_num = $student_data->roll_num . '/' . $student_branch . '/' . substr($student_data->year, 2, 4);
-
-		unset($student_data->roll_num);
-		unset($student_data->branch);
-		unset($student_data->year);
-
-		$student_data->roll_num = $roll_num;
-
-		$student_data->kategori = StudentCategories::find($student_data->category)
-			->kategori;
-		$issue->student = $student_data;
-
-
-		return $issue;
+		return view('panel.editbook', compact('book', 'categories_list'));
 	}
 
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function update($id)
+	public function update(Request $request, $id)
 	{
-		//
+		$book = Buku::find($id);
+
+		if ($book == NULL) {
+			return view('error')->with('message', 'Invalid Book ID');
+		}
+
+		// Validasi form input sesuai kebutuhan
+
+		$book->nomor_buku = $request->input('nomor_buku');
+		$book->judul_buku = $request->input('judul_buku');
+		$book->penerbit = $request->input('penerbit');
+		$book->pengarang = $request->input('pengarang');
+		$book->tahun_terbit = $request->input('tahun_terbit');
+		$book->kategori_id = $request->input('kategori_id');
+		$book->save();
+
+		return redirect('/all-books')->with('success', 'Book updated successfully.');
 	}
+
 
 
 	/**
@@ -256,7 +219,12 @@ class BooksController extends Controller
 	 */
 	public function destroy($id)
 	{
-		//
+		$book = Buku::find($id);
+		if ($book == NULL) {
+			return 'Invalid Book ID';
+		}
+		$book->delete();
+		return redirect('/all-books')->with('success', 'Book deleted successfully.');
 	}
 
 	public function renderAddBookCategory(Type $var = null)

@@ -206,6 +206,10 @@ Route::group(['middleware' => ['auth']], function () {
 	// Render Guestbook View
 	Route::get('/guestbook-view', [GuestbookController::class, 'viewbook'])->name('guestbook.view');
 
+	// Update Buku
+	Route::get('/books/{id}/edit', 'BooksController@edit')->name('books.edit');
+	Route::put('/books/{id}', 'BooksController@update')->name('books.update');
+
 	// Main Logs Controlller resource
 	Route::resource('/issue-log', 'LogController');
 

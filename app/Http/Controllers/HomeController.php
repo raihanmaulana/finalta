@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index()
     {
         return view('panel.index')
-            ->with('categories_list', $this->kategori_list)
+            ->with('kategori_list', $this->kategori_list)
             ->with('branch_list', $this->branch_list)
             ->with('student_categories_list', $this->student_categories_list);
     }
