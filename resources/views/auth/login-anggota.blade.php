@@ -18,8 +18,8 @@
     @endif
     <form method="POST" action="{{ route('anggota.login') }}">
         @csrf
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username" required>
+        <label for="nomor_anggota">Nomor Anggota:</label>
+        <input type="text" id="nomor_anggota" name="nomor_anggota" required>
         <br>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password" required>

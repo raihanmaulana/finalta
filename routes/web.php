@@ -12,32 +12,18 @@
 */
 
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\PeminjamanBukuController;
+use App\Http\Controllers\AnggotaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\AnggotaAuthController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [GuestbookController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
 // Keep the original guestbook route
 Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-// use App\Http\Controllers\AnggotaController;
-
-//Halaman Anggota
-Route::get('/anggota/dashboard', [AnggotaAuthController::class, 'dashboard'])->name('anggota.dashboard');
-
-// Pencarian Buku
-Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
-Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');
-
-
-
-
-//Anggota Register
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');
 
@@ -45,25 +31,45 @@ Route::post('/anggota/register', 'AnggotaAuthController@register');
 Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
-//Peminjaman Buku Anggota
-Route::get('/anggota/peminjaman', 'AnggotaController@showPeminjamanForm')->name('anggota.peminjaman.form');
-Route::post('/anggota/peminjaman', 'AnggotaController@submitPeminjaman')->name('anggota.peminjaman.submit');
+
+// Route::middleware(['auth', 'anggota'])->group(function () {
 
 //Middleware Anggota
 Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/dashboard', 'AnggotaController@dashboard')->name('anggota.dashboard');
+	//Halaman Anggota
+	Route::get('/anggota/dashboard', [AnggotaAuthController::class, 'dashboard'])->name('anggota.dashboard');
+
+	// Pencarian Buku
+	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
+	Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');
+
+	// Route::get('/dashboard', 'MemberDashboardController@index')->name('member.dashboard');
+	Route::post('/anggota/search-books', 'MemberDashboardController@searchBooks')->name('member.search.books');
+
+	//Peminjaman Buku Anggota
+	Route::get('/anggota/peminjaman', 'AnggotaController@showPeminjamanForm')->name('anggota.peminjaman.form');
+	Route::post('/anggota/peminjaman', 'AnggotaController@submitPeminjaman')->name('anggota.peminjaman.submit');
+
+	Route::get('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.form');
+	Route::post('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.store');
+
+	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cariBuku');
+	// Menampilkan daftar permintaan peminjaman
+	Route::get('/peminjaman/daftar', [PeminjamanBukuController::class, 'daftarPeminjaman'])->name('anggota.peminjaman.daftar');
+
+	Route::put('/anggota/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])
+		->name('anggota.peminjaman.kembalikan');
+
+	//Logout Anggota
+	Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');
 });
 // Formulir Permintaan Peminjaman Buku
-Route::get('/anggota/buat-permintaan', [AnggotaController::class, 'buatPermintaan'])->name('anggota.buat-permintaan');
-Route::post('/anggota/simpan-permintaan', [AnggotaController::class, 'submitPermintaan'])->name('anggota.simpan-permintaan');
+// Route::get('/anggota/buat-permintaan', [AnggotaController::class, 'buatPermintaan'])->name('anggota.buat-permintaan');
+// Route::post('/anggota/simpan-permintaan', [AnggotaController::class, 'submitPermintaan'])->name('anggota.simpan-permintaan');
+//Caribuku
 
-//Logout Anggota
-Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');
 
-//Admin untuk kelola peminjaman buku
-// Route::middleware(['auth', 'guest'])->group(function () {
-// 	Route::get('/admin/peminjaman', 'StudentController@listPeminjaman')->name('admin.peminjaman.list');
-// 	Route::get('/admin/peminjaman/approve/{id}', 'Student@approvePeminjaman')->name('admin.peminjaman.approve');
 // });
 
 Route::get('/admin/peminjaman', 'StudentController@listPeminjaman')->name('admin.peminjaman.list');
@@ -158,7 +164,8 @@ Route::group(['middleware' => ['auth']], function () {
 		'as' => 'bookBycategory',
 		'uses' => 'BooksController@BookByCategory'
 	));
-
+	// List Anggota
+	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('admin.listAnggota');
 	// Students
 	Route::get('/registered-students', array(
 		'as' => 'registered-students',
@@ -209,6 +216,22 @@ Route::group(['middleware' => ['auth']], function () {
 	// Update Buku
 	Route::get('/books/{id}/edit', 'BooksController@edit')->name('books.edit');
 	Route::put('/books/{id}', 'BooksController@update')->name('books.update');
+
+	//Detail Buku
+	Route::get('/books/{id}/detail', 'BooksController@showDetail')->name('books.detail');
+
+	//Hapus Buku
+	Route::delete('/books/{id}/delete', 'BooksController@destroyBook');
+
+	Route::get('/peminjaman/daftar', [PeminjamanBukuController::class, 'daftarPermintaanPeminjaman'])->name('admin.peminjaman.daftar');
+
+	// Menyetujui permintaan peminjaman
+	Route::put('/peminjaman/approve/{id}', [PeminjamanBukuController::class, 'approve'])->name('admin.peminjaman.approve');
+
+	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])
+		->name('admin.buku-dikembalikan');
+
+	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 
 	// Main Logs Controlller resource
 	Route::resource('/issue-log', 'LogController');

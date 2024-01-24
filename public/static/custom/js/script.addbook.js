@@ -1,5 +1,5 @@
 function loadResults() {
-    var url = "/books?category_id=" + $("#category_fill").val();
+    var url = "/books?kategori_id=" + $("#kategori_fill").val();
     // alert(url);
     var table = $("#all-books");
 
@@ -31,8 +31,8 @@ function loadResults() {
 }
 
 $(document).ready(function () {
-    $("#category_fill").change(function () {
-        var url = "/bookBycategory/" + $("#category_fill").val();
+    $("#kategori_fill").change(function () {
+        var url = "/bookBycategory/" + $("#kategori_fill").val();
         // alert(url);
         var table = $("#all-books");
 
@@ -142,4 +142,43 @@ function clearform() {
     $("#description").val("");
     $("#number").val("");
     $("#category").val("");
+}
+
+function editBook(button) {
+    var bookId = $(button).data("id");
+    // Redirect to the edit page using the bookId
+    window.location.href = "/books/" + bookId + "/edit";
+}
+
+function showBookDetail(button) {
+    var bookId = $(button).data("id");
+    // Redirect to the detail page using the bookId
+    window.location.href = "/books/" + bookId + "/detail";
+}
+
+function destroyBook(button) {
+    var bookId = $(button).data("id");
+
+    // Konfirmasi penghapusan
+    if (confirm("Apakah Anda yakin ingin menghapus buku ini?")) {
+        // Dapatkan CSRF token dari meta tag
+        var csrfToken = $('meta[name="csrf-token"]').attr("content");
+
+        // Kirim permintaan DELETE ke server dengan menyertakan CSRF token
+        $.ajax({
+            url: "/books/" + bookId + "/delete",
+            type: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": csrfToken,
+            },
+            success: function (result) {
+                // Hapus baris buku dari tampilan setelah berhasil dihapus dari server
+                $(button).closest("tr").remove();
+                alert("Buku berhasil dihapus.");
+            },
+            error: function (error) {
+                alert("Gagal menghapus buku. Silakan coba lagi.");
+            },
+        });
+    }
 }

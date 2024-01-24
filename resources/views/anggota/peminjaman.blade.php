@@ -1,29 +1,68 @@
-<!-- resources/views/anggota/peminjaman.blade.php -->
 @extends('layouts.app')
 
 @section('content')
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <h1>Form Permintaan Peminjaman Buku</h1>
-            <form method="POST" action="{{ route('anggota.peminjaman.submit') }}">
-                @csrf
+    <h2>Form Peminjaman Buku</h2>
 
-                <!-- Input untuk mencari buku -->
-                <div class="form-group">
-                    <label for="book_id">Judul Buku</label>
-                    <input type="text" name="book_id" id="book_id" class="form-control" placeholder="Judul Buku">
-                </div>
+    <!-- Form Peminjaman -->
+    <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
+        @csrf
 
-                <!-- Input untuk jumlah buku yang ingin dipinjam -->
-                <div class="form-group">
-                    <label for="jumlah">username</label>
-                    <input type="text" name="username" id="username" class="form-control" placeholder="Jumlah Buku">
-                </div>
-
-                <button type="submit" class="btn btn-primary">Ajukan Permintaan</button>
-            </form>
+        <!-- Pilih Buku -->
+        <div class="form-group">
+            <label for="id_buku">Pilih Buku:</label>
+            <select name="id_buku" id="id_buku" class="form-control">
+                <!-- Tampilkan daftar buku yang tersedia -->
+                @foreach($daftarBukuTersedia as $buku)
+                <option value="{{ $buku->id_buku }}">{{ $buku->judul_buku }}</option>
+                @endforeach
+            </select>
         </div>
-    </div>
-</div>
-@endsection
+
+        <!-- Tombol Submit -->
+        <button type="submit" class="btn btn-primary">Ajukan Peminjaman</button>
+    </form>
+
+    <hr>
+
+    <!-- Daftar Permintaan Peminjaman -->
+    <h2>Daftar Permintaan Peminjaman</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>No</th>
+                <th>Judul Buku</th>
+                <th>Nama Anggota</th>
+                <th>Status</th>
+                <th>Aksi</th> <!-- Tambah kolom untuk tombol kembalikan -->
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Tampilkan daftar permintaan peminjaman -->
+            @forelse($daftarPeminjaman as $index => $peminjaman)
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ optional($peminjaman->buku)->judul_buku }}</td>
+                <td>{{ $peminjaman->anggota->nama_anggota ?? 'Default Name' }}</td>
+                <td>{{ $peminjaman->status == 0 ? 'Pending' : ($peminjaman->status == 1 ? 'Approved' : 'Sudah Dikembalikan') }}</td>
+
+                <td>
+                    @if($peminjaman->status == 1)
+                    <!-- Tombol Kembalikan -->
+                    <form action="{{ route('anggota.peminjaman.kembalikan', $peminjaman->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+                        <button type="submit" class="btn btn-warning">Kembalikan</button>
+                    </form>
+                    @endif
+                </td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4">Tidak ada permintaan peminjaman.</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+
+    @endsection

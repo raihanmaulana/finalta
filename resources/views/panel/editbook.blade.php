@@ -65,6 +65,16 @@
                     </div>
                 </div>
 
+                <!-- Stok Buku -->
+                <div class="control-group">
+                    <label class="control-label" for="stok">Stok Buku</label>
+                    <div class="controls">
+                        <input type="text" id="stok" name="stok" value="{{ $book->stok }}" class="span8">
+                    </div>
+                </div>
+
+                <a href="{{ route('admin.listAnggota') }}" class="btn btn-primary">List Anggota</a>
+
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn btn-primary">Update Book</button>

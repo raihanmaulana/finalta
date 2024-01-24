@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Peminjaman;
-use Illuminate\Http\Request;
 use App\Models\AnggotaPerpustakaan;
-use App\Models\Books;
+use Illuminate\Http\Request;
+use App\Models\Buku;
 use App\Models\PeminjamanBuku;
+use App\Models\Kategori;
 
 class AnggotaController extends Controller
 {
@@ -14,63 +14,73 @@ class AnggotaController extends Controller
     {
         return view('anggota.dashboard');
     }
+
+    public function index()
+    {
+        $kategori_list = Kategori::all();
+
+        return view('anggota.dashboard', compact('kategori_list'));
+    }
+
+    public function cariBuku(Request $request)
+    {
+        $keyword = $request->input('keyword');
+
+        // Query pencarian buku
+        $result = Buku::where('judul_buku', 'like', '%' . $keyword . '%')
+            ->orWhere('pengarang', 'like', '%' . $keyword . '%')
+            ->orWhere('penerbit', 'like', '%' . $keyword . '%')
+            ->orWhere('tahun_terbit', 'like', '%' . $keyword . '%')
+            ->get();
+
+        $kategori_list = Kategori::all();
+
+        return view('anggota.cari_buku', compact('result', 'kategori_list', 'keyword'));
+    }
+
+
     public function showPeminjamanForm()
     {
-        return view('anggota.peminjaman');
+        // dd(auth()->user());
+        // Check if the user is authenticated
+        $user = auth()->user();
+
+        if ($user && $user instanceof AnggotaPerpustakaan) {
+            // Mendapatkan daftar buku yang tersedia untuk dipinjam
+            $daftarBukuTersedia = Buku::where('stok', '>', 0)->get();
+
+            // Mendapatkan daftar permintaan peminjaman yang diajukan oleh anggota
+            $daftarPeminjaman = $user->peminjaman()->latest()->get();
+
+            return view('anggota.peminjaman', compact('daftarBukuTersedia', 'daftarPeminjaman'));
+        }
+
+        // If the user is not authenticated, you might want to redirect them to the login page or handle it accordingly.
+        return redirect()->route('login')->with('error', 'You need to be logged in to access this page.');
     }
 
-    public function submitPeminjaman(Request $request)
+    // Memproses permintaan peminjaman buku
+    public function processPeminjaman(Request $request)
     {
-        // Validasi data peminjaman
-        $request->validate([
-            'book_id' => 'required|numeric',
-            'username' => 'required|string',
-        ]);
+        // Check if the user is authenticated and is an instance of AnggotaPerpustakaan
+        $user = auth()->user();
 
-        // Logika untuk menyimpan permintaan peminjaman ke dalam basis data
-        // Anda dapat menggunakan model Peminjaman
-        PeminjamanBuku::create([
-            'anggota_id' => auth()->user()->id,
-            'username' => $request->username,
-            'book_id' => $request->input('book_id'),
-            'status' => 'menunggu', // Status awal
-        ]);
+        if ($user && $user instanceof AnggotaPerpustakaan) {
+            // Validasi form
+            $request->validate([
+                'id_buku' => 'required|exists:buku,id_buku',
+            ]);
 
-        // Redirect atau tampilkan pesan sukses
-        return redirect()->route('anggota.dashboard');
+            // Membuat permintaan peminjaman baru
+            $user->peminjaman()->create([
+                'id_buku' => $request->input('id_buku'),
+                'status' => 0, // Status pending
+            ]);
+
+            return redirect()->route('anggota.peminjaman')->with('success', 'Permintaan peminjaman berhasil diajukan.');
+        }
+
+        // If the user is not authenticated or not an instance of AnggotaPerpustakaan, handle accordingly
+        return redirect()->route('login')->with('error', 'You need to be logged in as an AnggotaPerpustakaan to submit a borrowing request.');
     }
-
-    // public function cariBuku()
-    // {
-    //     return view('anggota.cari-buku');
-    // }
-
-    // public function hasilPencarian(Request $request)
-    // {
-    //     $judul = $request->input('judul');
-    //     $buku = Buku::where('judul', 'like', '%' . $judul . '%')->get();
-    //     return view('anggota.hasil-pencarian', ['buku' => $buku]);
-    // }
-
-    // public function buatPermintaan()
-    // {
-    //     return view('anggota.buat-permintaan');
-    // }
-
-    // public function simpanPermintaan(Request $request)
-    // {
-    //     $this->validate($request, [
-    //         'judul_buku' => 'required',
-    //         'tanggal_peminjaman' => 'required|date',
-    //     ]);
-
-    //     // // Simpan permintaan peminjaman ke dalam database
-    //     // PermintaanPeminjaman::create([
-    //     //     'judul_buku' => $request->input('judul_buku'),
-    //     //     'tanggal_peminjaman' => $request->input('tanggal_peminjaman'),
-    //     //     'anggota_id' => auth()->user()->id, // ID anggota yang sedang login
-    //     // ]);
-
-    //     return redirect()->route('anggota.dashboard')->with('success', 'Permintaan peminjaman berhasil disimpan.');
-    // }
 }

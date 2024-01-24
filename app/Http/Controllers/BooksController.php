@@ -13,6 +13,7 @@ use App\Models\KategoriBuku;
 use App\Models\StudentCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rules;
 use Mockery\Matcher\Type;
 
 class BooksController extends Controller
@@ -33,7 +34,7 @@ class BooksController extends Controller
 	public function index()
 	{
 
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori')
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'stok', 'kategoribuku.kategori',)
 			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 			->orderBy('id_buku')->get();
 		// dd($list_buku);
@@ -78,20 +79,50 @@ class BooksController extends Controller
 	 *
 	 * @return Response
 	 */
+
+
 	public function store(Request $request)
 	{
 		$books = $request->all();
 		$db_flag = false;
 		$user_id = Auth::id();
 
+		// Validate ISBN uniqueness
+		$request->validate([
+			'nomor_buku' => [
+				'required',
+				'unique:buku,nomor_buku', // Ensure nomor_buku is unique in the 'buku' table
+			],
+			// Add other validation rules as needed
+		]);
+
+		if ($request->hasFile('image_path')) {
+			$ImagePath = $request->file('image_path')->store('path/to/books_image', 'public');
+			// Simpan $gambarPath ke dalam basis data atau model buku
+			$buku = Buku::create([
+				// Kolom-kolom lainnya,
+				'image_path' => $ImagePath,
+			]);
+		}
+
+
+		// Get the latest id_buku
+		$latestBook = Buku::latest('id_buku')->first();
+
+		// Increment id_buku by 1
+		$newId = $latestBook ? $latestBook->id_buku + 1 : 1;
+
 		// Create the book
 		$book = Buku::create([
+			'id_buku'       => $newId, // Use the calculated id_buku
 			'nomor_buku'    => $books['nomor_buku'] ?? null,
 			'judul_buku'    => $books['judul_buku'] ?? null,
 			'penerbit'      => $books['penerbit'] ?? null,
 			'pengarang'     => $books['pengarang'] ?? null,
 			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
 			'kategori_id'   => $books['kategori_id'] ?? null,
+			'stok'         => $books['stok'] ?? 0, // Add this line
+			'image_path' => $books['image_path'] ?? null,
 			'added_by'      => $user_id,
 		]);
 
@@ -100,8 +131,6 @@ class BooksController extends Controller
 		} else {
 			// Check if 'number' key exists in $books array
 			$number_of_issues = isset($books['number']) ? $books['number'] : 0;
-
-			$newId = $book->id_buku;
 
 			// Create the issues
 			for ($i = 0; $i < $number_of_issues; $i++) {
@@ -123,6 +152,7 @@ class BooksController extends Controller
 			return redirect('/add-books')->with('success', 'Book and issues added successfully.');
 		}
 	}
+
 
 
 
@@ -204,11 +234,49 @@ class BooksController extends Controller
 		$book->pengarang = $request->input('pengarang');
 		$book->tahun_terbit = $request->input('tahun_terbit');
 		$book->kategori_id = $request->input('kategori_id');
+		$book->stok = $request->input('stok', 0); // Add this line
 		$book->save();
 
 		return redirect('/all-books')->with('success', 'Book updated successfully.');
 	}
 
+	public function showDetail($id)
+	{
+		$book = Buku::find($id);
+
+		if ($book == NULL) {
+			return view('error')->with('message', 'Invalid Book ID');
+		}
+
+		// Ambil data kategori untuk ditampilkan di detail
+		$category = Kategori::find($book->kategori_id);
+
+		return view('panel.bookdetail', compact('book', 'category'));
+	}
+
+	/**
+	 * Remove the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function destroyBook($id)
+
+	{
+		$book = Buku::find($id);
+
+		if ($book == NULL) {
+			return redirect('/all-books')->with('error', 'Invalid Book ID');
+		}
+
+		// Hapus buku
+		$book->delete();
+
+		// Hapus isu terkait buku
+		Issue::where('id_buku', $id)->delete();
+
+		return redirect('/all-books')->with('success', 'Book deleted successfully.');
+	}
 
 
 	/**
@@ -217,15 +285,6 @@ class BooksController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
-	{
-		$book = Buku::find($id);
-		if ($book == NULL) {
-			return 'Invalid Book ID';
-		}
-		$book->delete();
-		return redirect('/all-books')->with('success', 'Book deleted successfully.');
-	}
 
 	public function renderAddBookCategory(Type $var = null)
 	{
@@ -249,33 +308,46 @@ class BooksController extends Controller
 			->with('kategori_list', $db_control->kategori_list);
 	}
 
-	public function BookByCategory($cat_id)
+	// public function BookByCategory($cat_id)
+	// {
+	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
+	// 		->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
+	// 		->where('kategori_id', $cat_id)->orderBy('id_buku');
+
+	// 	$list_buku = $list_buku->get();
+
+	// 	for ($i = 0; $i < count($list_buku); $i++) {
+
+	// 		$id = $list_buku[$i]['id_buku'];
+	// 		$conditions = array(
+	// 			'id_buku'			=> $id,
+	// 			'available_status'	=> 1
+	// 		);
+
+	// 		$list_buku[$i]['total_buku'] = Issue::select()
+	// 			->where('book_id', '=', $id)
+	// 			->count();
+
+	// 		$list_buku[$i]['avaliable'] = Issue::select()
+	// 			->where($conditions)
+	// 			->count();
+	// 	}
+
+	// 	return $list_buku;
+	// }
+
+	public function BookByCategory(Request $request)
 	{
+		$cat_id = $request->input('kategori_id');
+
 		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
 			->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
-			->where('kategori_id', $cat_id)->orderBy('id_buku');
-
-		$list_buku = $list_buku->get();
-
-		for ($i = 0; $i < count($list_buku); $i++) {
-
-			$id = $list_buku[$i]['id_buku'];
-			$conditions = array(
-				'id_buku'			=> $id,
-				'available_status'	=> 1
-			);
-
-			$list_buku[$i]['total_buku'] = Issue::select()
-				->where('book_id', '=', $id)
-				->count();
-
-			$list_buku[$i]['avaliable'] = Issue::select()
-				->where($conditions)
-				->count();
-		}
+			->where('kategori_id', $cat_id)->orderBy('id_buku')
+			->get();
 
 		return $list_buku;
 	}
+
 
 	public function searchBook()
 	{

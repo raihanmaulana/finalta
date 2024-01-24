@@ -21,11 +21,11 @@ class AnggotaAuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('username', 'password');
+        $credentials = $request->only('nomor_anggota', 'password');
 
         // Validasi data langsung dalam metode validate
         $request->validate([
-            'username' => 'required|string',
+            'nomor_anggota' => 'required|string',
             'password' => 'required|string|min:8', // Kata sandi harus minimal 8 karakter
         ], [
             'password.min' => 'Password must be at least 8 characters.', // Pesan kesalahan khusus
@@ -35,7 +35,7 @@ class AnggotaAuthController extends Controller
             return redirect()->intended('/anggota/dashboard');
         }
 
-        return back()->withErrors(['username' => 'Login failed.']);
+        return back()->withErrors(['nomor_anggota' => 'Login failed.']);
     }
 
 
@@ -48,18 +48,22 @@ class AnggotaAuthController extends Controller
     {
         // Validasi data pendaftaran
         $this->validate($request, [
-            'username' => 'required|string|max:255',
+            'nama_anggota' => 'required|string|max:255',
+            'nomor_anggota' => 'required|string|max:255',
+            'email' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed', // Konfirmasi kata sandi harus sesuai
         ]);
 
         // Buat anggota baru
         AnggotaPerpustakaan::create([
-            'username' => $request->username,
+            'nama_anggota' => $request->nama_anggota,
+            'email' => $request->email,
+            'nomor_anggota' => $request->nomor_anggota,
             'password' => Hash::make($request->password),
         ]);
 
         // Otentikasi anggota setelah pendaftaran
-        Auth::guard('anggota')->attempt($request->only('username', 'password'));
+        Auth::guard('anggota')->attempt($request->only('nomor_anggota', 'password'));
 
         // Redirect ke halaman dashboard anggota atau rute yang sesuai
         return redirect()->route('anggota.dashboard');

@@ -6,11 +6,13 @@
     <td><%= obj.pengarang %></td>
     <td><%= obj.tahun_terbit %></td>
     <td><%= obj.kategori %></td>
-    <td><a class="btn btn-success"><%= obj.available %></a></td>
-    <td><a class="btn btn-inverse"><%= obj.available %></a></td>
+    <td><a class="btn btn-success"><%= obj.stok %></a></td>
     <td>
-        <button class="btn btn-primary btn-sm">Edit</button>
-        <button class="btn btn-info btn-sm">Detail</button>
-        <button class="btn btn-danger btn-sm">Hapus</button>
+        <img src="<%= obj.image_path %>" alt="Gambar Buku" style="max-width: 900px; max-height: 500px;">
+    </td>
+    <td>
+        <button class="btn btn-primary btn-sm" data-id="<%= obj.id_buku %>" onclick="editBook(this)">Edit</button>
+        <button class="btn btn-info btn-sm" data-id="<%= obj.id_buku %>" onclick="showBookDetail(this)">Detail</button>
+        <button class="btn btn-danger btn-sm" data-id="<%= obj.id_buku %>" onclick="destroyBook(this)">Hapus</button>
     </td>
 </tr>
