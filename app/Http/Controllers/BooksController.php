@@ -178,28 +178,21 @@ class BooksController extends Controller
 	 */
 	public function show($string)
 	{
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori')
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
 			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 			->where('judul_buku', 'like', '%' . $string . '%')
 			->orWhere('pengarang', 'like', '%' . $string . '%')
-			->orderBy('id_buku');
-
-		$list_buku = $list_buku->get();
+			->orderBy('id_buku')
+			->get();
 
 		foreach ($list_buku as $book) {
-			$conditions = array(
-				'id_buku'			=> $book->id_buku,
-				'available_status'	=> 1
-			);
-
-			$count = Issue::where($conditions)
-				->count();
-
-			$book->avaliability = ($count > 0) ? true : false;
+			$book->status_buku = ($book->stok > 0) ? 'Available' : 'Not Available';
 		}
 
 		return $list_buku;
 	}
+
+
 
 
 	// File: BooksController.php

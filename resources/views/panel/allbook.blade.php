@@ -36,9 +36,8 @@
                             <th>Tahun Terbit</th>
                             <th>Kategori</th>
                             <th>Stok</th>
+                            <th>Status</th> <!-- Kolom baru untuk menampilkan status_buku -->
                             <th>Gambar</th> <!-- New column for displaying images -->
-                            {{-- <th>Stok</th>
-                            <th>Available</th> --}}
                             <th>Aksi</th>
                         </tr>
                     </thead>

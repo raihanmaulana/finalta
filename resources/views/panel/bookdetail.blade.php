@@ -29,6 +29,17 @@
 
                     <h5>Stok Buku:</h5>
                     <p>{{ $book->stok }}</p>
+
+                    <h5>Status Buku:</h5>
+                    <p>{{ $book->status_buku }}</p>
+                </div>
+                <div class="span6">
+                    <h5>Gambar Buku:</h5>
+                    @if ($book->gambar_path)
+                    <img src="{{ asset($book->gambar_path) }}" alt="{{ $book->judul_buku }}" class="img-fluid">
+                    @else
+                    <p>Tidak ada gambar tersedia</p>
+                    @endif
                 </div>
             </div>
             <div class="row-fluid mt-3">
@@ -38,6 +49,5 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection

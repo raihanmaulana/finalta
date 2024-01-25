@@ -47,13 +47,15 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
-                                <th>ISBN</th>
+                                <th>ID Buku</th>
+                                <th>Nomor Buku</th>
                                 <th>Judul Buku</th>
-                                <th>Penerbit</th>
                                 <th>Pengarang</th>
                                 <th>Tahun Terbit</th>
                                 <th>Kategori</th>
+                                <th>Stok</th>
                                 <th>Status</th>
+                                <th>Detail</th>
                             </tr>
                         </thead>
                         <tbody id="book-results"></tbody>

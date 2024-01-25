@@ -27,6 +27,7 @@
                                 <label for="message" class="form-label">Asal Daerah</label>
                                 <input type="text" name="message" class="form-control" id="message" placeholder="Masukkan Asal Daerah Anda" />
                             </div>
+
                             <div class="row-6 text-center center-content">
                                 <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
                             </div>
