@@ -14,6 +14,7 @@
 use App\Http\Controllers\BooksController;
 use App\Http\Controllers\PeminjamanBukuController;
 use App\Http\Controllers\AnggotaController;
+use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GuestbookController;
 use App\Http\Controllers\AnggotaAuthController;
@@ -24,6 +25,9 @@ Route::get('/', [GuestbookController::class, 'viewform'])->name('guestbook.view'
 // Keep the original guestbook route
 Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
 
+Route::get('/offline', [PeminjamanBukuController::class, 'showForm'])->name('peminjaman.form');
+Route::post('/offline', [PeminjamanBukuController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
+
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');
 
@@ -31,8 +35,11 @@ Route::post('/anggota/register', 'AnggotaAuthController@register');
 Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
+Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('perpustakaan');
 
-// Route::middleware(['auth', 'anggota'])->group(function () {
+//Peminjaman Offline Anggota
+// Route untuk halaman peminjaman
+
 
 //Middleware Anggota
 Route::middleware(['auth:anggota', 'anggota'])->group(function () {
@@ -58,8 +65,7 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	// Menampilkan daftar permintaan peminjaman
 	Route::get('/peminjaman/daftar', [PeminjamanBukuController::class, 'daftarPeminjaman'])->name('anggota.peminjaman.daftar');
 
-	Route::put('/anggota/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])
-		->name('anggota.peminjaman.kembalikan');
+
 
 	//Logout Anggota
 	Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');
@@ -230,6 +236,15 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])
 		->name('admin.buku-dikembalikan');
+
+	//Caribuku yang dipinjam
+	// routes/web.php
+
+	Route::get('/find-issue-book/{bookId}', [BooksController::class, 'findBorrowedBook']);
+
+	//Kembalikan Buku
+	Route::put('/admin/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])
+		->name('admin.peminjaman.kembalikan');
 
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 

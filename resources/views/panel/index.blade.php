@@ -67,16 +67,19 @@
                 <div class="module-body">
                     <form class="form-horizontal row-fluid" id="findissueform">
                         <div class="control-group">
-                            <label class="control-label">Enter Book ID</label>
+                            <label class="control-label">Masukkan Nomor Buku</label>
                             <div class="controls">
-                                <input type="number" placeholder="" class="span9">
-                                <a class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff"><i class="icon-search"></i> Search</a>
+                                <input type="number" placeholder="" class="span9" id="search_issue">
+                                <a class="btn homepage-form-submit" style="background-color: #025E9B; color: #fff" onclick="findBorrowedBook()">
+                                    <i class="icon-search"></i> Search
+                                </a>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="module-body" id="module-body-results"></div>
             </div>
+
 
             <div class="module" style="display: none;">
                 <div class="module-body">
@@ -110,6 +113,7 @@
         kategori_list = $('#kategori_list').val(),
         _token = $('#_token').val();
 </script>
+
 
 <script type="text/javascript" src="{{ asset('static/custom/js/script.mainpage.js') }}"></script>
 

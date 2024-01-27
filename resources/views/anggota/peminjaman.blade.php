@@ -34,7 +34,6 @@
                 <th>Judul Buku</th>
                 <th>Nama Anggota</th>
                 <th>Status</th>
-                <th>Aksi</th> <!-- Tambah kolom untuk tombol kembalikan -->
             </tr>
         </thead>
         <tbody>
@@ -45,17 +44,6 @@
                 <td>{{ optional($peminjaman->buku)->judul_buku }}</td>
                 <td>{{ $peminjaman->anggota->nama_anggota ?? 'Default Name' }}</td>
                 <td>{{ $peminjaman->status == 0 ? 'Pending' : ($peminjaman->status == 1 ? 'Approved' : 'Sudah Dikembalikan') }}</td>
-
-                <td>
-                    @if($peminjaman->status == 1)
-                    <!-- Tombol Kembalikan -->
-                    <form action="{{ route('anggota.peminjaman.kembalikan', $peminjaman->id) }}" method="POST">
-                        @csrf
-                        @method('PUT')
-                        <button type="submit" class="btn btn-warning">Kembalikan</button>
-                    </form>
-                    @endif
-                </td>
             </tr>
             @empty
             <tr>

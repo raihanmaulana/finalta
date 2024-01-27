@@ -34,8 +34,10 @@ function loadSearchedBooks(string) {
     });
 }
 
-function loadIssue(issueID, module_box) {
-    var url = "/books/" + issueID + "/edit";
+// Tambahkan script ini pada bagian script.mainpage.js
+function findBorrowedBook($peminjamanID) {
+    var url = "/find-borrowed-book/" + $peminjamanID;
+    var module_box = $("#module-body-results");
 
     var default_tpl = _.template($("#search_issue").html());
 
@@ -46,37 +48,7 @@ function loadIssue(issueID, module_box) {
         success: function (data) {
             module_box.append(default_tpl(data));
         },
-        error: function (xhr, status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            module_box.prepend(
-                templates.alert_box({
-                    type: "danger",
-                    message: err.error.message,
-                })
-            );
-        },
-        beforeSend: function () {
-            module_box.css({ opacity: 0.4 });
-        },
-        complete: function () {
-            module_box.css({ opacity: 1.0 });
-        },
-    });
-}
-
-function loadStudent(studentID, module_box) {
-    var url = "/student/" + studentID;
-
-    var default_tpl = _.template($("#search_student").html());
-
-    module_box.html("");
-
-    $.ajax({
-        url: url,
-        success: function (data) {
-            module_box.append(default_tpl(data));
-        },
-        error: function (xhr, status, error) {
+        error: function (xhr, _status, error) {
             var err = eval("(" + xhr.responseText + ")");
             module_box.prepend(
                 templates.alert_box({
@@ -129,7 +101,8 @@ $(document).ready(function () {
                         .parents(".module")
                         .find("#module-body-results");
 
-                if (searched_book != "") loadIssue(searched_book, module_box);
+                if (searched_book != "")
+                    findBorrowedBook(searched_book, module_box);
                 break;
 
             case "student":

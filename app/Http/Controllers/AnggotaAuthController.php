@@ -52,18 +52,22 @@ class AnggotaAuthController extends Controller
             'nomor_anggota' => 'required|string|max:255',
             'email' => 'required|string|max:255',
             'password' => 'required|string|min:8|confirmed', // Konfirmasi kata sandi harus sesuai
+            'jurusan' => 'required|in:IPA,IPS', // Menambahkan validasi jurusan
+            'kelas' => 'required_if:jurusan,IPA,IPS', // Menambahkan validasi kelas jika jurusan adalah IPA atau IPS
         ]);
 
         // Buat anggota baru
-        AnggotaPerpustakaan::create([
-            'nama_anggota' => $request->nama_anggota,
-            'email' => $request->email,
-            'nomor_anggota' => $request->nomor_anggota,
-            'password' => Hash::make($request->password),
+        $anggota = AnggotaPerpustakaan::create([
+            'nama_anggota' => $request->input('nama_anggota'),
+            'nomor_anggota' => $request->input('nomor_anggota'),
+            'email' => $request->input('email'),
+            'password' => bcrypt($request->input('password')),
+            'jurusan' => $request->input('jurusan'),
+            'kelas' => $request->input('kelas'),
         ]);
 
         // Otentikasi anggota setelah pendaftaran
-        Auth::guard('anggota')->attempt($request->only('nomor_anggota', 'password'));
+        Auth::guard('anggota')->login($anggota);
 
         // Redirect ke halaman dashboard anggota atau rute yang sesuai
         return redirect()->route('anggota.dashboard');

@@ -1,21 +1,25 @@
-<div class="" style="background:#025E9B; color:#fff"><center>Book Details</center></div>
+<div class="" style="background:#025E9B; color:#fff">
+    <center>Book Details</center>
+</div>
 <dl class="dl-horizontal">
-    <dt>Book Name</dt>
-    <dd><%= obj.book_name %></dd>
+    <dt>Nomor buku</dt>
+    <dd><%= obj.nomor_buku %></dd>
     <dt>Author</dt>
-    <dd><%= obj.author %></dd>
+    <dd><%= obj.judul_buku %></dd>
     <dt>Book Category</dt>
-    <dd><%= obj.category %></dd>
+    <dd><%= obj.nomor_anggota %></dd>
     <dt>Available Status</dt>
-    <dd><%= obj.available_status %></dd>
+    <dd><%= obj.created_at %></dd>
     <dt>Date of addition</dt>
-    <dd><%= obj.updated_at %></dd>
+    <dd><%= obj.status %></dd>
 </dl>
 
 <%
-    if(obj.hasOwnProperty('student')){
+    if(obj.hasOwnProperty('anggota')){
 %>
-<div class="" style="background:#025E9B; color:#fff"><center>Student Details</center></div>
+<div class="" style="background:#025E9B; color:#fff">
+    <center>Student Details</center>
+</div>
 <dl class="dl-horizontal">
     <dt>Student ID</dt>
     <dd><%= obj.student.student_id %></dd>

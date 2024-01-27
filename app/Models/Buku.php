@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buku extends Model
 {
-    protected $fillable = array('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by', 'stok', 'image_path', 'status_buku');
+    protected $fillable = ['id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by', 'stok', 'image_path', 'status_buku'];
 
     public $timestamps = true;
 

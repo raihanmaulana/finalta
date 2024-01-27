@@ -93,24 +93,22 @@ class BooksController extends Controller
 				'required',
 				'unique:buku,nomor_buku', // Ensure nomor_buku is unique in the 'buku' table
 			],
-			// Add other validation rules as needed
+
+			'image_path' => [
+				'required',
+				'image',
+				'mimes:jpeg,png,jpg,gif,svg',
+				'max:2048'
+			],
 		]);
-
-		if ($request->hasFile('image_path')) {
-			$ImagePath = $request->file('image_path')->store('path/to/books_image', 'public');
-			// Simpan $gambarPath ke dalam basis data atau model buku
-			$buku = Buku::create([
-				// Kolom-kolom lainnya,
-				'image_path' => $ImagePath,
-			]);
-		}
-
 
 		// Get the latest id_buku
 		$latestBook = Buku::latest('id_buku')->first();
 
 		// Increment id_buku by 1
 		$newId = $latestBook ? $latestBook->id_buku + 1 : 1;
+
+		$imagePath = $request->file('image_path')->store('book_images', 'public');
 
 		// Create the book
 		$book = Buku::create([
@@ -122,7 +120,7 @@ class BooksController extends Controller
 			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
-			'image_path' => $books['image_path'] ?? null,
+			'image_path' => $imagePath,
 			'added_by'      => $user_id,
 		]);
 
@@ -299,6 +297,20 @@ class BooksController extends Controller
 
 		return view('panel.allbook')
 			->with('kategori_list', $db_control->kategori_list);
+	}
+
+	public function findBorrowedBook($nomor_buku)
+	{
+		// Query untuk mendapatkan informasi buku yang dipinjam berdasarkan nomor buku
+		$result = Buku::table('peminjaman_buku')
+			->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
+			->join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
+			->select('buku.nomor_buku', 'buku.judul_buku', 'anggota_perpustakaan.nomor_anggota', 'peminjaman_buku.created_at as tanggal_peminjaman', 'peminjaman_buku.status')
+			->where('buku.nomor_buku', $nomor_buku)
+			->get();
+
+		// Kirim data ke tampilan
+		return view('admin.find_borrowed_book')->with('result', $result);
 	}
 
 	// public function BookByCategory($cat_id)

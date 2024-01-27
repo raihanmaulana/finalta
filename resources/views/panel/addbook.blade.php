@@ -68,7 +68,7 @@
                 <div class="control-group">
                     <label class="control-label">Gambar Buku</label>
                     <div class="controls">
-                        <input type="file" name="image_path" accept="image_path/*" class="span8">
+                        <input type="file" name="image_path" id="image_path" data-form-field="image_path" placeholder="Masukkan Stok Buku" class="span8">
                     </div>
                 </div>
 

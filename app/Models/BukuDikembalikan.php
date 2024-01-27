@@ -9,5 +9,5 @@ class BukuDikembalikan extends Model
 {
     protected $table = 'buku_dikembalikan';
     protected $primaryKey = 'id';
-    protected $fillable = ['id_anggota', 'id_buku'];
+    protected $fillable = ['id_anggota', 'id_buku', 'added_by'];
 }
