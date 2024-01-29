@@ -27,12 +27,18 @@
                         <td>{{ optional($item->anggota)->nama_anggota }}</td>
                         <td>{{ optional($item->anggota)->nomor_anggota }}</td>
                         <td>{{ optional($item->buku)->judul_buku }}</td>
-                        <td>{{ optional(optional($item->peminjamanBuku)->tanggal_peminjaman)->format('Y-m-d H:i:s') ?? 'N/A' }}</td>
+                        <td>
+                            @if ($item->peminjamanBuku)
+                            {{ $item->peminjamanBuku->created_at->format('Y-m-d H:i:s') }}
+                            @else
+                            N/A
+                            @endif
+                        </td>
                         <td>{{ $item->created_at ?? 'N/A' }}</td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5">Tidak ada buku yang dikembalikan.</td>
+                        <td colspan="6">Tidak ada buku yang dikembalikan.</td>
                     </tr>
                     @endforelse
                 </tbody>

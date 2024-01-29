@@ -56,11 +56,9 @@ class PeminjamanBukuController extends Controller
         // Mengupdate status peminjaman menjadi dikembalikan
         $peminjaman->update(['status' => 2]);
 
-        BukuDikembalikan::create([
-            'id_anggota' => $peminjaman->anggota->id_anggota,
-            'id_buku' => $buku->id_buku,
-            'added_by' => auth()->user()->id,
-        ]);
+        // Menyimpan data ke BukuDikembalikan
+        $addedBy = auth()->user()->id;
+        BukuDikembalikan::createFromPeminjamanBuku($peminjaman, $addedBy);
 
         return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
     }
@@ -106,18 +104,13 @@ class PeminjamanBukuController extends Controller
 
         return view('admin.buku_dipinjam', compact('bukuDipinjam'));
     }
-    // PeminjamanBukuController.php
-
     public function bukuDikembalikan()
     {
         // Retrieve a list of books that have been returned
-        $bukuDikembalikan = BukuDikembalikan::with(['anggota', 'buku', 'peminjamanBuku'])
-            ->latest()
-            ->get();
+        $bukuDikembalikan = BukuDikembalikan::latest()->get();
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
-
 
     public function showForm()
     {
