@@ -58,8 +58,10 @@
                     <label class="control-label" for="kategori_id">Category</label>
                     <div class="controls">
                         <select id="kategori_id" name="kategori_id" class="span8">
-                            @foreach($categories_list as $category)
-                            <option value="{{ $category->id }}" {{ $book->kategori_id == $category->id ? 'selected' : '' }}>{{ $category->kategori }}</option>
+                            @foreach ($categories_list as $category)
+                            <option value="{{ $category->id }}" {{ $book->kategori_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->kategori }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -72,6 +74,8 @@
                         <input type="text" id="stok" name="stok" value="{{ $book->stok }}" class="span8">
                     </div>
                 </div>
+
+                <a href="{{ route('admin.listAnggota') }}" class="btn btn-primary">List Anggota</a>
 
                 <div class="control-group">
                     <div class="controls">

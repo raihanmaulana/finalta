@@ -36,25 +36,6 @@
                     <i class="menu-icon icon-akar-eos-person"></i>Daftar Buku Tamu
                 </a>
             </li>
-
-
-            {{-- <li>
-                <a href="{{ URL::route('add-book-category') }}">
-            <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
-            </a>
-            </li>
-            <li>
-                <a href="{{ URL::route('add-books') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Books
-                </a>
-            </li>
-            <li>
-                <a href="{{ URL::route('settings') }}">
-                    <i class="menu-icon icon-cog"></i>Add Settings
-                </a>
-            </li> --}}
-
-
         </ul>
 
         <ul class="widget widget-menu unstyled">
