@@ -8,7 +8,7 @@
             </li>
             <li>
                 <a href="{{ URL::route('all-books') }}">
-                    <i class="menu-icon icon-th-list"></i>Kelola Katalog
+                    <i class="menu-icon icon-book"></i>Kelola Katalog
                 </a>
             </li>
             <li>
@@ -33,7 +33,7 @@
             </li>
             <li>
                 <a href="{{ URL::route('guestbook.view') }}">
-                    <i class="menu-icon icon-akar-eos-person"></i>Daftar Buku Tamu
+                    <i class="menu-icon icon-list-ul"></i>Buku Tamu Umum
                 </a>
             </li>
         </ul>
