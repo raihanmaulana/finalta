@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\BukuTamuAnggotaController;
 use App\Http\Controllers\PeminjamanBukuController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PublicController;
@@ -39,6 +40,9 @@ Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('pe
 Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
 
 Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
+
+Route::post('/bukutamu-anggota/store', [BukuTamuAnggotaController::class, 'store'])->name('bukutamu_anggota.store');
+Route::get('/getAnggotaInfo/{nomorAnggota}', [BukuTamuAnggotaController::class, 'getAnggotaInfo'])->name('bukutamu_anggota.getAnggotaInfo');
 
 //Peminjaman Offline Anggota
 // Route untuk halaman peminjaman

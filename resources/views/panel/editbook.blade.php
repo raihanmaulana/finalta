@@ -73,8 +73,6 @@
                     </div>
                 </div>
 
-                <a href="{{ route('admin.listAnggota') }}" class="btn btn-primary">List Anggota</a>
-
                 <div class="control-group">
                     <div class="controls">
                         <button type="submit" class="btn btn-primary">Update Book</button>

@@ -83,4 +83,23 @@ class AnggotaController extends Controller
         // If the user is not authenticated or not an instance of AnggotaPerpustakaan, handle accordingly
         return redirect()->route('login')->with('error', 'You need to be logged in as an AnggotaPerpustakaan to submit a borrowing request.');
     }
+
+    // GuestbookController.php
+
+
+    // ...
+
+    public function getAnggotaInfo($nomorAnggota)
+    {
+        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->first();
+
+        if ($anggota) {
+            return response()->json([
+                'nama_anggota' => $anggota->nama_anggota,
+                'email' => $anggota->email,
+            ]);
+        }
+
+        return response()->json(['error' => 'Anggota not found'], 404);
+    }
 }
