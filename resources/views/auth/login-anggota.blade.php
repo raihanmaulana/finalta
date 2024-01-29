@@ -13,8 +13,7 @@
                                 <div class="col-9">
                                     <h2>PERPUSTAKAAN SMA NEGERI 1 TUNJUNGAN</h2>
                                 </div>
-                                <form class="form-vertical" action="{{ URL::route('account-sign-in-post') }}"
-                                    method="POST">
+                                <form class="form-vertical" action="{{ URL::route('anggota.login') }}" method="POST">
                                     @csrf
                                     <div class="mb-3">
                                         <label for="nomor_anggota" class="form-label">Nomor Anggota</label>

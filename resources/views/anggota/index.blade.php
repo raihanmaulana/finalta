@@ -57,7 +57,7 @@
         }
     </style>
 
-    @include('layout.template_navbar')
+    @include('layout.template_anggota_navbar')
 
     <div class="wrapper">
         <div class="container">
