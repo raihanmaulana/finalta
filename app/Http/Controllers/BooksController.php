@@ -140,8 +140,8 @@ class BooksController extends Controller
 					$db_flag = true;
 				}
 			}
+			$book->hitungTersedia();
 		}
-
 		// Handle $db_flag accordingly, e.g., redirect with error message
 		if ($db_flag) {
 			return redirect('/add-books')->with('error', 'Failed to add book or issues to the database.');
