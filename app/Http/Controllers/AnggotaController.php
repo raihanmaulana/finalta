@@ -15,6 +15,19 @@ class AnggotaController extends Controller
         return view('anggota.dashboard');
     }
 
+    public function showPeminjamanDaftar()
+    {
+        $user = auth()->user();
+
+
+        if ($user && $user instanceof AnggotaPerpustakaan) {
+
+            // Mendapatkan daftar permintaan peminjaman yang diajukan oleh anggota
+            $daftarPeminjaman = $user->peminjaman()->latest()->get();
+
+            return view('anggota.list', compact('daftarPeminjaman'));
+        }
+    }
     public function index()
     {
         $kategori_list = Kategori::all();

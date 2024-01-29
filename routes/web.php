@@ -65,9 +65,9 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 
 	//Peminjaman Buku Anggota
 	Route::get('/anggota/peminjaman', 'AnggotaController@showPeminjamanForm')->name('anggota.peminjaman.form');
-	Route::post('/anggota/peminjaman', 'AnggotaController@submitPeminjaman')->name('anggota.peminjaman.submit');
+	Route::get('/anggota/list', 'AnggotaController@showPeminjamanDaftar')->name('anggota.list');
 
-	Route::get('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.form');
+	// Route::get('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.form');
 	Route::post('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.store');
 
 	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cariBuku');

@@ -2,21 +2,20 @@
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
             <li>
-                <a href="{{ URL::route('home') }}">
+                <a href="{{ URL::route('anggota.dashboard') }}">
                     <i class="menu-icon icon-home"></i>Cari Buku
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('all-books') }}">
-                    <i class="menu-icon icon-th-list"></i>Peminjaman Buku
+                <a href="{{ URL::route('anggota.peminjaman.form') }}">
+                    <i class="menu-icon icon-th-list"></i>Form Peminjaman Buku
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('list-anggota') }}">
+                <a href="{{ URL::route('anggota.list') }}">
                     <i class="menu-icon icon-group"></i>Status Peminjaman
                 </a>
             </li>
-
         </ul>
 
         <ul class="widget widget-menu unstyled">
