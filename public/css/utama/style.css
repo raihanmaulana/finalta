@@ -1,0 +1,66 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&family=Signika+Negative:wght@300;400;700&display=swap");
+*/
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+    font-family: "Poppins", sans-serif;
+}
+
+.banner {
+    padding-top: 20%;
+    padding-bottom: 305px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+h1 {
+    font-size: 350%;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+dd {
+    font-size: 110%;
+}
+
+/* style.css */
+
+.page.page1 {
+    /* Menentukan gambar latar belakang */
+    background-image: url("images/bg.jpg");
+    /* Menentukan gaya latar belakang */
+    background-size: cover; /* Mengisi seluruh area dengan gambar */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    background-attachment: fixed; /* Membuat gambar tetap di latar belakang saat menggulir halaman */
+    background-position: center center; /* Posisi gambar di tengah latar belakang */
+    height: 100vh; /* Mengisi tinggi viewport */
+}
+
+.transparent-bg {
+    opacity: 0.5; /* Sesuaikan dengan tingkat transparansi yang Anda inginkan; 0 = sepenuhnya transparan, 1 = tidak transparan */
+}
+/* Anda dapat menambahkan gaya tambahan untuk elemen lain di halaman Anda di sini */
+.img-logo {
+    width: 75px; /* Sesuaikan lebar yang Anda inginkan */
+    height: auto; /* Tinggi diatur secara otomatis untuk menjaga proporsi gambar */
+}
+
+.card-img-top {
+    max-height: 200px; /* Adjust the height as needed */
+    max-width: 100px;
+    object-fit: cover; /* This property scales the image while maintaining its aspect ratio */
+    border-radius: 5px;
+}
+
+.white-container {
+    background-color: white;
+    /* You can also add more styles here if needed */
+}
+
+.btn-box:hover {
+    background-color: #fef5a4; /* Change the background color on hover */
+    color: #ffffff; /* Change the text color on hover */
+    cursor: pointer; /* Change the cursor to a pointer on hover */
+}
