@@ -17,17 +17,17 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('students-for-approval') }}">
+                <a href="{{ URL::route('admin.peminjaman.daftar') }}">
                     <i class="menu-icon icon-filter"></i> Konfirmasi Peminjaman
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('currently-issued') }}">
+                <a href="{{ URL::route('admin.buku-dipinjam') }}">
                     <i class="menu-icon icon-list-ul"></i>List Peminjam
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('issue-return') }}">
+                <a href="{{ URL::route('admin.buku-dikembalikan') }}">
                     <i class="menu-icon icon-signout"></i>Pengembalian Buku
                 </a>
             </li>
