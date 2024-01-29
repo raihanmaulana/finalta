@@ -1,21 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Homepage</title>
-    <link rel="stylesheet" href="public\css\dashboard.css">
-</head>
-
 <body>
-    <!-- navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <img src="...\public\css\images\logo.png" alt="Bootstrap" width="30" height="auto" />
+                <img src="{{ asset('css\images\logo.png') }}" alt="SMA N 1 Tunjungan" width="30" height="auto" />
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -25,26 +16,35 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Beranda</a>
+                        <a class="nav-link active" aria-current="page" href="perpustakaan">Beranda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="semuabuku">Katalog</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/galeri.html">Galeri</a>
+                        <a class="nav-link" href="galeri">Galeri</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact.html">Contact</a>
                     </li>
                 </ul>
                 <form class="d-flex">
-                    <a class="btn btn-outline-primary" href="anggota/login" role="button">Login</a>
+                    <a class="btn btn-outline-primary" href="anggota/login" role="button">Anggota</a>
                     <ul>
 
                     </ul>
-                    <a class="btn btn-outline-primary" href="login" role="button">Admin</a>
+                    <a class="btn btn-outline-primary" href="signin" role="button">Admin</a>
                 </form>
             </div>
         </div>
     </nav>
     <!-- end -->
+
+    <!-- @section('app')
+    <div id="app">
+        <main class="py-4">
+            @yield('content')
+        </main>
+    </div>
+    {{-- </body>
+</html> --}} -->

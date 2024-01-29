@@ -1,0 +1,18 @@
+body {
+  background-image: url("/img/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Ubah nilai alpha (0.5) sesuai dengan tingkat transparansi yang Anda inginkan */
+}
+
+/* .col-12 {
+  opacity: 80%;
+  margin-left: auto;
+}
+
+.btn-group-lg > .btn,
+.btn-lg {
+  opacity: 1;
+} */

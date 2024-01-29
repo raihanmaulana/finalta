@@ -10,7 +10,7 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="public\css\dashboard.css">
 </head>
-</head>
+
 
 <body>
     <h2>Login Anggota Perpustakaan</h2>
@@ -35,8 +35,8 @@
     </form>
 
     <form class="d-flex">
-                    <a class="btn btn-outline-primary" href="anggota.register" role="button">Register</a>
-                    <ul>
+        <a class="btn btn-outline-primary" href="anggota/register" role="button">Register</a>
+        <ul>
     </form>
 </body>
 
