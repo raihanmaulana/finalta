@@ -106,13 +106,18 @@ class PeminjamanBukuController extends Controller
 
         return view('admin.buku_dipinjam', compact('bukuDipinjam'));
     }
+    // PeminjamanBukuController.php
+
     public function bukuDikembalikan()
     {
         // Retrieve a list of books that have been returned
-        $bukuDikembalikan = BukuDikembalikan::latest()->get();
+        $bukuDikembalikan = BukuDikembalikan::with(['anggota', 'buku', 'peminjamanBuku'])
+            ->latest()
+            ->get();
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
+
 
     public function showForm()
     {
