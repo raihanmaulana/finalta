@@ -21,7 +21,7 @@
 
     <hr>
 
-    <!-- Fitur Cari Buku -->
+    <!-- Fitur Cari Buku
     <form action="{{ route('search-book') }}" method="GET">
         <div class="input-group mb-3">
             <input type="text" class="form-control" placeholder="Cari buku..." name="keyword">
@@ -30,5 +30,10 @@
             </div>
         </div>
     </form>
-</div>
-@endsection
+</div> -->
+
+    <!-- Peminjaman Offline -->
+    <a href="{{ route('peminjaman.form') }}" class="btn btn-info">Peminjaman Offline</a>
+
+    <hr>
+    @endsection
