@@ -45,6 +45,6 @@ class GuestbookController extends Controller
             return redirect()->back()->with('error', 'Failed to save the guestbook entry.');
         }
 
-        return redirect()->route('account-sign-in');
+        return redirect()->route('perpustakaan');
     }
 }

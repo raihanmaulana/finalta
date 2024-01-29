@@ -8,8 +8,9 @@ use App\Models\PeminjamanBuku;
 use App\Models\StudentCategories;
 use App\Models\AnggotaPerpustakaan;
 use App\Models\Branch;
-
 use App\Models\Kategori;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Exception;
 
 class HomeController extends Controller
@@ -61,6 +62,40 @@ class HomeController extends Controller
         }
 
         return redirect()->route('admin.daftar-peminjaman')->with('error', 'Permintaan peminjaman sudah disetujui sebelumnya.');
+    }
+
+
+    public function showProfile()
+    {
+        $user = auth()->user(); // Mengambil informasi pengguna yang sedang login
+
+        return view('admin.profile', compact('user'));
+    }
+
+    public function showChangePasswordForm()
+    {
+        return view('admin.change-password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|confirmed',
+        ]);
+
+        $admin = Auth::user();
+
+        // Periksa apakah kata sandi saat ini cocok
+        if (Hash::check($request->current_password, $admin->password)) {
+            // Ubah kata sandi jika valid
+            $admin->password = Hash::make($request->new_password);
+            $admin->save();
+
+            return redirect()->route('admin.profile')->with('success', 'Kata sandi berhasil diubah.');
+        } else {
+            return redirect()->route('admin.profile.change-password')->with('error', 'Kata sandi saat ini tidak valid.');
+        }
     }
     public function index()
     {

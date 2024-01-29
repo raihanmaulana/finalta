@@ -17,7 +17,7 @@
     <hr>
 
     <!-- Daftar Buku -->
-    <a href="{{ route('all-books') }}" class="btn btn-info">Daftar Buku</a>
+    <a href="{{ route('semuabuku') }}" class="btn btn-info">Daftar Buku</a>
 
     <hr>
 

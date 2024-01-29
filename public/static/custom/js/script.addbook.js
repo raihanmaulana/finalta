@@ -98,15 +98,9 @@ $(document).ready(function () {
         if (send_flag == true) {
             $.ajax({
                 type: "POST",
-                data: {
-                    title: title,
-                    author: author,
-                    description: description,
-                    number: number,
-                    category_id: category_id,
-                    _token: _token,
-                    auth_user: auth_user,
-                },
+                data: formData,
+                processData: false, // Prevent jQuery from processing data
+                contentType: false, // Set content type to false as FormData will handle it
                 url: "/books",
                 success: function (data) {
                     module_body.prepend(

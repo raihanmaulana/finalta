@@ -36,6 +36,9 @@ Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggo
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
 Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('perpustakaan');
+Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
+
+Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 
 //Peminjaman Offline Anggota
 // Route untuk halaman peminjaman
@@ -216,6 +219,10 @@ Route::group(['middleware' => ['auth']], function () {
 		'uses' => 'LogController@renderLogs'
 	));
 
+	Route::get('/admin/profile', 'HomeController@showProfile')->name('admin.profile');
+	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
+	Route::post('/admin/profile/change-password', [HomeController::class, 'changePassword'])->name('admin.profile.change-password.post');
+
 	// Render Guestbook View
 	Route::get('/guestbook-view', [GuestbookController::class, 'viewbook'])->name('guestbook.view');
 
@@ -238,7 +245,6 @@ Route::group(['middleware' => ['auth']], function () {
 		->name('admin.buku-dikembalikan');
 
 	//Caribuku yang dipinjam
-	// routes/web.php
 
 	Route::get('/find-issue-book/{bookId}', [BooksController::class, 'findBorrowedBook']);
 

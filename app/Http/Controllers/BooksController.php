@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\HomeController;
 use App\Models\Buku;
+use App\Models\PeminjamanBuku;
 use App\Models\Branch;
 use App\Models\Issue;
 use App\Models\Kategori;
@@ -33,33 +34,31 @@ class BooksController extends Controller
 	 */
 	public function index()
 	{
-
+		// ...
 		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'stok', 'kategoribuku.kategori',)
 			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 			->orderBy('id_buku')->get();
-		// dd($list_buku);
-		// $this->filterQuery($list_buku);
 
-		// $list_buku = $list_buku->get();
-
-		for ($i = 0; $i < count($list_buku); $i++) {
-
-			$id = $list_buku[$i]['id_buku'];
-			$conditions = array(
-				'id_buku'			=> $id,
-				'available_status'	=> 1
-			);
-
-			$list_buku[$i]['total_buku'] = Issue::select()
-				->where('id_buku', '=', $id)
-				->count();
-
-			$list_buku[$i]['available'] = Issue::select()
-				->where($conditions)
-				->count();
+		// Loop melalui setiap buku dan tambahkan informasi available
+		foreach ($list_buku as $book) {
+			$book->available = $this->calculateAvailableForBorrow($book->id_buku);
 		}
 
 		return $list_buku;
+	}
+
+	protected function calculateAvailableForBorrow($bookId)
+	{
+		// Menghitung jumlah buku yang dipinjam
+		$totalBorrowed = PeminjamanBuku::where('id_buku', '=', $bookId)->where('status', '=', 1)->count();
+
+		// Mendapatkan stok buku
+		$stok = Buku::where('id_buku', '=', $bookId)->value('stok');
+
+		// Menghitung jumlah buku yang tersedia
+		$available = max(0, $stok - $totalBorrowed);
+
+		return $available;
 	}
 
 
@@ -94,12 +93,12 @@ class BooksController extends Controller
 				'unique:buku,nomor_buku', // Ensure nomor_buku is unique in the 'buku' table
 			],
 
-			'image_path' => [
-				'required',
-				'image',
-				'mimes:jpeg,png,jpg,gif,svg',
-				'max:2048'
-			],
+			// 'image_path' => [
+			// 	'required',
+			// 	'image',
+			// 	'mimes:jpeg,png,jpg,gif,svg',
+			// 	'max:2048'
+			// ],
 		]);
 
 		// Get the latest id_buku
@@ -108,7 +107,7 @@ class BooksController extends Controller
 		// Increment id_buku by 1
 		$newId = $latestBook ? $latestBook->id_buku + 1 : 1;
 
-		$imagePath = $request->file('image_path')->store('book_images', 'public');
+		// $imagePath = $request->file('image_path')->store('book_images', 'public');
 
 		// Create the book
 		$book = Buku::create([
@@ -120,7 +119,7 @@ class BooksController extends Controller
 			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
-			'image_path' => $imagePath,
+			// 'image_path' => $imagePath,
 			'added_by'      => $user_id,
 		]);
 

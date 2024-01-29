@@ -15,7 +15,11 @@ class Buku extends Model
 
     protected $hidden = array();
 
-
+    public function getImagePathAttribute($value)
+    {
+        // Any custom logic for getting the image path
+        return $value;
+    }
     public function issues()
     {
         return $this::count();
