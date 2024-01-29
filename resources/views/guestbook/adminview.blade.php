@@ -1,28 +1,42 @@
-<!-- resources/views/guestbook/admin-view.blade.php -->
+@extends('layout.index')
+@section('custom_top_script')
+@stop
 
-@extends('account.layout')
-@section('index')
+@section('content')
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>Buku Tamu Umum</h3>
+            </div>
+            <div class="module-body">
+                <div class="controls">
+                </div>
+                @if (count($guests) > 0)
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Alamat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($guests as $index => $guest)
+                                <tr>
+                                    <td>{{ $index + 1 }}</td>
+                                    <td>{{ $guest->name }}</td>
+                                    <td>{{ $guest->message }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                @else
+                    <p>No guestbook entries found.</p>
+                @endif
+            </div>
+        </div>
+    </div>
+@stop
 
-<h1>Guestbook Entries</h1>
-
-@if (count($guests) > 0)
-<table>
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Message</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($guests as $guest)
-        <tr>
-            <td>{{ $guest->name }}</td>
-            <td>{{ $guest->message }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-@else
-<p>No guestbook entries found.</p>
-@endif
-@endsection
+@section('custom_bottom_script')
+@stop
