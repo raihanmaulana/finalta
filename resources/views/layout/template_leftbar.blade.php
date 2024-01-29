@@ -12,7 +12,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('registered-students') }}">
+                <a href="{{ URL::route('list-anggota') }}">
                     <i class="menu-icon icon-group"></i>Kelola Anggota
                 </a>
             </li>

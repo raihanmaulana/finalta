@@ -31,7 +31,7 @@ class HomeController extends Controller
     {
         $anggotaList = AnggotaPerpustakaan::all();
 
-        return view('admin.list-anggota', compact('anggotaList'));
+        return view('panel.list-anggota', compact('anggotaList'));
     }
 
     public function showDaftarPeminjaman()

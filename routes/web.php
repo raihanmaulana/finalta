@@ -174,7 +174,7 @@ Route::group(['middleware' => ['auth']], function () {
 		'uses' => 'BooksController@BookByCategory'
 	));
 	// List Anggota
-	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('admin.listAnggota');
+	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('list-anggota');
 	// Students
 	Route::get('/registered-students', array(
 		'as' => 'registered-students',
