@@ -3,85 +3,91 @@
 @extends('layout.index')
 
 @section('content')
-<div class="content">
-    <div class="module">
-        <div class="module-head">
-            <h3>Edit Book</h3>
-        </div>
-        <div class="module-body">
-            <form class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', ['id' => $book->id_buku]) }}">
-                @csrf
-                @method('PUT')
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h3>Edit Book</h3>
+            </div>
+            <div class="module-body">
+                <form class="form-horizontal row-fluid" method="POST"
+                    action="{{ route('books.update', ['id' => $book->id_buku]) }}">
+                    @csrf
+                    @method('PUT')
 
-                <!-- Nomor Buku -->
-                <div class="control-group">
-                    <label class="control-label" for="nomor_buku">Book Number</label>
-                    <div class="controls">
-                        <input type="text" id="nomor_buku" name="nomor_buku" value="{{ $book->nomor_buku }}" class="span8">
+                    <!-- Nomor Buku -->
+                    <div class="control-group">
+                        <label class="control-label" for="nomor_buku">Book Number</label>
+                        <div class="controls">
+                            <input type="text" id="nomor_buku" name="nomor_buku" value="{{ $book->nomor_buku }}"
+                                class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Judul Buku -->
-                <div class="control-group">
-                    <label class="control-label" for="judul_buku">Title Of Book</label>
-                    <div class="controls">
-                        <input type="text" id="judul_buku" name="judul_buku" value="{{ $book->judul_buku }}" class="span8">
+                    <!-- Judul Buku -->
+                    <div class="control-group">
+                        <label class="control-label" for="judul_buku">Title Of Book</label>
+                        <div class="controls">
+                            <input type="text" id="judul_buku" name="judul_buku" value="{{ $book->judul_buku }}"
+                                class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Penerbit -->
-                <div class="control-group">
-                    <label class="control-label" for="penerbit">Publisher</label>
-                    <div class="controls">
-                        <input type="text" id="penerbit" name="penerbit" value="{{ $book->penerbit }}" class="span8">
+                    <!-- Penerbit -->
+                    <div class="control-group">
+                        <label class="control-label" for="penerbit">Publisher</label>
+                        <div class="controls">
+                            <input type="text" id="penerbit" name="penerbit" value="{{ $book->penerbit }}"
+                                class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Pengarang -->
-                <div class="control-group">
-                    <label class="control-label" for="pengarang">Author Name</label>
-                    <div class="controls">
-                        <input type="text" id="pengarang" name="pengarang" value="{{ $book->pengarang }}" class="span8">
+                    <!-- Pengarang -->
+                    <div class="control-group">
+                        <label class="control-label" for="pengarang">Author Name</label>
+                        <div class="controls">
+                            <input type="text" id="pengarang" name="pengarang" value="{{ $book->pengarang }}"
+                                class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Tahun Terbit -->
-                <div class="control-group">
-                    <label class="control-label" for="tahun_terbit">Year of Publication</label>
-                    <div class="controls">
-                        <input type="text" id="tahun_terbit" name="tahun_terbit" value="{{ $book->tahun_terbit }}" class="span8">
+                    <!-- Tahun Terbit -->
+                    <div class="control-group">
+                        <label class="control-label" for="tahun_terbit">Year of Publication</label>
+                        <div class="controls">
+                            <input type="text" id="tahun_terbit" name="tahun_terbit" value="{{ $book->tahun_terbit }}"
+                                class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <!-- Kategori -->
-                <div class="control-group">
-                    <label class="control-label" for="kategori_id">Category</label>
-                    <div class="controls">
-                        <select id="kategori_id" name="kategori_id" class="span8">
-                            @foreach($categories_list as $category)
-                            <option value="{{ $category->id }}" {{ $book->kategori_id == $category->id ? 'selected' : '' }}>{{ $category->kategori }}</option>
-                            @endforeach
-                        </select>
+                    <!-- Kategori -->
+                    <div class="control-group">
+                        <label class="control-label" for="kategori_id">Category</label>
+                        <div class="controls">
+                            <select id="kategori_id" name="kategori_id" class="span8">
+                                @foreach ($categories_list as $category)
+                                    <option value="{{ $category->id }}"
+                                        {{ $book->kategori_id == $category->id ? 'selected' : '' }}>
+                                        {{ $category->kategori }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Stok Buku -->
-                <div class="control-group">
-                    <label class="control-label" for="stok">Stok Buku</label>
-                    <div class="controls">
-                        <input type="text" id="stok" name="stok" value="{{ $book->stok }}" class="span8">
+                    <!-- Stok Buku -->
+                    <div class="control-group">
+                        <label class="control-label" for="stok">Stok Buku</label>
+                        <div class="controls">
+                            <input type="text" id="stok" name="stok" value="{{ $book->stok }}" class="span8">
+                        </div>
                     </div>
-                </div>
 
-                <a href="{{ route('admin.listAnggota') }}" class="btn btn-primary">List Anggota</a>
-
-                <div class="control-group">
-                    <div class="controls">
-                        <button type="submit" class="btn btn-primary">Update Book</button>
+                    <div class="control-group">
+                        <div class="controls">
+                            <button type="submit" class="btn btn-primary">Update Book</button>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 @endsection
