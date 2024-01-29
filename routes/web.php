@@ -38,6 +38,8 @@ Route::post('/anggota/login', 'AnggotaAuthController@login');
 
 Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('perpustakaan');
 Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
+Route::get('/katalog', [PublicController::class, 'semuabuku'])->name('semuabuku');
+Route::get('/galeri', [PublicController::class, 'galeri'])->name('galeri');
 
 Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 

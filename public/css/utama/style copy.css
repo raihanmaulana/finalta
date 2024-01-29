@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@200;500;700&family=Signika+Negative:wght@300;400;700&display=swap");
+
+:root {
+  --lg-font: "Inter", sans-serif;
+  --sm-font: "Signika Negative", sans-serif;
+}
+
+.banner {
+  padding-top: 20%;
+  padding-bottom: 305px;
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+}
+h1 {
+  font-family: sans-serif;
+  font-size: 350%;
+}
+
+h2 {
+  font-weight: bold;
+}
+
+dd {
+  font-family: sans-serif;
+  font-size: 110%;
+}
+
+/* style.css */
+
+.page1 {
+  background-image: url("img/bg.jpg"); /* Ganti 'gambar-latar-belakang.jpg' dengan path atau URL gambar Anda */
+  background-size: cover; /* Menyesuaikan ukuran gambar dengan lebar dan tinggi elemen body */
+  background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+  background-attachment: fixed; /* Membuat gambar tetap di tempatnya saat menggulir */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0
+  ); /* Nilai terakhir (0.5) menentukan tingkat transparansi; 1 = tidak transparan, 0 = sepenuhnya transparan */
+}
+.transparent-bg {
+  opacity: 0.5; /* Sesuaikan dengan tingkat transparansi yang Anda inginkan; 0 = sepenuhnya transparan, 1 = tidak transparan */
+}
+/* Anda dapat menambahkan gaya tambahan untuk elemen lain di halaman Anda di sini */
+.img-logo {
+  width: 75px; /* Sesuaikan lebar yang Anda inginkan */
+  height: auto; /* Tinggi diatur secara otomatis untuk menjaga proporsi gambar */
+}
+
+.card-img-top {
+  max-height: 200px; /* Adjust the height as needed */
+  max-width: 100px;
+  object-fit: cover; /* This property scales the image while maintaining its aspect ratio */
+  border-radius: 5px;
+}
+
+.white-container {
+  background-color: white;
+  /* You can also add more styles here if needed */
+}
+
+body {
+  background-image: url("/img/bg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Ubah nilai alpha (0.5) sesuai dengan tingkat transparansi yang Anda inginkan */
+}

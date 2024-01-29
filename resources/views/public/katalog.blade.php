@@ -1,6 +1,4 @@
-<!-- resources/views/public/all_books.blade.php -->
-
-@extends('layouts.layout')
+@extends('layouts.navbar')
 
 @section('customcss')
 <head>
@@ -13,8 +11,8 @@
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <!-- my css -->
-    <link rel="stylesheet" href="{{asset('css/utama/katalog.css')}}" />
-    <link rel="stylesheet" href="{{asset('css/utama/search.css')}}" />
+    <link rel="stylesheet" href="css/katalog.css" />
+    <link rel="stylesheet" href="css/search.css" />
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon-->
@@ -39,13 +37,14 @@
     <link rel="stylesheet" href="css/nouislider.min.css">
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="{{asset('css/utama/katalog.css')}}" />
 </head>
 
 @endsection
 
 @section('content')
-<!-- header -->
-<section id="header">
+ <!-- header -->
+ <section id="header">
         <form class="d-flex">
             <input class="form-control" type="search" placeholder="Search" aria-label="Search">
         </form>
@@ -274,8 +273,11 @@
             </div>
         </div>
         <!-- end -->
-        <!-- jquery -->
-        <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
+@endsection
+
+@section('customjs')
+<!-- jquery -->
+<script src="js/code.jquery.com_jquery-3.7.1.js"></script>
         <!-- boostrap js and popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
@@ -300,4 +302,4 @@
                 detailCard.style.display = "none";
             }
         </script>
-        @endsection
+@endsection

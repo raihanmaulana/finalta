@@ -1,0 +1,8 @@
+.form-control {
+  width: 50%;
+  margin: 0 auto; /* Ini akan menengahkan elemen horizontal */
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+}
