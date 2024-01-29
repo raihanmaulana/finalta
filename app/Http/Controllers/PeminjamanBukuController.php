@@ -43,7 +43,6 @@ class PeminjamanBukuController extends Controller
 
     public function kembalikanBukuAnggota($id)
     {
-        // Mencari peminjaman berdasarkan ID
         $peminjaman = PeminjamanBuku::findOrFail($id);
 
         // Memastikan status peminjaman masih pending (status = 0)
@@ -51,20 +50,15 @@ class PeminjamanBukuController extends Controller
             return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan karena status peminjaman belum disetujui.');
         }
 
-
         // Mengembalikan stok buku setelah buku dikembalikan
         $buku = $peminjaman->buku;
-        $buku->stok += 1;
-        $buku->save();
 
         // Mengupdate status peminjaman menjadi dikembalikan
         $peminjaman->update(['status' => 2]);
 
-        BukuDikembalikan::create([
-            'id_anggota' => $peminjaman->anggota->id_anggota,
-            'id_buku' => $buku->id_buku,
-            'added_by' => auth()->user()->id,
-        ]);
+        // Menyimpan data ke BukuDikembalikan
+        $addedBy = auth()->user()->id;
+        BukuDikembalikan::createFromPeminjamanBuku($peminjaman, $addedBy);
 
         return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
     }
@@ -90,7 +84,7 @@ class PeminjamanBukuController extends Controller
             $buku = Buku::findOrFail($peminjaman->id_buku);
 
             // Mengurangi stok buku setelah permintaan disetujui
-            $buku->stok -= 1;
+            $buku->tersedia -= 1;
             $buku->save();
 
             // Menyetujui permintaan peminjaman
@@ -143,6 +137,8 @@ class PeminjamanBukuController extends Controller
                 'status' => 1,
             ]);
 
+            $buku->tersedia -= 1;
+            $buku->save();
             return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
         } else {
             return redirect()->back()->with('error', 'Nomor anggota atau nomor buku tidak valid.');

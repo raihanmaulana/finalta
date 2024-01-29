@@ -8,7 +8,7 @@
             </li>
             <li>
                 <a href="{{ URL::route('all-books') }}">
-                    <i class="menu-icon icon-th-list"></i>Kelola Katalog
+                    <i class="menu-icon icon-book"></i>Kelola Katalog
                 </a>
             </li>
             <li>
@@ -17,44 +17,25 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('students-for-approval') }}">
+                <a href="{{ URL::route('admin.peminjaman.daftar') }}">
                     <i class="menu-icon icon-filter"></i> Konfirmasi Peminjaman
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('currently-issued') }}">
+                <a href="{{ URL::route('admin.buku-dipinjam') }}">
                     <i class="menu-icon icon-list-ul"></i>List Peminjam
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('issue-return') }}">
+                <a href="{{ URL::route('admin.buku-dikembalikan') }}">
                     <i class="menu-icon icon-signout"></i>Pengembalian Buku
                 </a>
             </li>
             <li>
                 <a href="{{ URL::route('guestbook.view') }}">
-                    <i class="menu-icon icon-akar-eos-person"></i>Daftar Buku Tamu
+                    <i class="menu-icon icon-list-ul"></i>Buku Tamu Umum
                 </a>
             </li>
-
-
-            {{-- <li>
-                <a href="{{ URL::route('add-book-category') }}">
-            <i class="menu-icon icon-folder-open-alt"></i>Add Book Category
-            </a>
-            </li>
-            <li>
-                <a href="{{ URL::route('add-books') }}">
-                    <i class="menu-icon icon-folder-open-alt"></i>Add Books
-                </a>
-            </li>
-            <li>
-                <a href="{{ URL::route('settings') }}">
-                    <i class="menu-icon icon-cog"></i>Add Settings
-                </a>
-            </li> --}}
-
-
         </ul>
 
         <ul class="widget widget-menu unstyled">
