@@ -70,11 +70,13 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	// Route::get('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.form');
 	Route::post('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.store');
 
-	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cariBuku');
+	// Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cariBuku');
 	// Menampilkan daftar permintaan peminjaman
 	Route::get('/peminjaman/daftar', [PeminjamanBukuController::class, 'daftarPeminjaman'])->name('anggota.peminjaman.daftar');
 
-
+	Route::get('/anggota/profile', 'AnggotaController@showProfile')->name('anggota.profile');
+	Route::get('/anggota/profile/change-password', [AnggotaController::class, 'showChangePasswordForm'])->name('anggota.profile.change-password');
+	Route::post('/anggota/profile/change-password', [AnggotaController::class, 'changePassword'])->name('anggota.profile.change-password.post');
 
 	//Logout Anggota
 	Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');
@@ -247,8 +249,7 @@ Route::group(['middleware' => ['auth']], function () {
 	// Menyetujui permintaan peminjaman
 	Route::put('/peminjaman/approve/{id}', [PeminjamanBukuController::class, 'approve'])->name('admin.peminjaman.approve');
 
-	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])
-		->name('admin.buku-dikembalikan');
+	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');
 
 	//Caribuku yang dipinjam
 

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Buku;
 use App\Models\PeminjamanBuku;
 use App\Models\Kategori;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AnggotaController extends Controller
 {
@@ -97,10 +99,38 @@ class AnggotaController extends Controller
         return redirect()->route('login')->with('error', 'You need to be logged in as an AnggotaPerpustakaan to submit a borrowing request.');
     }
 
-    // GuestbookController.php
+    public function showProfile()
+    {
+        $user = auth()->user(); // Mengambil informasi pengguna yang sedang login
 
+        return view('anggota.profile', compact('user'));
+    }
 
-    // ...
+    public function showChangePasswordForm()
+    {
+        return view('anggota.change-password');
+    }
+
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:8|confirmed',
+        ]);
+
+        $admin = Auth::user();
+
+        // Periksa apakah kata sandi saat ini cocok
+        if (Hash::check($request->current_password, $admin->password)) {
+            // Ubah kata sandi jika valid
+            $admin->password = Hash::make($request->new_password);
+            $admin->save();
+
+            return redirect()->route('anggota.profile')->with('success', 'Kata sandi berhasil diubah.');
+        } else {
+            return redirect()->route('anggota.profile.change-password')->with('error', 'Kata sandi saat ini tidak valid.');
+        }
+    }
 
     public function getAnggotaInfo($nomorAnggota)
     {

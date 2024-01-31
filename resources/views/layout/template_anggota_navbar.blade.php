@@ -13,7 +13,7 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a href="/admin/profile" target="_blank">Profile</a></li>
+                            <li><a href="/anggota/profile" target="_blank">Profile</a></li>
                             <li class="divider"></li>
                             <li><a href="{{ URL::route('anggota.logout') }}">Logout</a></li>
                         </ul>

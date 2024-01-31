@@ -30,12 +30,17 @@ class PeminjamanBukuController extends Controller
             'id_buku' => 'required|exists:buku,id_buku',
         ]);
 
-        $tanggalKembali = now()->addDays(7);
+        // Mendapatkan tanggal sekarang
+        $tanggalSekarang = now();
+
+        // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
+        $tanggalPeminjaman = $tanggalSekarang->addDays(7);
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
-            'tanggal_kembali' => $tanggalKembali,
+            'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
+            'tanggal_kembali' => $tanggalSekarang->addDays(7), // Menyimpan tanggal kembali
         ]);
 
         return redirect()->route('anggota.peminjaman.form')->with('success', 'Permintaan peminjaman berhasil diajukan.');
@@ -50,17 +55,25 @@ class PeminjamanBukuController extends Controller
             return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan karena status peminjaman belum disetujui.');
         }
 
-        // Mengembalikan stok buku setelah buku dikembalikan
-        $buku = $peminjaman->buku;
+        // Memastikan status buku dipinjam (status = 1) sebelum dikembalikan
+        if ($peminjaman->status == 1) {
+            // Mengembalikan stok buku setelah buku dikembalikan
+            $buku = $peminjaman->buku;
 
-        // Mengupdate status peminjaman menjadi dikembalikan
-        $peminjaman->update(['status' => 2]);
+            // Mengupdate status peminjaman menjadi dikembalikan (status = 2)
+            $peminjaman->update([
+                'status' => 2,
+                'tanggal_pengembalian' => now(), // Menyimpan tanggal pengembalian
+            ]);
 
-        // Menyimpan data ke BukuDikembalikan
-        $addedBy = auth()->user()->id;
-        BukuDikembalikan::createFromPeminjamanBuku($peminjaman, $addedBy);
+            // Menyimpan data ke BukuDikembalikan
+            $addedBy = auth()->user()->id;
+            BukuDikembalikan::createFromPeminjamanBuku($peminjaman, $addedBy);
 
-        return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
+            return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
+        }
+
+        return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan.');
     }
 
     // Admin: Daftar Permintaan Peminjaman
@@ -106,11 +119,16 @@ class PeminjamanBukuController extends Controller
     }
     public function bukuDikembalikan()
     {
-        // Retrieve a list of books that have been returned
-        $bukuDikembalikan = BukuDikembalikan::latest()->get();
+        // Query langsung ke tabel peminjaman_buku untuk mendapatkan data buku yang sudah dikembalikan
+        $bukuDikembalikan = PeminjamanBuku::with(['anggota', 'buku'])
+            ->where('status', 2) // Status 'Dikembalikan'
+            ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
+            ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
+            ->get();
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
+
 
     public function showForm()
     {
@@ -131,14 +149,18 @@ class PeminjamanBukuController extends Controller
         // Periksa apakah anggota dan buku ditemukan
         if ($anggota && $buku) {
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
-            PeminjamanBuku::create([
+            $peminjaman = PeminjamanBuku::create([
                 'id_buku' => $buku->id_buku,
                 'id_anggota' => $anggota->id_anggota,
                 'status' => 1,
             ]);
 
+            // Update tanggal peminjaman saat buku berhasil dipinjam
+            $peminjaman->update(['tanggal_peminjaman' => now()]);
+
             $buku->tersedia -= 1;
             $buku->save();
+
             return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
         } else {
             return redirect()->back()->with('error', 'Nomor anggota atau nomor buku tidak valid.');

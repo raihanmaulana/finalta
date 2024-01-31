@@ -18,6 +18,13 @@ class PeminjamanBuku extends Model
         'id_buku', // ID buku yang dipinjam
         'id_anggota', // ID anggota yang melakukan peminjaman
         'status', // Status peminjaman (misalnya: menunggu, disetujui, ditolak)
+        'tanggal_peminjaman',
+        'tanggal_pengembalian',
+    ];
+
+    protected $casts = [
+        'tanggal_peminjaman' => 'datetime',
+        'tanggal_pengembalian' => 'datetime',
     ];
 
     public function user()

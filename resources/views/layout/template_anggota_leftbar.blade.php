@@ -2,7 +2,7 @@
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
             <li>
-                <a href="{{ URL::route('anggota.dashboard') }}">
+                <a href="{{ URL::route('anggota.cari-buku') }}">
                     <i class="menu-icon icon-home"></i>Cari Buku
                 </a>
             </li>
@@ -19,7 +19,7 @@
         </ul>
 
         <ul class="widget widget-menu unstyled">
-            <li><a href="{{ URL::route('account-sign-out') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
+            <li><a href="{{ URL::route('anggota.logout') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
         </ul>
     </div>
 </div>

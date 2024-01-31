@@ -12,11 +12,10 @@ class BukuDikembalikan extends Model
     protected $fillable = ['id_anggota', 'id_buku', 'added_by', 'nomor_anggota'];
 
 
-    public function peminjamanBuku()
+    public function peminjaman()
     {
-        return $this->belongsTo(PeminjamanBuku::class, 'id');
+        return $this->belongsTo(PeminjamanBuku::class, 'id_peminjaman', 'id_peminjaman');
     }
-
     public function anggota()
     {
         return $this->belongsTo(AnggotaPerpustakaan::class, 'id_anggota');
@@ -27,14 +26,15 @@ class BukuDikembalikan extends Model
         return $this->belongsTo(Buku::class, 'id_buku');
     }
 
-    public static function createFromPeminjamanBuku($peminjamanBuku, $addedBy)
+    public static function createFromPeminjamanBuku($peminjaman, $addedBy)
     {
         return self::create([
-            'id_anggota' => $peminjamanBuku->id_anggota,
-            'id_buku' => $peminjamanBuku->id_buku,
+            'id_peminjaman' => $peminjaman->id_peminjaman,
+            'id_anggota' => $peminjaman->id_anggota,
+            'id_buku' => $peminjaman->id_buku, // Menambahkan nilai id_anggota dari PeminjamanBuku
             'added_by' => $addedBy,
-            'nomor_anggota' => $peminjamanBuku->anggota->nomor_anggota, // Sesuaikan dengan relasi
-            'tanggal_peminjaman' => $peminjamanBuku->created_at, // Tambahkan kolom waktu peminjaman
+            'tanggal_peminjaman' => $peminjaman->tanggal_peminjaman,
+            'tanggal_pengembalian' => now(),
         ]);
     }
 }
