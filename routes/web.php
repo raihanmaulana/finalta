@@ -251,6 +251,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');
 
+
+	Route::get('/cari-anggota/{nomorAnggota}', 'AnggotaController@cariAnggotaByNomorAnggota');
+
 	//Caribuku yang dipinjam
 
 	Route::get('/find-issue-book/{bookId}', [BooksController::class, 'findBorrowedBook']);

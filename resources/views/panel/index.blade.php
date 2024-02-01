@@ -20,7 +20,7 @@
                 <b>Find Issue Book </b>
             </button>
 
-            <button class="btn-box big span4 homepage-form-box btn-hover" id="findstudentbox">
+            <button class="btn-box big span4 homepage-form-box btn-hover" id="findanggotabox">
                 <i class="icon-user" style="color: #025E9B"></i>
                 <b>Find Student</b>
             </button>
@@ -31,7 +31,7 @@
                 <div class="module-body">
                     <form class="form-horizontal row-fluid" id="findbookform">
                         <div class="control-group">
-                            <label class="control-label">Name or author<br>of the book</label>
+                            <label class="control-label">Judul Buku<br></label>
                             <div class="controls">
                                 <div class="span9">
                                     <textarea class="span12" rows="2"></textarea>
@@ -71,8 +71,7 @@
                             <div class="controls">
                                 <input type="number" placeholder="" class="span9" id="search_issue">
                                 <a class="btn homepage-form-submit" style="background-color: #025E9B; color: #fff" onclick="findBorrowedBook()">
-                                    <i class="icon-search"></i> Search
-                                </a>
+                                    <i class="icon-search"></i> Search </a>
                             </div>
                         </div>
                     </form>
@@ -83,15 +82,34 @@
 
             <div class="module" style="display: none;">
                 <div class="module-body">
-                    <form class="form-horizontal row-fluid" id="findstudentform">
+                    <form class="form-horizontal row-fluid" id="findanggotaform">
                         <div class="control-group">
-                            <label class="control-label">Enter Student ID</label>
+                            <label class="control-label">Masukkan Nomor Anggota</label>
                             <div class="controls">
-                                <input type="text" placeholder="" class="span9">
-                                <a class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff"><i class="icon-search"></i> Search</a>
+                                <div class="span9">
+                                    <textarea class="span12" rows="2"></textarea>
+                                </div>
+
+                                <input type="text" placeholder="" class="span9" id="search_anggota">
+                                <a class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff" onclick="searchAnggotaByNumber()">
+                                    <i class=" icon-search"></i> Search
+                                </a>
                             </div>
                         </div>
                     </form>
+                    <table class=" table table-striped table-bordered table-condensed" style="display: none;">
+                        <thead>
+                            <tr>
+                                <th>Nama Anggota</th>
+                                <th>Nomor Anggota</th>
+                                <th>Email</th>
+                                <th>Jurusan</th>
+                                <th>Kelas</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody id="anggota-results"></tbody>
+                    </table>
                 </div>
                 <div class="module-body" id="module-body-results"></div>
             </div>
@@ -124,10 +142,7 @@
 <script type="text/template" id="search_issue">
     @include('underscore.search_issue')
 </script>
-<script type="text/template" id="search_student">
-    @include('underscore.search_student')
-</script>
-<script type="text/template" id="approvalstudents_show">
-    @include('underscore.approvalstudents_show')
+<script type="text/template" id="search_anggota">
+    @include('underscore.search_anggota')
 </script>
 @stop
