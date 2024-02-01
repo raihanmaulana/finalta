@@ -1,11 +1,11 @@
 <tr>
     <td><%= obj.id_buku %></td>
-    <td><%= obj.nomor_buku %></td>
+    <td class="hide-on-small"><%= obj.nomor_buku %></td>
     <td><%= obj.judul_buku %></td>
-    <td><%= obj.penerbit %></td>
-    <td><%= obj.pengarang %></td>
-    <td><%= obj.tahun_terbit %></td>
-    <td><%= obj.kategori %></td>
+    <td class="hide-on-small"><%= obj.penerbit %></td>
+    <td class="hide-on-small"><%= obj.pengarang %></td>
+    <td class="hide-on-small"><%= obj.tahun_terbit %></td>
+    <td class="hide-on-small"><%= obj.kategori %></td>
     <td><a class="btn btn-success"><%= obj.stok %></a></td>
     <!-- <td>
         <% if (obj.stok > 0) { %>

@@ -6,11 +6,11 @@
                     <i class="menu-icon icon-home"></i>Cari Buku
                 </a>
             </li>
-            <li>
+            {{-- <li>
                 <a href="{{ URL::route('anggota.peminjaman.form') }}">
                     <i class="menu-icon icon-th-list"></i>Form Peminjaman Buku
                 </a>
-            </li>
+            </li> --}}
             <li>
                 <a href="{{ URL::route('anggota.list') }}">
                     <i class="menu-icon icon-group"></i>Status Peminjaman
