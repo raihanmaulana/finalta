@@ -58,10 +58,10 @@ function findBorrowedBook($peminjamanID) {
             );
         },
         beforeSend: function () {
-            module_box.css({ opacity: 0.4 });
+            table.css({ opacity: 0.4 });
         },
         complete: function () {
-            module_box.css({ opacity: 1.0 });
+            table.css({ opacity: 1.0 });
         },
     });
 }
@@ -82,41 +82,67 @@ $(document).ready(function () {
         formid = formid.substring(0, formid.length - 3) + "form";
         showFormModule(formid);
     });
+});
 
-    $(".homepage-form-submit").click(function () {
-        var form = $(this).parents("form");
-        mode = form.attr("id");
+// Tambahkan fungsi pencarian anggota
+function searchAnggotaByNumber(nomorAnggota) {
+    var url = "/anggota/" + nomorAnggota;
 
-        mode = mode.substring(4, mode.length - 4);
+    var table = $("#anggota-results"), // Ganti dengan id yang sesuai pada halaman Anda
+        table_parent_div = table.parents("table"),
+        default_tpl = _.template($("#search_anggota").html());
 
-        switch (mode) {
-            case "book":
-                var search_query = form.find("textarea").val();
-                if (search_query != "") loadSearchedBooks(search_query);
-                break;
+    table_parent_div.show();
 
-            case "issue":
-                var searched_book = form.find("input").val(),
-                    module_box = form
-                        .parents(".module")
-                        .find("#module-body-results");
+    $.ajax({
+        url: url,
+        success: function (data) {
+            if ($.isEmptyObject(data)) {
+                table.html(
+                    '<tr><td colspan="99">No such anggotas found in library</td></tr>'
+                );
+            } else {
+                table.html("");
+                for (var anggotas in data) {
+                    var anggota = data[anggotas];
+                    table.append(default_tpl(anggota));
+                }
+            }
+        },
+        beforeSend: function () {
+            table.css({ opacity: 0.4 });
+        },
+        complete: function () {
+            table.css({ opacity: 1.0 });
+        },
+    });
+}
 
-                if (searched_book != "")
-                    findBorrowedBook(searched_book, module_box);
-                break;
+$(document).ready(function () {
+    $("#search_anggota_button").click(function () {
+        var search_query = $(this).parents("form").find("textarea").val();
 
-            case "student":
-                var searched_student = form.find("input").val(),
-                    module_box = form
-                        .parents(".module")
-                        .find("#module-body-results");
-
-                if (searched_student != "")
-                    loadStudent(searched_student, module_box);
-                break;
-        }
+        if (search_query != "") loadResults(search_query);
     });
 });
+// function showAnggotaDetail(button) {
+//     var anggotaId = $(button).data("id");
+//     // Redirect to the detail page using the anggotaId
+//     window.location.href = "/anggota/" + anggotaId + "/detail";
+// }
+
+// Tambahkan pada bagian ready function
+// $(".homepage-form-box").click(function () {
+//     var formid = $(this).attr("id");
+//     formid = formid.substring(0, formid.length - 3) + "form";
+
+//     if (formid === "findanggotaform") {
+//         var nomorAnggota = $("#findanggotaform input").val();
+//         searchAnggotaByNumber(nomorAnggota);
+//     }
+
+//     showFormModule(formid);
+// });
 
 function showBookDetail(button) {
     var bookId = $(button).data("id");
