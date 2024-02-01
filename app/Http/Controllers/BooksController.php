@@ -298,6 +298,7 @@ class BooksController extends Controller
 			->with('kategori_list', $db_control->kategori_list);
 	}
 
+
 	public function findBorrowedBook($nomor_buku)
 	{
 		// Query untuk mendapatkan informasi buku yang dipinjam berdasarkan nomor buku

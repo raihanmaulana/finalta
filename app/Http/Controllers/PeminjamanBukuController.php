@@ -34,13 +34,13 @@ class PeminjamanBukuController extends Controller
         $tanggalSekarang = now();
 
         // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
-        $tanggalPeminjaman = $tanggalSekarang->addDays(7);
+        $tanggalPeminjaman = now(); //->addDays(7);
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
-            'tanggal_kembali' => $tanggalSekarang->addDays(7), // Menyimpan tanggal kembali
+            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
         ]);
 
         return redirect()->route('anggota.peminjaman.form')->with('success', 'Permintaan peminjaman berhasil diajukan.');

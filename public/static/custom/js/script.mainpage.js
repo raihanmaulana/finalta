@@ -86,9 +86,9 @@ $(document).ready(function () {
 
 // Tambahkan fungsi pencarian anggota
 function searchAnggotaByNumber(nomorAnggota) {
-    var url = "/anggota/" + nomorAnggota;
+    var url = "/cari-anggota/" + nomorAnggota;
 
-    var table = $("#anggota-results"), // Ganti dengan id yang sesuai pada halaman Anda
+    var table = $("#anggota_perpustakaan-results"), // Ganti dengan id yang sesuai pada halaman Anda
         table_parent_div = table.parents("table"),
         default_tpl = _.template($("#search_anggota").html());
 
@@ -99,7 +99,7 @@ function searchAnggotaByNumber(nomorAnggota) {
         success: function (data) {
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="99">No such anggotas found in library</td></tr>'
+                    '<tr><td colspan="99">No such anggota found in library</td></tr>'
                 );
             } else {
                 table.html("");
@@ -118,13 +118,13 @@ function searchAnggotaByNumber(nomorAnggota) {
     });
 }
 
-$(document).ready(function () {
-    $("#search_anggota_button").click(function () {
-        var search_query = $(this).parents("form").find("textarea").val();
+// $(document).ready(function () {
+//     $("#search_anggota_button").click(function () {
+//         var search_query = $(this).parents("form").find("textarea").val();
 
-        if (search_query != "") loadResults(search_query);
-    });
-});
+//         if (search_query != "") loadResults(search_query);
+//     });
+// });
 // function showAnggotaDetail(button) {
 //     var anggotaId = $(button).data("id");
 //     // Redirect to the detail page using the anggotaId
@@ -143,6 +143,44 @@ $(document).ready(function () {
 
 //     showFormModule(formid);
 // });
+
+$(document).ready(function () {
+    $(".homepage-form-box").click(function () {
+        var formid = $(this).attr("id");
+
+        formid = formid.substring(0, formid.length - 3) + "form";
+        showFormModule(formid);
+    });
+
+    $(".homepage-form-submit").click(function () {
+        var form = $(this).parents("form");
+        mode = form.attr("id");
+
+        mode = mode.substring(4, mode.length - 4);
+
+        switch (mode) {
+            case "book":
+                var search_query = form.find("textarea").val();
+                if (search_query != "") loadSearchedBooks(search_query);
+                break;
+
+            case "issue":
+                var searched_book = form.find("input").val(),
+                    module_box = form
+                        .parents(".module")
+                        .find("#module-body-results");
+
+                if (searched_book != "")
+                    findBorrowedBook(searched_book, module_box);
+                break;
+
+            case "anggota":
+                var search_query = form.find("textarea").val();
+                if (search_query != "") searchAnggotaByNumber(search_query);
+                break;
+        }
+    });
+});
 
 function showBookDetail(button) {
     var bookId = $(button).data("id");

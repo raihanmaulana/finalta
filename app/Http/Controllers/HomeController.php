@@ -20,11 +20,14 @@ class HomeController extends Controller
     public $branch_list = array();
     public $student_categories_list = array();
 
+    public $nomor_anggota = array();
+
     public function __construct()
     {
         $this->kategori_list = Kategori::select()->orderBy('kategori')->get();
         $this->branch_list = Branch::select()->orderBy('id')->get();
         $this->student_categories_list = StudentCategories::select()->orderBy('cat_id')->get();
+        $this->nomor_anggota = AnggotaPerpustakaan::select()->orderBy('nomor_anggota')->get();
     }
 
     public function listAnggota()
@@ -102,6 +105,7 @@ class HomeController extends Controller
         return view('panel.index')
             ->with('kategori_list', $this->kategori_list)
             ->with('branch_list', $this->branch_list)
-            ->with('student_categories_list', $this->student_categories_list);
+            ->with('student_categories_list', $this->student_categories_list)
+            ->with('nomor_anggota', $this->nomor_anggota);
     }
 }

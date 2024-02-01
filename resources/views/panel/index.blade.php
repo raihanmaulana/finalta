@@ -80,16 +80,12 @@
             </div>
 
 
-            <div class="module" style="display: none;">
+            <!-- <div class="module" style="display: none;">
                 <div class="module-body">
                     <form class="form-horizontal row-fluid" id="findanggotaform">
                         <div class="control-group">
                             <label class="control-label">Masukkan Nomor Anggota</label>
                             <div class="controls">
-                                <div class="span9">
-                                    <textarea class="span12" rows="2"></textarea>
-                                </div>
-
                                 <input type="text" placeholder="" class="span9" id="search_anggota">
                                 <a class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff" onclick="searchAnggotaByNumber()">
                                     <i class=" icon-search"></i> Search
@@ -112,37 +108,72 @@
                     </table>
                 </div>
                 <div class="module-body" id="module-body-results"></div>
+            </div> -->
+
+            <div class="content">
+                <div class="module" style="display: none;">
+                    <div class="module-body">
+                        <form class="form-horizontal row-fluid" id="findanggotaform">
+                            <div class="control-group">
+                                <label class="control-label">Nomor Anggota<br></label>
+                                <div class="controls">
+                                    <div class="span9">
+                                        <textarea class="span12" rows="2"></textarea>
+                                    </div>
+                                    <div class="span3">
+                                        <a class="btn homepage-form-submit " style="background-color:  #025E9B; color:#fff"><i class="icon-search"></i>
+                                            Search</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <hr>
+                        <table class="table table-striped table-bordered table-condensed" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th>Nama Anggota</th>
+                                    <th>Nomor Anggota</th>
+                                    <th>Email</th>
+                                    <th>Jurusan</th>
+                                    <th>Kelas</th>
+                                    <th>Detail</th>
+                                </tr>
+                            </thead>
+                            <tbody id="anggota_perpustakaan-results"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
+        <input type="hidden" name="" id="branches_list" value="{{ json_encode($branch_list) }}">
+        <input type="hidden" name="" id="student_categories_list" value="{{ json_encode($student_categories_list) }}">
+        <input type="hidden" name="" id="kategori_list" value="{{ json_encode($kategori_list) }}">
+        <input type="hidden" name="" id="nomor_anggota" value="{{ json_encode($nomor_anggota) }}">
+        <input type="hidden" id="_token" data-form-field="token" value="{{ csrf_token() }}">
+
     </div>
-    <input type="hidden" name="" id="branches_list" value="{{ json_encode($branch_list) }}">
-    <input type="hidden" name="" id="student_categories_list" value="{{ json_encode($student_categories_list) }}">
-    <input type="hidden" name="" id="kategori_list" value="{{ json_encode($kategori_list) }}">
-    <input type="hidden" id="_token" data-form-field="token" value="{{ csrf_token() }}">
-
-</div>
-@stop
+    @stop
 
 
-@section('custom_bottom_script')
-<script type="text/javascript">
-    var branches_list = $('#branches_list').val(),
-        student_categories_list = $('#student_categories_list').val(),
-        kategori_list = $('#kategori_list').val(),
-        _token = $('#_token').val();
+    @section('custom_bottom_script')
+    <script type="text/javascript">
+        var branches_list = $('#branches_list').val(),
+            student_categories_list = $('#student_categories_list').val(),
+            kategori_list = $('#kategori_list').val(),
+            _token = $('#_token').val();
+    </script>
+
+
+    <script type="text/javascript" src="{{ asset('static/custom/js/script.mainpage.js') }}"></script>
+
+
+    <script type="text/template" id="search_book">
+        @include('underscore.search_book')
 </script>
-
-
-<script type="text/javascript" src="{{ asset('static/custom/js/script.mainpage.js') }}"></script>
-
-
-<script type="text/template" id="search_book">
-    @include('underscore.search_book')
+    <script type="text/template" id="search_issue">
+        @include('underscore.search_issue')
 </script>
-<script type="text/template" id="search_issue">
-    @include('underscore.search_issue')
+    <script type="text/template" id="search_anggota">
+        @include('underscore.search_anggota')
 </script>
-<script type="text/template" id="search_anggota">
-    @include('underscore.search_anggota')
-</script>
-@stop
+    @stop
