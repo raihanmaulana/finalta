@@ -7,7 +7,7 @@
 	<td><%= obj.tahun_terbit %></td>
 	<td><%= obj.kategori %></td>
 	<td><a class="btn btn-success"><%= obj.stok %></a></td>
-	<td><%= obj.status_buku %></td> <!-- Kolom Status -->
+	<td><%= obj.status_buku %></td>
 	<td>
 		<button class="btn btn-info btn-detail" data-id="<%= obj.id_buku %>" onclick="showBookDetail(this)">Detail</button>
 	</td>

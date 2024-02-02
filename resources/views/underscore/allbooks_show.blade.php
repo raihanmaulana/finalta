@@ -7,13 +7,7 @@
     <td class="hide-on-small"><%= obj.tahun_terbit %></td>
     <td class="hide-on-small"><%= obj.kategori %></td>
     <td><a class="btn btn-success"><%= obj.stok %></a></td>
-    <!-- <td>
-        <% if (obj.stok > 0) { %>
-        <a class="btn btn-success">Available</a>
-        <% } else { %>
-        <a class="btn btn-danger">Not Available</a>
-        <% } %>
-    </td> -->
+
     <td><a class="btn btn-warning"><%= obj.available %></a></td>
     <td>
         <img src="<%= obj.image_path %>" alt="Gambar Buku" style="max-width: 900px; max-height: 500px;">

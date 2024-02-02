@@ -8,6 +8,7 @@ use App\Models\PeminjamanBuku;
 use App\Models\Buku;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class PeminjamanBukuController extends Controller
 {
@@ -30,21 +31,43 @@ class PeminjamanBukuController extends Controller
             'id_buku' => 'required|exists:buku,id_buku',
         ]);
 
-        // Mendapatkan tanggal sekarang
-        $tanggalSekarang = now();
+        // Mendapatkan buku berdasarkan ID
+        $buku = Buku::findOrFail($request->input('id_buku'));
 
-        // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
-        $tanggalPeminjaman = now(); //->addDays(7);
+        // Memeriksa apakah stok buku tersedia
+        if ($buku->available <= 0) {
+            throw ValidationException::withMessages(['id_buku' => 'Stok buku habis. Peminjaman tidak dapat dilakukan.']);
+        }
+
+        // Memeriksa apakah anggota pernah meminjam buku ini sebelumnya
+        $existingPeminjaman = auth()->user('anggota')->peminjaman()->where('id_buku', $buku->id_buku)->first();
+
+        // Memeriksa apakah buku sudah diapprove oleh admin
+        if ($existingPeminjaman && $existingPeminjaman->status == 1) {
+            return redirect()->route('anggota.list')->with('error', 'Anda sudah meminjam buku ini dan permintaan Anda sudah disetujui.');
+        }
+
+        // Memeriksa apakah anggota sudah pernah membuat permintaan peminjaman untuk buku ini
+        if ($existingPeminjaman && $existingPeminjaman->status == 0) {
+            return redirect()->route('anggota.list')->with('error', 'Anda sudah membuat permintaan peminjaman untuk buku ini. Harap tunggu persetujuan admin.');
+        }
+
+        // Jika belum pernah meminjam buku ini, maka buat permintaan peminjaman baru
+        $tanggalSekarang = now();
+        $tanggalPeminjaman = now();
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
-            'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
-            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
+            'tanggal_peminjaman' => $tanggalPeminjaman,
+            'tanggal_kembali' => $tanggalSekarang,
         ]);
 
-        return redirect()->route('anggota.peminjaman.form')->with('success', 'Permintaan peminjaman berhasil diajukan.');
+        $buku->decrement('available');
+
+        return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');
     }
+
 
     public function kembalikanBukuAnggota($id)
     {
@@ -144,9 +167,9 @@ class PeminjamanBukuController extends Controller
         $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomor_anggota)->first();
 
         // Cari buku berdasarkan nomor_buku
-        $buku = Buku::where('nomor_buku', $nomor_buku)->first();
+        $buku = Buku::where('nomor_buku', $nomor_buku)->where('tersedia', '>', 0)->first();
 
-        // Periksa apakah anggota dan buku ditemukan
+        // Periksa apakah anggota dan buku ditemukan dan buku tersedia
         if ($anggota && $buku) {
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
             $peminjaman = PeminjamanBuku::create([
@@ -163,9 +186,10 @@ class PeminjamanBukuController extends Controller
 
             return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
         } else {
-            return redirect()->back()->with('error', 'Nomor anggota atau nomor buku tidak valid.');
+            return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
         }
     }
+
     public function findBorrowedBook($nomor_buku)
     {
         // Query untuk mendapatkan informasi buku yang dipinjam berdasarkan nomor buku

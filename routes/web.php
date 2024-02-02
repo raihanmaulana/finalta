@@ -68,7 +68,8 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/list', 'AnggotaController@showPeminjamanDaftar')->name('anggota.list');
 
 	// Route::get('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.form');
-	Route::post('/peminjaman', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.store');
+	Route::post('/peminjaman/store', [PeminjamanBukuController::class, 'store'])->name('anggota.peminjaman.store');
+
 
 	// Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cariBuku');
 	// Menampilkan daftar permintaan peminjaman
@@ -177,6 +178,7 @@ Route::group(['middleware' => ['auth']], function () {
 		'uses' => 'BooksController@renderAllBooks'
 	));
 
+
 	Route::get('/bookBycategory/{cat_id}', array(
 		'as' => 'bookBycategory',
 		'uses' => 'BooksController@BookByCategory'
@@ -242,7 +244,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/books/{id}/detail', 'BooksController@showDetail')->name('books.detail');
 
 	//Hapus Buku
-	Route::delete('/books/{id}/delete', 'BooksController@destroyBook');
+	Route::delete('/all-books/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
 
 	Route::get('/peminjaman/daftar', [PeminjamanBukuController::class, 'daftarPermintaanPeminjaman'])->name('admin.peminjaman.daftar');
 

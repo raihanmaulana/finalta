@@ -54,7 +54,7 @@
                                 <th>Tahun Terbit</th>
                                 <th>Kategori</th>
                                 <th>Stok</th>
-                                <th>Status</th>
+                                <th>Status Buku</th>
                                 <th>Detail</th>
                             </tr>
                         </thead>
@@ -78,37 +78,6 @@
                 </div>
                 <div class="module-body" id="module-body-results"></div>
             </div>
-
-
-            <!-- <div class="module" style="display: none;">
-                <div class="module-body">
-                    <form class="form-horizontal row-fluid" id="findanggotaform">
-                        <div class="control-group">
-                            <label class="control-label">Masukkan Nomor Anggota</label>
-                            <div class="controls">
-                                <input type="text" placeholder="" class="span9" id="search_anggota">
-                                <a class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff" onclick="searchAnggotaByNumber()">
-                                    <i class=" icon-search"></i> Search
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                    <table class=" table table-striped table-bordered table-condensed" style="display: none;">
-                        <thead>
-                            <tr>
-                                <th>Nama Anggota</th>
-                                <th>Nomor Anggota</th>
-                                <th>Email</th>
-                                <th>Jurusan</th>
-                                <th>Kelas</th>
-                                <th>Detail</th>
-                            </tr>
-                        </thead>
-                        <tbody id="anggota-results"></tbody>
-                    </table>
-                </div>
-                <div class="module-body" id="module-body-results"></div>
-            </div> -->
 
             <div class="content">
                 <div class="module" style="display: none;">

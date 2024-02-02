@@ -183,7 +183,8 @@ class BooksController extends Controller
 			->get();
 
 		foreach ($list_buku as $book) {
-			$book->status_buku = ($book->stok > 0) ? 'Available' : 'Not Available';
+			$book->available = $this->calculateAvailableForBorrow($book->id_buku);
+			$book->status_buku = ($book->available > 0) ? 'Available' : 'Not Available';
 		}
 
 		return $list_buku;
@@ -262,9 +263,6 @@ class BooksController extends Controller
 		// Hapus buku
 		$book->delete();
 
-		// Hapus isu terkait buku
-		Issue::where('id_buku', $id)->delete();
-
 		return redirect('/all-books')->with('success', 'Book deleted successfully.');
 	}
 
@@ -313,13 +311,23 @@ class BooksController extends Controller
 		return view('admin.find_borrowed_book')->with('result', $result);
 	}
 
-	// public function BookByCategory($cat_id)
-	// {
-	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
-	// 		->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
-	// 		->where('kategori_id', $cat_id)->orderBy('id_buku');
+	public function BookByCategory($cat_id)
+	{
+		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
+			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
+			->where('kategoribuku.id', $cat_id) // Use the correct table name
+			->orderBy('id_buku')
+			->get();
 
-	// 	$list_buku = $list_buku->get();
+		foreach ($list_buku as $book) {
+			$book->available = $this->calculateAvailableForBorrow($book->id_buku);
+		}
+
+		return $list_buku;
+	}
+
+
+
 
 	// 	for ($i = 0; $i < count($list_buku); $i++) {
 
@@ -338,20 +346,19 @@ class BooksController extends Controller
 	// 			->count();
 	// 	}
 
+
+
+	// public function BookByCategory(Request $request)
+	// {
+	// 	$cat_id = $request->input('kategori_id');
+
+	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
+	// 		->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
+	// 		->where('kategori_id', $cat_id)->orderBy('id_buku')
+	// 		->get();
+
 	// 	return $list_buku;
 	// }
-
-	public function BookByCategory(Request $request)
-	{
-		$cat_id = $request->input('kategori_id');
-
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
-			->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
-			->where('kategori_id', $cat_id)->orderBy('id_buku')
-			->get();
-
-		return $list_buku;
-	}
 
 
 	public function searchBook()

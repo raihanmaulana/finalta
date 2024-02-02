@@ -17,6 +17,11 @@ class AnggotaController extends Controller
         return view('anggota.dashboard');
     }
 
+    public function showDaftarBuku()
+    {
+        $daftarBuku = Buku::all();
+        return view('anggota.daftar_buku', compact('daftarBuku'));
+    }
     public function showPeminjamanDaftar()
     {
         $user = auth()->user();
@@ -53,7 +58,27 @@ class AnggotaController extends Controller
         return view('anggota.cari_buku', compact('result', 'kategori_list', 'keyword'));
     }
 
+    public function store(Request $request)
+    {
+        $request->validate([
+            'id_buku' => 'required|exists:buku,id_buku',
+        ]);
 
+        // Mendapatkan tanggal sekarang
+        $tanggalSekarang = now();
+
+        // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
+        $tanggalPeminjaman = now(); //->addDays(7);
+
+        auth()->user('anggota')->peminjaman()->create([
+            'id_buku' => $request->input('id_buku'),
+            'status' => 0, // Status pending
+            'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
+            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
+        ]);
+
+        return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');
+    }
     public function showPeminjamanForm()
     {
         // dd(auth()->user());

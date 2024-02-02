@@ -2,14 +2,14 @@
     <div class="sidebar">
         <ul class="widget widget-menu unstyled">
             <li>
-                <a href="{{ URL::route('anggota.cari-buku') }}">
-                    <i class="menu-icon icon-home"></i>Cari Buku
+                <a href="{{ URL::route('anggota.peminjaman.form') }}">
+                    <i class="menu-icon icon-home"></i>Peminjaman Buku
                 </a>
             </li>
             {{-- <li>
                 <a href="{{ URL::route('anggota.peminjaman.form') }}">
-                    <i class="menu-icon icon-th-list"></i>Form Peminjaman Buku
-                </a>
+            <i class="menu-icon icon-th-list"></i>Form Peminjaman Buku
+            </a>
             </li> --}}
             <li>
                 <a href="{{ URL::route('anggota.list') }}">

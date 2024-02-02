@@ -6,11 +6,10 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Form Peminjaman Buku</h3>
+            <h3>Daftar Buku</h3>
         </div>
         <div class="module-body">
-            <!-- Tabel Daftar Buku -->
-            <table class="table table-striped table-bordered table-condensed">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -20,12 +19,12 @@
                         <th>Penerbit</th>
                         <th>Tahun Terbit</th>
                         <th>Kategori</th>
-                        <!-- <th>Stok</th> -->
+                        <th>Stok</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($daftarBukuTersedia as $index => $buku)
+                    @forelse ($daftarBuku as $index => $buku)
                     <tr>
                         <td>{{ $index + 1 }}</td>
                         <td>{{ $buku->nomor_buku }}</td>
@@ -34,19 +33,24 @@
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
                         <td>{{ $buku->kategori->kategori }}</td>
-                        <!-- <td>{{ $buku->stok }}</td> -->
+                        <td>{{ $buku->stok }}</td>
                         <td>
-                            <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
+                            <form action="{{ route('anggota.daftar-buku.store', ['idBuku' => $buku->id_buku]) }}" method="POST">
                                 @csrf
-                                <input type="hidden" name="id_buku" value="{{ $buku->id_buku }}">
                                 <button type="submit" class="btn btn-warning">Pinjam</button>
                             </form>
                         </td>
                     </tr>
-                    @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="9">Tidak ada buku tersedia.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
-        @endsection
+    </div>
+</div>
+@endsection
 
-        @section('custom_bottom_script')
+@section('custom_bottom_script')

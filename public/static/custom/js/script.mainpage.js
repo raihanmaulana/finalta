@@ -19,7 +19,7 @@ function loadSearchedBooks(string) {
                 for (var books in data) {
                     var book = data[books];
                     book.status_buku =
-                        book.stok > 0 ? "Available" : "Not Available";
+                        book.available > 0 ? "Available" : "Not Available";
 
                     table.append(default_tpl(book));
                 }

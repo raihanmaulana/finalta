@@ -100,6 +100,17 @@ class HomeController extends Controller
             return redirect()->route('admin.profile.change-password')->with('error', 'Kata sandi saat ini tidak valid.');
         }
     }
+
+    public function showAnggota($id)
+    {
+        $anggota = AnggotaPerpustakaan::find($id);
+
+        if (!$anggota) {
+            return redirect()->route('anggota.index')->with('error', 'Anggota not found.');
+        }
+
+        return view('anggota.show', compact('anggota'));
+    }
     public function index()
     {
         return view('panel.index')

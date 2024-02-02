@@ -1,9 +1,6 @@
 function loadResults() {
     var url = "/books?kategori_id=" + $("#kategori_fill").val();
-    // alert(url);
     var table = $("#all-books");
-
-    // alert(table);
     var default_tpl = _.template($("#allbooks_show").html());
 
     $.ajax({
@@ -16,8 +13,8 @@ function loadResults() {
                 );
             } else {
                 table.html("");
-                for (var book in data) {
-                    table.append(default_tpl(data[book]));
+                for (var buku in data) {
+                    table.append(default_tpl(data[buku]));
                 }
             }
         },
@@ -33,10 +30,7 @@ function loadResults() {
 $(document).ready(function () {
     $("#kategori_fill").change(function () {
         var url = "/bookBycategory/" + $("#kategori_fill").val();
-        // alert(url);
         var table = $("#all-books");
-
-        // alert(table);
         var default_tpl = _.template($("#allbooks_show").html());
 
         $.ajax({
@@ -49,8 +43,8 @@ $(document).ready(function () {
                     );
                 } else {
                     table.html("");
-                    for (var book in data) {
-                        table.append(default_tpl(data[book]));
+                    for (var buku in data) {
+                        table.append(default_tpl(data[buku]));
                     }
                 }
             },
@@ -150,23 +144,20 @@ function showBookDetail(button) {
     window.location.href = "/books/" + bookId + "/detail";
 }
 
+// Tambahkan fungsi destroyBook
 function destroyBook(button) {
     var bookId = $(button).data("id");
 
-    // Konfirmasi penghapusan
     if (confirm("Apakah Anda yakin ingin menghapus buku ini?")) {
-        // Dapatkan CSRF token dari meta tag
         var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
-        // Kirim permintaan DELETE ke server dengan menyertakan CSRF token
         $.ajax({
-            url: "/books/" + bookId + "/delete",
+            url: "/all-books/" + bookId + "/delete",
             type: "DELETE",
             headers: {
                 "X-CSRF-TOKEN": csrfToken,
             },
             success: function (result) {
-                // Hapus baris buku dari tampilan setelah berhasil dihapus dari server
                 $(button).closest("tr").remove();
                 alert("Buku berhasil dihapus.");
             },
