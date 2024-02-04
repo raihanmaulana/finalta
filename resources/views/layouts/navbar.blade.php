@@ -40,11 +40,11 @@
     </nav>
     <!-- end -->
 
-    <!-- @section('app')
+    @section('app')
     <div id="app">
         <main class="py-4">
             @yield('content')
         </main>
     </div>
     {{-- </body>
-</html> --}} -->
+</html> --}}
