@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Exception;
 
 class AccountController extends Controller
@@ -51,35 +52,40 @@ class AccountController extends Controller
 	/* Submitting the Create User form (POST) */
 	public function postCreate(Request $request)
 	{
-		// dd($request->all());
-		$validator = $request->validate([
-			'username'		=> 'required|max:20|min:3|unique:users',
-			'password'		=> 'required',
-			'password_again' => 'required|same:password'
+		$validator = Validator::make($request->all(), [
+			'nama'            => 'required|max:255',
+			'username'        => 'required|max:20|min:3|unique:users',
+			'email'           => 'required|email|unique:users',
+			'password'        => 'required|min:5',
+			'password_again'  => 'required|same:password',
 		]);
 
-		if (!$validator) {
+		if ($validator->fails()) {
 			return Redirect::route('account-create')
 				->withErrors($validator)
 				->withInput();   // fills the field with the old inputs what were correct
-
-		} else {
-			// create an account
-			$username	= $request->get('username');
-			$password 	= $request->get('password');
-
-			$userdata = User::create([
-				'username' 	=> $username,
-				'password' 	=> Hash::make($password)	// Changed the default column for Password
-			]);
-
-			if ($userdata) {
-
-
-				return Redirect::route('account-sign-in')
-					->with('global', 'Your account has been created. We have sent you an email to activate your account');
-			}
 		}
+
+		// create an account
+		$username = $request->get('username');
+		$password = $request->get('password');
+		$email    = $request->get('email');
+		$nama     = $request->get('nama');
+
+		$user = User::create([
+			'username' => $username,
+			'email'    => $email,
+			'password' => Hash::make($password),
+			'nama'     => $nama,
+		]);
+
+		if ($user) {
+			return Redirect::route('account-sign-in')
+				->with('global', 'Your account has been created. We have sent you an email to activate your account');
+		}
+
+		// Handle if user creation fails
+
 	}
 
 	public function getSignIn()
