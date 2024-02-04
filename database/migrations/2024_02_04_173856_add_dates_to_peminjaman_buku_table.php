@@ -14,8 +14,7 @@ class AddDatesToPeminjamanBukuTable extends Migration
     public function up()
     {
         Schema::table('peminjaman_buku', function (Blueprint $table) {
-            $table->timestamp('tanggal_peminjaman')->nullable();
-            $table->timestamp('tanggal_pengembalian')->nullable();
+            //
         });
     }
 
