@@ -20,6 +20,7 @@ class AnggotaPerpustakaan extends Authenticatable
         'jurusan',
         'kelas',
         'password',
+        'gambar'
         // Tambahkan fillable lain jika diperlukan
     ];
 

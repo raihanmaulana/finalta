@@ -58,7 +58,9 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/dashboard', 'AnggotaController@dashboard')->name('anggota.dashboard');
 	//Halaman Anggota
 	Route::get('/anggota/dashboard', [AnggotaAuthController::class, 'dashboard'])->name('anggota.dashboard');
-
+	//Edit Profil
+	Route::get('/edit-profil/{id}', [AnggotaController::class, 'editProfil'])->name('edit_profil');
+	Route::post('/update-profil/{id}', [AnggotaController::class, 'updateProfil'])->name('update_profil');
 	// Pencarian Buku
 	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
 	Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');

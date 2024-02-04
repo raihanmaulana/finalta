@@ -60,7 +60,6 @@ $(document).ready(function () {
     $(document).on("click", "#addbooks", function () {
         var form = $(this).parents("form"),
             module_body = $(this).parents(".module-body"),
-            sendJSON = {},
             send_flag = true,
             f$ = function (selector) {
                 return form.find(selector);
@@ -88,6 +87,12 @@ $(document).ready(function () {
             );
             send_flag = false;
         }
+        var formData = new FormData(form[0]);
+        // Tambahkan informasi gambar ke FormData
+        formData.append(
+            "image",
+            f$("input[data-form-field~=image]")[0].files[0]
+        );
 
         if (send_flag == true) {
             $.ajax({
@@ -119,7 +124,7 @@ $(document).ready(function () {
                 },
             });
         }
-    }); // add books to database
+    });
 
     loadResults();
 });

@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Mockery\Matcher\Type;
+use Illuminate\Http\UploadedFile;
 
 class BooksController extends Controller
 {
@@ -83,7 +84,6 @@ class BooksController extends Controller
 	public function store(Request $request)
 	{
 		$books = $request->all();
-		$db_flag = false;
 		$user_id = Auth::id();
 
 		// Validate ISBN uniqueness
@@ -92,13 +92,6 @@ class BooksController extends Controller
 				'required',
 				'unique:buku,nomor_buku', // Ensure nomor_buku is unique in the 'buku' table
 			],
-
-			// 'image_path' => [
-			// 	'required',
-			// 	'image',
-			// 	'mimes:jpeg,png,jpg,gif,svg',
-			// 	'max:2048'
-			// ],
 		]);
 
 		// Get the latest id_buku
@@ -106,8 +99,6 @@ class BooksController extends Controller
 
 		// Increment id_buku by 1
 		$newId = $latestBook ? $latestBook->id_buku + 1 : 1;
-
-		// $imagePath = $request->file('image_path')->store('book_images', 'public');
 
 		// Create the book
 		$book = Buku::create([
@@ -119,38 +110,14 @@ class BooksController extends Controller
 			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
-			// 'image_path' => $imagePath,
 			'added_by'      => $user_id,
+			'image'         => $request->file('image') ? $request->file('image')->store('public/book_images') : null,
 		]);
 
-		if (!$book) {
-			$db_flag = true;
-		} else {
-			// Check if 'number' key exists in $books array
-			$number_of_issues = isset($books['number']) ? $books['number'] : 0;
+		$book->hitungTersedia();
 
-			// Create the issues
-			for ($i = 0; $i < $number_of_issues; $i++) {
-				$issue = Issue::create([
-					'id_buku'  => $newId,
-					'added_by' => $user_id,
-				]);
-
-				if (!$issue) {
-					$db_flag = true;
-				}
-			}
-			$book->hitungTersedia();
-		}
-		// Handle $db_flag accordingly, e.g., redirect with error message
-		if ($db_flag) {
-			return redirect('/add-books')->with('error', 'Failed to add book or issues to the database.');
-		} else {
-			return redirect('/add-books')->with('success', 'Book and issues added successfully.');
-		}
+		return redirect('/add-books')->with('success', 'Book and issues added successfully.');
 	}
-
-
 
 
 
