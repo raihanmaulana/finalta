@@ -44,6 +44,26 @@ class HomeController extends Controller
         return view('panel.list-anggota-detail', compact('anggota'));
     }
 
+    public function editAnggota($id)
+    {
+        $anggota = AnggotaPerpustakaan::findOrFail($id);
+        return view('panel.list-anggota-edit', compact('anggota'));
+    }
+
+    public function updateAnggota(Request $request, $id)
+    {
+        $anggota = AnggotaPerpustakaan::findOrFail($id);
+        // Lakukan validasi data dari request jika diperlukan
+        $anggota->update($request->all());
+        return redirect()->route('list-anggota')->with('success', 'Anggota berhasil diperbarui.');
+    }
+
+    public function deleteAnggota($id)
+    {
+        $anggota = AnggotaPerpustakaan::findOrFail($id);
+        $anggota->delete();
+        return redirect()->route('list-anggota')->with('success', 'Anggota berhasil dihapus.');
+    }
     public function showDaftarPeminjaman()
     {
         // Mendapatkan daftar permintaan peminjaman yang harus disetujui oleh admin
