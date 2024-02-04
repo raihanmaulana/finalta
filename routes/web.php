@@ -185,6 +185,7 @@ Route::group(['middleware' => ['auth']], function () {
 	));
 	// List Anggota
 	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('list-anggota');
+	Route::get('/list-anggota/{id}', [HomeController::class, 'showAnggota'])->name('list-anggota-detail');
 	// Students
 	Route::get('/registered-students', array(
 		'as' => 'registered-students',

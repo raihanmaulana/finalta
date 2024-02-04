@@ -37,6 +37,13 @@ class HomeController extends Controller
         return view('panel.list-anggota', compact('anggotaList'));
     }
 
+    public function showAnggota($id)
+    {
+        $anggota = AnggotaPerpustakaan::find($id);
+
+        return view('panel.list-anggota-detail', compact('anggota'));
+    }
+
     public function showDaftarPeminjaman()
     {
         // Mendapatkan daftar permintaan peminjaman yang harus disetujui oleh admin
@@ -101,16 +108,6 @@ class HomeController extends Controller
         }
     }
 
-    public function showAnggota($id)
-    {
-        $anggota = AnggotaPerpustakaan::find($id);
-
-        if (!$anggota) {
-            return redirect()->route('anggota.index')->with('error', 'Anggota not found.');
-        }
-
-        return view('anggota.show', compact('anggota'));
-    }
     public function index()
     {
         return view('panel.index')

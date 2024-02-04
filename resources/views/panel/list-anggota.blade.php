@@ -1,12 +1,12 @@
 @extends('layout.index')
 @section('custom_top_script')
 @stop
-@section('content')
 
+@section('content')
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Anggota Perpustakaan</h3>
+            <h3>List Anggota</h3>
         </div>
         <div class="module-body">
             <table class="table table-striped">
@@ -16,7 +16,7 @@
                         <th>Nomor Anggota</th>
                         <th>Nama</th>
                         <th>Email</th>
-                        <!-- Tambahkan kolom-kolom lain sesuai kebutuhan -->
+                        <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,21 +26,18 @@
                         <td>{{ $anggota->nomor_anggota }}</td>
                         <td>{{ $anggota->nama_anggota }}</td>
                         <td>{{ $anggota->email }}</td>
-                        <!-- Tambahkan kolom-kolom lain sesuai kebutuhan -->
+                        <td>
+                            <a href="{{ route('list-anggota-detail', ['id' => $anggota->id_anggota]) }}" class="btn btn-info btn-sm">Detail</a>
+                        </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="4">Tidak ada anggota.</td>
+                        <td colspan="5">Tidak ada anggota.</td>
                     </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
-@stop
-
-@section('custom_bottom_script')
-<script type="text/javascript" src="{{ asset('static/custom/js/script.students.js') }}"></script>
-@stop
+@endsection

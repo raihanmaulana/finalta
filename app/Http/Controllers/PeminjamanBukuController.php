@@ -35,12 +35,14 @@ class PeminjamanBukuController extends Controller
         $buku = Buku::findOrFail($request->input('id_buku'));
 
         // Memeriksa apakah stok buku tersedia
-        if ($buku->available <= 0) {
+        if ($buku->stok <= 0) {
             throw ValidationException::withMessages(['id_buku' => 'Stok buku habis. Peminjaman tidak dapat dilakukan.']);
         }
 
-        // Memeriksa apakah anggota pernah meminjam buku ini sebelumnya
-        $existingPeminjaman = auth()->user('anggota')->peminjaman()->where('id_buku', $buku->id_buku)->first();
+        $existingPeminjaman = auth()->user('anggota')->peminjaman()
+            ->where('id_buku', $buku->id_buku)
+            ->whereIn('status', [0, 1]) // Mengizinkan permintaan dan peminjaman yang sudah diapprove
+            ->first();
 
         // Memeriksa apakah buku sudah diapprove oleh admin
         if ($existingPeminjaman && $existingPeminjaman->status == 1) {
@@ -52,22 +54,22 @@ class PeminjamanBukuController extends Controller
             return redirect()->route('anggota.list')->with('error', 'Anda sudah membuat permintaan peminjaman untuk buku ini. Harap tunggu persetujuan admin.');
         }
 
-        // Jika belum pernah meminjam buku ini, maka buat permintaan peminjaman baru
+        // Mendapatkan tanggal sekarang
         $tanggalSekarang = now();
-        $tanggalPeminjaman = now();
+
+        // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
+        $tanggalPeminjaman = now(); //->addDays(7);
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
-            'tanggal_peminjaman' => $tanggalPeminjaman,
-            'tanggal_kembali' => $tanggalSekarang,
+            'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
+            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
         ]);
 
-        $buku->decrement('available');
 
         return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');
     }
-
 
     public function kembalikanBukuAnggota($id)
     {
