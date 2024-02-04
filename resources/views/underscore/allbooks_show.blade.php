@@ -10,18 +10,15 @@
 
     <td><a class="btn btn-success"><%= obj.available %></a></td>
     <td>
-        <img src="<%= obj.image_path %>" alt="Gambar Buku" style="max-width: 900px; max-height: 500px;">
+        <img src="<%= obj.image %>" alt="Gambar Buku" style="max-width: 900px; max-height: 500px;">
     </td>
     <td>
         <div class="center-block" style="display: flex;
         flex-direction: column;
         align-items: center;">
-            <button class="btn btn-primary btn-sm" style="margin-bottom: 2px; width: 60px;" data-id="<%= obj.id_buku %>"
-                onclick="editBook(this)">Edit</button>
-            <button class="btn btn-info btn-sm" style="margin-bottom: 2px; width: 60px;"data-id="<%= obj.id_buku %>"
-                onclick="showBookDetail(this)">Detail</button>
-            <button class="btn btn-danger btn-sm" style="width: 60px;" data-id="<%= obj.id_buku %>"
-                onclick="destroyBook(this)">Hapus</button>
+            <button class="btn btn-primary btn-sm" style="margin-bottom: 2px; width: 60px;" data-id="<%= obj.id_buku %>" onclick="editBook(this)">Edit</button>
+            <button class="btn btn-info btn-sm" style="margin-bottom: 2px; width: 60px;" data-id="<%= obj.id_buku %>" onclick="showBookDetail(this)">Detail</button>
+            <button class="btn btn-danger btn-sm" style="width: 60px;" data-id="<%= obj.id_buku %>" onclick="destroyBook(this)">Hapus</button>
         </div>
     </td>
 </tr>

@@ -65,17 +65,18 @@
                     </div>
                 </div>
 
+
                 <div class="control-group">
-                    <label class="control-label">Gambar</label>
+                    <label class="control-label" for="image">Book Image</label>
                     <div class="controls">
-                        <input type="file" name="image" id="image" data-form-field="stok" placeholder="Masukkan Stok Buku" class="span8">
+                        <input type="file" id="image" name="image" class="span8">
                     </div>
                 </div>
 
                 {{-- <div class="control-group">
                     <label class="control-label">Stok</label>
                     <div class="controls">
-                        <input type="number" id="stok" data-form-field="stok" placeholder="How many issues are there?" class="span8">
+                        <input type="number" id="stok" data-form-field="image" placeholder="How many issues are there?" class="span8">
                     </div>
                 </div>
                 
@@ -99,6 +100,7 @@
 
 @section('custom_bottom_script')
 
-<script type="text/javascript" src="{{ asset('static/custom/js/script.addbook.js') }}"></script>
+<!-- <script type="text/javascript" src="{{ asset('static/custom/js/script.addbook.js') }}"></script> -->
+
 
 @stop

@@ -1,4 +1,4 @@
-@extends('layouts.index') <!-- Sesuaikan dengan layout yang Anda gunakan -->
+@extends('anggota.index') <!-- Sesuaikan dengan layout yang Anda gunakan -->
 
 @section('content')
 <div class="container">

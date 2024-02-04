@@ -63,15 +63,6 @@ class BooksController extends Controller
 	}
 
 
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
-	public function create()
-	{
-		//
-	}
 
 
 	/**
@@ -111,8 +102,13 @@ class BooksController extends Controller
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
 			'added_by'      => $user_id,
-			'image'         => $request->file('image') ? $request->file('image')->store('public/book_images') : null,
+			'image'         => $books['image'] ?? null,
 		]);
+		if ($request->hasFile('image')) {
+			$imagePath = $request->file('image')->store('book_images', 'public');
+			$book->image = $imagePath;
+		}
+
 
 		$book->hitungTersedia();
 
@@ -185,18 +181,37 @@ class BooksController extends Controller
 		}
 
 		// Validasi form input sesuai kebutuhan
+		$request->validate([
+			'nomor_buku'    => 'required',
+			'judul_buku'    => 'required',
+			'penerbit'      => 'required',
+			'pengarang'     => 'required',
+			'tahun_terbit'  => 'required|numeric',
+			'kategori_id'   => 'required|exists:kategoribuku,id',
+			'stok'          => 'required|numeric',
+			'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+		]);
 
+		// Update book properties
 		$book->nomor_buku = $request->input('nomor_buku');
 		$book->judul_buku = $request->input('judul_buku');
 		$book->penerbit = $request->input('penerbit');
 		$book->pengarang = $request->input('pengarang');
 		$book->tahun_terbit = $request->input('tahun_terbit');
 		$book->kategori_id = $request->input('kategori_id');
-		$book->stok = $request->input('stok', 0); // Add this line
+		$book->stok = $request->input('stok');
+
+		// Handle image upload
+		if ($request->hasFile('image')) {
+			$imagePath = $request->file('image')->store('book_images', 'public');
+			$book->image = $imagePath;
+		}
+
 		$book->save();
 
 		return redirect('/all-books')->with('success', 'Book updated successfully.');
 	}
+
 
 	public function showDetail($id)
 	{
