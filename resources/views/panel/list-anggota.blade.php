@@ -28,6 +28,12 @@
                         <td>{{ $anggota->email }}</td>
                         <td>
                             <a href="{{ route('list-anggota-detail', ['id' => $anggota->id_anggota]) }}" class="btn btn-info btn-sm">Detail</a>
+                            <a href="{{ route('list-anggota-edit', ['id' => $anggota->id_anggota]) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('list-anggota-delete', ['id' => $anggota->id_anggota]) }}" method="post" style="display: inline;">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus anggota ini?')">Delete</button>
+                            </form>
                         </td>
                     </tr>
                     @empty

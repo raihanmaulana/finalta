@@ -183,9 +183,16 @@ Route::group(['middleware' => ['auth']], function () {
 		'as' => 'bookBycategory',
 		'uses' => 'BooksController@BookByCategory'
 	));
+
+	Route::get('/list-anggota/{id}/edit', 'HomeController@editAnggota')->name('list-anggota-edit');
+	Route::put('/list-anggota/{id}', 'HomeController@updateAnggota')->name('list-anggota-updateAnggota');
+
 	// List Anggota
 	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('list-anggota');
 	Route::get('/list-anggota/{id}', [HomeController::class, 'showAnggota'])->name('list-anggota-detail');
+
+	Route::delete('/list-anggota/{id}', [HomeController::class, 'deleteAnggota'])->name('list-anggota-delete');
+
 	// Students
 	Route::get('/registered-students', array(
 		'as' => 'registered-students',
