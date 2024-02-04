@@ -252,8 +252,9 @@ Route::group(['middleware' => ['auth']], function () {
 	// Menyetujui permintaan peminjaman
 	Route::put('/peminjaman/approve/{id}', [PeminjamanBukuController::class, 'approve'])->name('admin.peminjaman.approve');
 
+	//Kembalikan Buku
 	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');
-
+	Route::put('/admin/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])->name('admin.peminjaman.kembalikan');
 
 	Route::get('/cari-anggota/{nomorAnggota}', 'AnggotaController@cariAnggotaByNomorAnggota');
 
@@ -261,9 +262,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/find-issue-book/{bookId}', [BooksController::class, 'findBorrowedBook']);
 
-	//Kembalikan Buku
-	Route::put('/admin/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])
-		->name('admin.peminjaman.kembalikan');
+
 
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 

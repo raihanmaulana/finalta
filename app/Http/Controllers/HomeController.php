@@ -113,7 +113,7 @@ class HomeController extends Controller
         return view('panel.index')
             ->with('kategori_list', $this->kategori_list)
             ->with('branch_list', $this->branch_list)
-            ->with('student_categories_list', $this->student_categories_list)
+            // ->with('student_categories_list', $this->student_categories_list)
             ->with('nomor_anggota', $this->nomor_anggota);
     }
 }

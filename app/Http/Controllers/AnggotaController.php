@@ -74,7 +74,7 @@ class AnggotaController extends Controller
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
-            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
+            'tanggal_pengembalian' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
         ]);
 
         return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');

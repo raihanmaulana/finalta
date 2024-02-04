@@ -3,6 +3,7 @@
 @stop
 
 @section('content')
+
 <div class="content">
     <div class="module">
         <div class="module-head">
@@ -21,6 +22,7 @@
                 </thead>
                 <tbody>
                     @foreach($bukuDikembalikan as $data)
+                    @if($data->status == 2) {{-- Hanya tampilkan buku yang telah dikembalikan --}}
                     <tr>
                         <td>{{ $data->anggota->nomor_anggota }}</td>
                         <td>{{ $data->anggota->nama_anggota }}</td>
@@ -28,6 +30,7 @@
                         <td>{{ $data->tanggal_peminjaman ? $data->tanggal_peminjaman->format('Y-m-d H:i:s') : 'Belum Dikembalikan' }}</td>
                         <td>{{ $data->tanggal_pengembalian ? $data->tanggal_pengembalian->format('Y-m-d H:i:s') : 'Belum Dikembalikan' }}</td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>

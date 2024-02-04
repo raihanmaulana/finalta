@@ -54,8 +54,6 @@ class PeminjamanBukuController extends Controller
             return redirect()->route('anggota.list')->with('error', 'Anda sudah membuat permintaan peminjaman untuk buku ini. Harap tunggu persetujuan admin.');
         }
 
-        // Mendapatkan tanggal sekarang
-        $tanggalSekarang = now();
 
         // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
         $tanggalPeminjaman = now(); //->addDays(7);
@@ -64,7 +62,6 @@ class PeminjamanBukuController extends Controller
             'id_buku' => $request->input('id_buku'),
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
-            'tanggal_kembali' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
         ]);
 
 
@@ -76,9 +73,9 @@ class PeminjamanBukuController extends Controller
         $peminjaman = PeminjamanBuku::findOrFail($id);
 
         // Memastikan status peminjaman masih pending (status = 0)
-        if ($peminjaman->status == 0) {
-            return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan karena status peminjaman belum disetujui.');
-        }
+        // if ($peminjaman->status == 0) {
+        //     return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan karena status peminjaman belum disetujui.');
+        // }
 
         // Memastikan status buku dipinjam (status = 1) sebelum dikembalikan
         if ($peminjaman->status == 1) {
@@ -92,8 +89,9 @@ class PeminjamanBukuController extends Controller
             ]);
 
             // Menyimpan data ke BukuDikembalikan
-            $addedBy = auth()->user()->id;
-            BukuDikembalikan::createFromPeminjamanBuku($peminjaman, $addedBy);
+            $buku->update([
+                'tersedia' => $buku->tersedia + 1,
+            ]);
 
             return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
         }

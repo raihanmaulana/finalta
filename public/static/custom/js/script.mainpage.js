@@ -118,32 +118,6 @@ function searchAnggotaByNumber(nomorAnggota) {
     });
 }
 
-// $(document).ready(function () {
-//     $("#search_anggota_button").click(function () {
-//         var search_query = $(this).parents("form").find("textarea").val();
-
-//         if (search_query != "") loadResults(search_query);
-//     });
-// });
-// function showAnggotaDetail(button) {
-//     var anggotaId = $(button).data("id");
-//     // Redirect to the detail page using the anggotaId
-//     window.location.href = "/anggota/" + anggotaId + "/detail";
-// }
-
-// Tambahkan pada bagian ready function
-// $(".homepage-form-box").click(function () {
-//     var formid = $(this).attr("id");
-//     formid = formid.substring(0, formid.length - 3) + "form";
-
-//     if (formid === "findanggotaform") {
-//         var nomorAnggota = $("#findanggotaform input").val();
-//         searchAnggotaByNumber(nomorAnggota);
-//     }
-
-//     showFormModule(formid);
-// });
-
 $(document).ready(function () {
     $(".homepage-form-box").click(function () {
         var formid = $(this).attr("id");
