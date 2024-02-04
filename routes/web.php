@@ -22,6 +22,9 @@ use App\Http\Controllers\AnggotaAuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
+Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
+
 Route::get('/', [GuestbookController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
 // Keep the original guestbook route
 Route::post('/guestbook', [GuestbookController::class, 'store'])->name('guestbook.store');
