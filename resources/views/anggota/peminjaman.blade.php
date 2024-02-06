@@ -20,7 +20,7 @@
                         <th>Penerbit</th>
                         <th>Tahun Terbit</th>
                         <th>Kategori</th>
-                        <th>Available</th>
+                        <!-- <th>Available</th> -->
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -34,7 +34,7 @@
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
                         <td>{{ $buku->kategori->kategori }}</td>
-                        <td>{{ $buku->status_buku }}</td>
+                        <!-- <td>{{ $buku->status_buku }}</td> -->
                         <td>
                             <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
                                 @csrf
