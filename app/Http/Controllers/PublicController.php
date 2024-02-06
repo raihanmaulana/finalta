@@ -19,6 +19,12 @@ class PublicController extends Controller
         return view('public.semuabuku', compact('books'));
     }
 
+    public function galeri()
+    {
+
+        return view('public.galeri');
+    }
+
     public function searchBooks(Request $request)
     {
         $keyword = $request->input('keyword');
