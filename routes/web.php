@@ -65,8 +65,8 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/cari-buku', [AnggotaController::class, 'cariBuku'])->name('anggota.cari-buku');
 	Route::post('/anggota/hasil-pencarian', [AnggotaController::class, 'hasilPencarian'])->name('anggota.hasil-pencarian');
 
-	// Route::get('/dashboard', 'MemberDashboardController@index')->name('member.dashboard');
-	Route::post('/anggota/search-books', 'MemberDashboardController@searchBooks')->name('member.search.books');
+	// // Route::get('/dashboard', 'MemberDashboardController@index')->name('member.dashboard');
+	// Route::post('/anggota/search-books', 'MemberDashboardController@searchBooks')->name('member.search.books');
 
 	//Peminjaman Buku Anggota
 	Route::get('/anggota/peminjaman', 'AnggotaController@showPeminjamanForm')->name('anggota.peminjaman.form');
@@ -95,7 +95,7 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 
 // });
 
-Route::get('/admin/peminjaman', 'StudentController@listPeminjaman')->name('admin.peminjaman.list');
+
 
 
 // Unauthenticated group 
@@ -115,12 +115,6 @@ Route::group(array('before' => 'guest'), function () {
 			'as' => 'account-sign-in-post',
 			'uses' => 'AccountController@postSignIn'
 		));
-
-		// Sign in (POST) 
-		Route::post('/student-registration', array(
-			'as' => 'student-registration-post',
-			'uses' => 'StudentController@postRegistration'
-		));
 	});
 
 	// Sign in (GET) 
@@ -135,11 +129,7 @@ Route::group(array('before' => 'guest'), function () {
 		'uses' 	=> 'AccountController@getCreate'
 	));
 
-	// Student Registeration form 
-	Route::get('/student-registration', array(
-		'as' 	=> 'student-registration',
-		'uses' 	=> 'StudentController@getRegistration'
-	));
+
 
 	// Render search books panel
 	Route::get('/book', array(
@@ -198,50 +188,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::delete('/list-anggota/{id}', [HomeController::class, 'deleteAnggota'])->name('list-anggota-delete');
 
-	// Students
-	Route::get('/registered-students', array(
-		'as' => 'registered-students',
-		'uses' => 'StudentController@renderStudents'
-	));
-
-	// Render students approval panel
-	Route::get('/students-for-approval', array(
-		'as' => 'students-for-approval',
-		'uses' => 'StudentController@renderApprovalStudents'
-	));
-
-	// Render students approval panel
-	Route::get('/settings', array(
-		'as' => 'settings',
-		'uses' => 'StudentController@Setting'
-	));
-
-	// Render students approval panel
-	Route::post('/setting', array(
-		'as' => 'settings.store',
-		'uses' => 'StudentController@StoreSetting'
-	));
-
-	// Main students Controlller resource
-	Route::resource('/student', 'StudentController');
-
-	Route::post('/studentByattribute', array(
-		'as' => 'studentByattribute',
-		'uses' => 'StudentController@StudentByAttribute'
-	));
-
-	// Issue Logs
-	Route::get('/issue-return', array(
-		'as' => 'issue-return',
-		'uses' => 'LogController@renderIssueReturn'
-	));
-
-	// Render logs panel
-	Route::get('/currently-issued', array(
-		'as' => 'currently-issued',
-		'uses' => 'LogController@renderLogs'
-	));
-
 	Route::get('/admin/profile', 'HomeController@showProfile')->name('admin.profile');
 	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
 	Route::post('/admin/profile/change-password', [HomeController::class, 'changePassword'])->name('admin.profile.change-password.post');
@@ -278,8 +224,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 
-	// Main Logs Controlller resource
-	Route::resource('/issue-log', 'LogController');
+
 
 	// Sign out (GET) 
 	Route::get('/sign-out', array(
@@ -288,7 +233,3 @@ Route::group(['middleware' => ['auth']], function () {
 	));
 });
 Auth::routes();
-
-
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

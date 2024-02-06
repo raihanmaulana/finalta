@@ -67,7 +67,7 @@ class AnggotaAuthController extends Controller
         ]);
 
         // Redirect ke halaman login
-        return redirect()->route('login')->with('success', 'Pendaftaran berhasil! Silakan masuk ke akun Anda.');
+        return redirect()->route('anggota.login')->with('success', 'Pendaftaran berhasil! Silakan masuk ke akun Anda.');
     }
 
 
