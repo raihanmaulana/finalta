@@ -38,5 +38,9 @@ dd {
 }
 
 .social-icons a {
-    margin-right: 10px; /* Atur spasi kanan antara ikon-ikon */
+    margin-right: 10px;
+}
+
+.social-icons1 a {
+    margin-right: 10px;
 }

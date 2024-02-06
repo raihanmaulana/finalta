@@ -1,3 +1,13 @@
+@section('customcss')
+<!----======== CSS ======== -->
+<link rel="stylesheet" href="{{asset('css/utama/dashboard.css')}}" />
+
+<head>
+    <script src="https://kit.fontawesome.com/d94b3a5809.js" crossorigin="anonymous"></script>
+</head>
+
+@endsection
+
 <div class="footer" style="position: fixed; bottom: 0; width: 100%; background-color: #f8f9fa; text-align: center;">
     <div class="container">
         <div class="row">
@@ -6,12 +16,15 @@
                 <b class="copyright">&copy; {{ date('Y') }} - Perpustakaan SMA Negeri 1 Tunjungan </b>
                 All rights reserved.
             </div>
-            <div class="col-md-6 text-md-end">
-                <!-- Ikon media sosial -->
-                <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                <!-- Ganti tautan "#" dengan tautan ke akun media sosial Anda -->
+            <div class="social-icons1">
+                <a href="https://web.facebook.com/sman1tunjungan" title="Facebook"><i
+                        class="fa-brands fa-facebook fa-2xl" style="color: #0f7dd2;"></i></a>
+                <a href="https://twitter.com" title="Twitter"><i class="fa-brands fa-x-twitter fa-2xl"
+                        style="color: #101010;"></i></a>
+                <a href="https://www.instagram.com" title="Instagram"><i class="fab fa-instagram fa-2xl"
+                        style="color: #0f7dd2;"></i></a>
+                <a href="https://www.youtube.com" title="Youtube"><i class="fa-brands fa-youtube fa-2xl"
+                        style="color: #ff0000;"></i></a>
             </div>
         </div>
     </div>
