@@ -9,7 +9,7 @@
 p {
     font-family: sans-serif;
     font-size: 300%;
-    line-height: 2;
+    line-height: 0.5;
 }
 
 h2 {
@@ -18,9 +18,11 @@ h2 {
 }
 
 dd {
+    font-weight: lighter;
     font-family: sans-serif;
-    font-size: 110%;
-    line-height: 2;
+    font-size: 150%;
+    color: rgb(117, 117, 117);
+    line-height: 1.5;
 }
 
 .container1 {
@@ -28,4 +30,13 @@ dd {
     text-align: left;
     margin-top: 10px;
     line-height: 2;
+}
+
+.page-title {
+    margin-top: 10%;
+    margin-bottom: 2%;
+}
+
+.social-icons a {
+    margin-right: 10px; /* Atur spasi kanan antara ikon-ikon */
 }
