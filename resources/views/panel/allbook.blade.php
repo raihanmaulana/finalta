@@ -37,7 +37,6 @@
                             <th class="hide-on-small">Kategori</th>
                             <th class="hide-on-small">Stok</th>
                             <th>Available</th>
-                            <th>Gambar</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>

@@ -33,8 +33,9 @@
                     <h5>Status Buku:</h5>
                     <p>{{ $book->status_buku }}</p>
                 </div>
+                <h5>Gambar Buku:</h5>
                 <div class="span6">
-                    <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;">
+                    <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 200px; max-height: 200px;">
                 </div>
             </div>
             <div class="row-fluid mt-3">

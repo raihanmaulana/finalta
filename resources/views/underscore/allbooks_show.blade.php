@@ -10,9 +10,6 @@
 
     <td><a class="btn btn-success"><%= obj.available %></a></td>
     <td>
-        <img src="<%= obj.image %>" alt="Gambar Buku" style="max-width: 900px; max-height: 500px;">
-    </td>
-    <td>
         <div class="center-block" style="display: flex;
         flex-direction: column;
         align-items: center;">
