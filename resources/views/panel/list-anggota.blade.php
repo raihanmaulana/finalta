@@ -90,7 +90,7 @@
                             <form id="deleteAnggota{{ $anggota->id_anggota }}" action="{{ route('list-anggota-delete', $anggota->id_anggota) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
-                                <button type="button" class="btn btn-success" onclick="deleteAnggota('{{ $anggota->id_anggota }}')">Hapus</button>
+                                <button type="button" class="btn btn-danger" onclick="deleteAnggota('{{ $anggota->id_anggota }}')">Hapus</button>
                             </form>
 
                         </td>

@@ -17,6 +17,7 @@ class GuestbookController extends Controller
     public function viewbook()
     {
         $guests = Guest::all();
+        $guests = Guest::paginate(10); // Mengambil data tamu dengan pagination
         return view('guestbook.adminview', compact('guests'));
     }
 

@@ -237,18 +237,16 @@ class BooksController extends Controller
 	 * @return Response
 	 */
 	public function destroyBook($id)
-
 	{
-		$book = Buku::find($id);
+		$book = Buku::findOrFail($id);
 
-		if ($book == NULL) {
-			return redirect('/all-books')->with('error', 'Invalid Book ID');
+		if ($book->delete()) {
+			// Jika penghapusan berhasil, kirimkan respons JSON sukses
+			return response()->json(['success' => true], 200);
+		} else {
+			// Jika terjadi kesalahan, kirimkan respons JSON gagal
+			return response()->json(['success' => false], 500);
 		}
-
-		// Hapus buku
-		$book->delete();
-
-		return redirect('/all-books')->with('success', 'Book deleted successfully.');
 	}
 
 
