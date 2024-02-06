@@ -17,30 +17,32 @@
 <div class="container">
         <div class="box">
             <div class="dream">
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
             </div>
 
             <div class="dream">
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
             </div>
 
             <div class="dream">
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
-                <img src="img/130x190.png" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
+                <img src="{{ asset('css\images\130x190.png') }}" />
             </div>
         </div>
         <div class="btn">
             <a href="#">More</a>
         </div>
     </div>
+
+@endsection
