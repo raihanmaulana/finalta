@@ -1,5 +1,39 @@
 @extends('anggota.index')
 @section('custom_top_script')
+<script>
+    // Fungsi untuk melakukan filter pada tabel berdasarkan input pencarian
+    function searchBooks() {
+        // Mendapatkan nilai input pencarian
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchInput");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("bookTable");
+        tr = table.getElementsByTagName("tr");
+
+        // Melakukan iterasi pada setiap baris tabel
+        for (i = 0; i < tr.length; i++) {
+            // Mendapatkan sel data pada kolom judul buku dan nomor buku
+            tdPengarang = tr[i].getElementsByTagName("td")[3]; // Kolom nomor buku
+            tdTitle = tr[i].getElementsByTagName("td")[2]; // Kolom judul buku
+            tdNumber = tr[i].getElementsByTagName("td")[1]; // Kolom nomor buku
+
+
+            if (tdTitle || tdNumber || tdPengarang) {
+                // Mendapatkan teks dari sel data
+                txtValuePengarang = tdPengarang.textContent || tdPengarang.innerText;
+                txtValueTitle = tdTitle.textContent || tdTitle.innerText;
+                txtValueNumber = tdNumber.textContent || tdNumber.innerText;
+
+                // Mengecek apakah teks pada kolom judul buku atau nomor buku cocok dengan input pencarian
+                if (txtValueTitle.toUpperCase().indexOf(filter) > -1 || txtValueNumber.toUpperCase().indexOf(filter) > -1 || txtValuePengarang.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = ""; // Menampilkan baris jika cocok
+                } else {
+                    tr[i].style.display = "none"; // Menyembunyikan baris jika tidak cocok
+                }
+            }
+        }
+    }
+</script>
 @stop
 
 @section('content')
@@ -9,8 +43,11 @@
             <h3>Form Peminjaman Buku</h3>
         </div>
         <div class="module-body">
+            <!-- Input form untuk pencarian -->
+            <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Cari berdasarkan judul buku atau nomor buku" style="width: 60%;">
+
             <!-- Tabel Daftar Buku -->
-            <table class="table table-striped table-bordered table-condensed">
+            <table id="bookTable" class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -20,7 +57,6 @@
                         <th>Penerbit</th>
                         <th>Tahun Terbit</th>
                         <th>Kategori</th>
-                        <!-- <th>Available</th> -->
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -34,7 +70,6 @@
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
                         <td>{{ $buku->kategori->kategori }}</td>
-                        <!-- <td>{{ $buku->status_buku }}</td> -->
                         <td>
                             <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
                                 @csrf
@@ -47,12 +82,12 @@
                             </form>
                         </td>
                     </tr>
-
                     @endforeach
                 </tbody>
             </table>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
 
-    @section('custom_bottom_script')
+@section('custom_bottom_script')
