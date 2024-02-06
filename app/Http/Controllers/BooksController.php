@@ -205,6 +205,7 @@ class BooksController extends Controller
 		if ($request->hasFile('image')) {
 			$imagePath = $request->file('image')->store('book_images', 'public');
 			$book->image = $imagePath;
+			$book->hitungTersedia();
 		}
 
 		$book->save();
