@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\AnggotaPerpustakaan;
 use Illuminate\Http\Request;
 use App\Models\Buku;
-use App\Models\PeminjamanBuku;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -117,6 +116,9 @@ class AnggotaController extends Controller
         // dd(auth()->user());
         // Check if the user is authenticated
         $user = auth()->user();
+        $daftarBukuTersedia = Buku::where('tersedia', '>', 0)->get();
+        $kategoriBuku = Kategori::all(); // Mengambil semua kategori buku
+        $tahunTerbit = Buku::distinct('tahun_terbit')->pluck('tahun_terbit');
 
         if ($user && $user instanceof AnggotaPerpustakaan) {
             // Mendapatkan daftar buku yang tersedia untuk dipinjam
@@ -126,7 +128,7 @@ class AnggotaController extends Controller
             // Mendapatkan daftar permintaan peminjaman yang diajukan oleh anggota
             $daftarPeminjaman = $user->peminjaman()->latest()->get();
 
-            return view('anggota.peminjaman', compact('daftarBukuTersedia', 'daftarPeminjaman'));
+            return view('anggota.peminjaman', compact('daftarBukuTersedia', 'daftarPeminjaman', 'kategoriBuku', 'tahunTerbit'));
         }
 
         // If the user is not authenticated, you might want to redirect them to the login page or handle it accordingly.
