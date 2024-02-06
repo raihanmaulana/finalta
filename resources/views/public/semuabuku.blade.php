@@ -45,10 +45,16 @@
 
 @section('content')
 <!-- header -->
-<section id="header">
-        <form class="d-flex">
-            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-        </form>
+<!-- Form Pencarian -->
+<form action="{{ route('cari-buku') }}" method="GET" class="mb-3">
+        <div class="input-group">
+            <input type="text" name="keyword" class="form-control" placeholder="Cari buku..." aria-label="Search">
+            <!-- <button type="submit" class="btn btn-primary">Cari</button> -->
+        </div>
+    </form>
+    @if ($books->isEmpty())
+    <p>Tidak ada buku.</p>
+    @else
 
 
         <!-- end header -->
@@ -166,109 +172,58 @@
                 </div>
                 <div class="col-xl-9 col-lg-8 col-md-7">
                     <!-- katalog -->
-                    <section id="katalog">
-                        <div class="container">
-                            <div class="row g-3">
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button type="button" class="btn btn-dark" data-bs-toggle="modal"
-                                                data-bs-target="#myModal">
-                                                Detail
-                                            </button>
-                                            <!-- The Modal -->
-                                            <div class="modal fade" id="myModal">
-                                                <div class="modal-dialog ">
-                                                    <div class="modal-content">
-                                                        <!-- Modal Header -->
-                                                        <div class="modal-header">
-                                                            <h4 class="modal-title">Modal Heading</h4>
-                                                            <button type="button" class="btn-close"
-                                                                data-bs-dismiss="modal"></button>
-                                                        </div>
+                    <div class="col-xl-9 col-lg-8 col-md-7">
+            <section id="katalog">
+                <div class="container">
+                    <div class="row g-3">
+                        @foreach ($books as $book)
+                            <div class="col-6 col-md-4 col-lg-2">
+                                <div class="card h-100">
+                                    <!-- Gambar buku -->
+                                    <img src="{{ $book->image_path ? asset($book->image_path) : 'img/130x190.png' }}" class="card-img-top mt-3 mx-auto" alt="Book Image">
+                                    <div class="card-body text-center">
+                                        <!-- Judul buku -->
+                                        <h6 class="card-title">{{ $book->judul_buku }}</h6>
+                                        <!-- Tombol detail -->
+                                        <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id }}" onclick="showBookDetails('{{ $book->judul_buku }}')">Detail</button>
+                                    </div>
+                                </div>
+                            </div>
 
-                                                        <!-- Modal body -->
-                                                        <div class="modal-body">
-                                                            Modal body..
-                                                        </div>
-
-                                                        <!-- Modal footer -->
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-danger"
-                                                                data-bs-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+                            <!-- Modal detail buku -->
+                            <div class="modal fade" id="detailModal{{ $book->id }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">{{ $book->judul_buku }}</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    </div>
-                                </div>
-                                <!-- Tambahkan card detail buku -->
-                                <div id="detailCard" class="col-12 col-md-12 col-lg-12" style="display: none;">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Detail Buku</h5>
-                                            <p class="card-text">Informasi tentang buku akan ditampilkan di sini.
-                                            </p>
-                                            <button type="button" class="btn btn-sm btn-success" data-toggle="modal"
-                                                data-target="#exampleModal">
-                                            </button>
+                                        <div class="modal-body">
+                                            <!-- Informasi buku -->
+                                            <p>Nomor Buku: {{ $book->nomor_buku }}</p>
+                                            <p>Penerbit: {{ $book->penerbit }}</p>
+                                            <p>Pengarang: {{ $book->pengarang }}</p>
+                                            <p>Tahun Terbit: {{ $book->tahun_terbit }}</p>
+                                            <p>Deskripsi: {{ $book->deskripsi }}</p>
+                                            <!-- Gambar buku -->
+                                            @if ($book->image_path)
+                                                <img src="{{ asset($book->image_path) }}" alt="Book Image" style="max-width: 100px; max-height: 100px;">
+                                            @else
+                                                No Image
+                                            @endif
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button class="btn btn-dark">Detail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button class="btn btn-dark">Detail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button class="btn btn-dark">Detail</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button class="btn btn-dark" data-toggle="modal" data-target="#detailModal"
-                                                onclick="showBookDetails('Card title')">Detail</button>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-md-4 col-lg-2">
-                                    <div class="card h-90">
-                                        <img src="img/130x190.png" class="card-img-top mt-3 mx-auto" alt="..." />
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Card title</h6>
-                                            <button class="btn btn-dark">Detail</button>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </section>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+        </div>
                     <!-- end katalog -->
                 </div>
             </div>

@@ -303,3 +303,6 @@
             }
         </script>
 @endsection
+
+
+@include('layout.template_footer')
