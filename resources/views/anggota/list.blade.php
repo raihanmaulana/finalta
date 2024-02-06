@@ -16,8 +16,9 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Judul Buku</th>
+                                <th>Nomor Anggota</th>
                                 <th>Nama Anggota</th>
+                                <th>Judul Buku</th>
                                 <th>Status</th>
                             </tr>
                         </thead>
@@ -26,8 +27,9 @@
                             @forelse($daftarPeminjaman as $index => $peminjaman)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ optional($peminjaman->buku)->judul_buku }}</td>
+                                    <td>{{ $peminjaman->anggota->nomor_anggota ?? 'Default Name' }}</td>
                                     <td>{{ $peminjaman->anggota->nama_anggota ?? 'Default Name' }}</td>
+                                    <td>{{ optional($peminjaman->buku)->judul_buku }}</td>
                                     <td>{{ $peminjaman->status == 0 ? 'Pending' : ($peminjaman->status == 1 ? 'Approved' : 'Sudah Dikembalikan') }}
                                     </td>
                                 </tr>

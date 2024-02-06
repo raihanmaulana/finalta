@@ -1,41 +1,33 @@
 @extends('anggota.index')
 @section('custom_top_script')
 @stop
-
 @section('content')
-
-<div class="content">
-    <div class="module">
-        <div class="module-head">
-            <h3>Cari Buku</h3>
-        </div>
-        <div class="module-body">
-            <div class="controls">
-
-                <table class="table table-striped table-bordered table-condensed">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>ISBN</th>
-                            <th>Judul Buku</th>
-                            <th>Penerbit</th>
-                            <th>Pengarang</th>
-                            <th>Tahun Terbit</th>
-                            <th>Kategori</th>
-                            <!-- <th>Stok</th> -->
-                            <!-- <th>Status</th> Kolom baru untuk menampilkan status_buku -->
-                            <th>Available</th>
-                            <th>Gambar</th> <!-- New column for displaying images -->
-                            <!-- <th>Aksi</th> -->
-                        </tr>
-                    </thead>
-                    <tbody id="all-books">
-                        <tr class="text-center">
-                            <td colspan="99"> <i class="icon-spinner icon-spin"></i></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="content">
+        <div class="module">
+            <div class="module-head">
+                <h2>Perpustakaan SMA Negeri 1 Tunjungan</h2>
+            </div>
+            <div class="module-body text">
+                <h3>Selamat Datang, nama anggota!</h3>
+                <p>Silahkan untuk meminjam buku pada tab Peminjaman Buku. Anda dapat memantau buku pada
+                    tab Status
+                    Peminjaman. Buku yang ingin dipinjam dapat diambil di Perpustakaan SMA Negeri 1 Tunjungan</p>
+                <p>Hubungi Admin jika Anda memiliki kendala</p>
+                <p>Kontak Admin : 08XX-XXXX-XXXX</p>
             </div>
         </div>
     </div>
-    @stop
+    </div>
+@endsection
+
+{{-- <div class="btn-controls">
+            <div class="btn-box-row row-fluid">
+                <button class="btn-box span12" style="background: #025E9B; ">
+                    <b style="color:#fff">Perpustakaan SMA Negeri 1 Tunjungan</b>
+                </button>
+            </div>
+            <div class="btn-box-row row-fluid">
+                <button class="btn-box span12" id="findbookbox">
+                    <b>Selamat Datang</b>
+                </button>
+            </div> --}}
