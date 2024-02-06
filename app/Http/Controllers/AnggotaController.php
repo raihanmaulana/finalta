@@ -120,7 +120,8 @@ class AnggotaController extends Controller
 
         if ($user && $user instanceof AnggotaPerpustakaan) {
             // Mendapatkan daftar buku yang tersedia untuk dipinjam
-            $daftarBukuTersedia = Buku::where('stok', '>', 0)->get();
+            $daftarBukuTersedia = Buku::select('*', Buku::raw('(CASE WHEN tersedia > 0 THEN "Available" ELSE "Not Available" END) as status_buku'))
+                ->get();
 
             // Mendapatkan daftar permintaan peminjaman yang diajukan oleh anggota
             $daftarPeminjaman = $user->peminjaman()->latest()->get();
