@@ -41,6 +41,9 @@
                         console.error('Error:', error);
                         Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus anggota.', 'error');
                     });
+            } else {
+                // If the user cancels, show a cancel message
+                Swal.fire('Dibatalkan!', 'Penghapusan anggota dibatalkan.', 'info');
             }
         });
     }

@@ -186,7 +186,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/list-anggota', [HomeController::class, 'listAnggota'])->name('list-anggota');
 	Route::get('/list-anggota/{id}', [HomeController::class, 'showAnggota'])->name('list-anggota-detail');
 
-	Route::delete('/list-anggota/{id}', [HomeController::class, 'deleteAnggota'])->name('list-anggota-delete');
+	Route::delete('/list-anggota/{id}', [HomeController::class, 'destroy'])->name('list-anggota-delete');
 
 	Route::get('/admin/profile', 'HomeController@showProfile')->name('admin.profile');
 	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
