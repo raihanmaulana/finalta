@@ -45,8 +45,8 @@ class AccountController extends Controller
 				->with('global', 'Wrong Email or Wrong Password.');
 		}
 
-		return Redirect::route('account-sign-in')
-			->with('global', 'There is a problem. Have you activated your account?');
+		// 	return Redirect::route('account-sign-in')
+		// 		->with('global', 'There is a problem. Have you activated your account?');
 	}
 
 	/* Submitting the Create User form (POST) */
@@ -90,7 +90,7 @@ class AccountController extends Controller
 
 	public function getSignIn()
 	{
-		return view('account.signin');
+		return view('account.index');
 	}
 
 	/* Viewing the form (GET) */

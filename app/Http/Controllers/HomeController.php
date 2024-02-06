@@ -25,8 +25,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->kategori_list = Kategori::select()->orderBy('kategori')->get();
-        $this->branch_list = Branch::select()->orderBy('id')->get();
-        $this->student_categories_list = StudentCategories::select()->orderBy('cat_id')->get();
+
         $this->nomor_anggota = AnggotaPerpustakaan::select()->orderBy('nomor_anggota')->get();
     }
 
@@ -58,12 +57,21 @@ class HomeController extends Controller
         return redirect()->route('list-anggota')->with('success', 'Anggota berhasil diperbarui.');
     }
 
-    public function deleteAnggota($id)
+    public function destroy($id)
     {
-        $anggota = AnggotaPerpustakaan::findOrFail($id);
-        $anggota->delete();
-        return redirect()->route('list-anggota')->with('success', 'Anggota berhasil dihapus.');
+        $anggota = AnggotaPerpustakaan::find($id);
+        if (!$anggota) {
+            return response()->json(['error' => 'Anggota tidak ditemukan'], 404);
+        }
+
+        try {
+            $anggota->delete();
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Gagal menghapus anggota: ' . $e->getMessage()], 500);
+        }
     }
+
     public function showDaftarPeminjaman()
     {
         // Mendapatkan daftar permintaan peminjaman yang harus disetujui oleh admin
@@ -132,8 +140,14 @@ class HomeController extends Controller
     {
         return view('panel.index')
             ->with('kategori_list', $this->kategori_list)
-            ->with('branch_list', $this->branch_list)
-            // ->with('student_categories_list', $this->student_categories_list)
             ->with('nomor_anggota', $this->nomor_anggota);
+    }
+
+    public function home()
+    {
+        return view('panel.index')
+            ->with('kategori_list', $this->kategori_list)
+            ->with('nomor_anggota', $this->nomor_anggota)
+            ->with('student_categories_list', $this->student_categories_list);
     }
 }

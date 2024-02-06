@@ -16,16 +16,16 @@
 							<div class="controls row-fluid">
 								<input class="span12" type="text" name="username" placeholder="Username" value="{{ Request::old('login') }}" autofocus>
 								@if($errors->has('user_login'))
-									{{ $errors->first('login')}}
-								@endif									
+								{{ $errors->first('login')}}
+								@endif
 							</div>
 						</div>
 						<div class="control-group">
 							<div class="controls row-fluid">
 								<input class="span12" type="password" name="password" placeholder="Password">
 								@if($errors->has('password'))
-									{{ $errors->first('password')}}
-								@endif									
+								{{ $errors->first('password')}}
+								@endif
 							</div>
 						</div>
 					</div>
@@ -47,11 +47,11 @@
 					<h3>Student Section</h3>
 				</div>
 				<div class="module-body">
-                    <p><a href="{{ URL::route('student-registration') }}"><strong>Student Registration Form</strong></a></p>
-                    <p><a href="{{ URL::route('search-book') }}"><strong>Search Book</strong></a></p>
+					<!-- <p><a href="{{ URL::route('student-registration') }}"><strong>Student Registration Form</strong></a></p>
+                    <p><a href="{{ URL::route('search-book') }}"><strong>Search Book</strong></a></p> -->
 				</div>
 			</div>
-        </div>
+		</div>
 	</div>
 </div>
 @include('account.style')

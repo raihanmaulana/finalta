@@ -1,10 +1,68 @@
-@extends('layout.index')
+<!-- @extends('layout.index') -->
 @section('custom_top_script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function deleteAnggota(id) {
+        // Show a confirmation popup
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin menghapus anggota ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Ya, Hapus!',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            // If the user confirms, send the DELETE request
+            if (result.isConfirmed) {
+                // Send the DELETE request to the server
+                fetch('/list-anggota/' + id, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}', // Add the CSRF token to the header
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        // Handle the response from the server
+                        if (response.ok) {
+                            // If the deletion was successful, show a success message
+                            Swal.fire({
+                                title: "Berhasil!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000, // Mengatur timer selama 2 detik (2000 milidetik)
+                                onClose: () => {
+                                    // Reload the page after the timer finishes
+                                    location.reload();
+                                }
+                            });
+
+                        } else {
+                            // If there was an error, show an error message
+                            Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus anggota.', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        // Handle any errors that occur during the request
+                        console.error('Error:', error);
+                        Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus anggota.', 'error');
+                    });
+            } else {
+                // If the user cancels, show a cancel message
+                Swal.fire('Dibatalkan!', 'Penghapusan anggota dibatalkan.', 'info');
+            }
+        });
+    }
+</script>
 @stop
+
 @section('content')
 <div class="content">
     <div class="module">
         <div class="module-head">
+            <meta name="csrf-token" content="{{ csrf_token() }}">
             <h3>List Anggota</h3>
         </div>
         <div class="module-body">
@@ -25,11 +83,18 @@
                         <td>{{ $anggota->nomor_anggota }}</td>
                         <td>{{ $anggota->nama_anggota }}</td>
                         <td>{{ $anggota->email }}</td>
+
                         <td>
                             <a href="{{ route('list-anggota-detail', ['id' => $anggota->id_anggota]) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('list-anggota-edit', ['id' => $anggota->id_anggota]) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete('{{ $anggota->id_anggota }}')">Delete</button>
+                            <form id="deleteAnggota{{ $anggota->id_anggota }}" action="{{ route('list-anggota-delete', $anggota->id_anggota) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-success" onclick="deleteAnggota('{{ $anggota->id_anggota }}')">Hapus</button>
+                            </form>
+
                         </td>
+
                     </tr>
                     @empty
                     <tr>
@@ -41,51 +106,4 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
-<!-- JavaScript untuk menampilkan SweetAlert2 saat tombol Delete ditekan -->
-<script>
-    function confirmDelete(id_anggota) {
-        Swal.fire({
-            title: 'Konfirmasi',
-            text: 'Apakah Anda yakin ingin menghapus anggota ini?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            confirmButtonText: 'Ya, Hapus!',
-            cancelButtonText: 'Batal'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Kirim permintaan penghapusan ke server
-                fetch('/list-anggota/' + id_anggota, {
-                    method: 'DELETE',
-                    headers: {
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}', // Menambahkan token CSRF ke header
-                        'Content-Type': 'application/json',
-                    },
-                })
-                .then(response => {
-                    // Periksa kode status respons
-                    if (response.ok) {
-                        // Jika penghapusan berhasil, tampilkan notifikasi sukses
-                        Swal.fire('Berhasil!', 'Anggota telah dihapus.', 'success');
-                        // Perbarui UI dengan memuat ulang halaman atau menghapus baris anggota dari tabel
-                        location.reload(); // Contoh: Memuat ulang halaman untuk memperbarui daftar anggota
-                    } else {
-                        // Jika ada kesalahan, tampilkan notifikasi gagal
-                        Swal.fire('Gagal!', 'Terdapat masalah saat menghapus anggota.', 'error');
-                    }
-                })
-                .catch(error => {
-                    // Tangani kesalahan saat melakukan permintaan penghapusan
-                    console.error('Error:', error);
-                    Swal.fire('Gagal!', 'Terdapat masalah saat menghapus anggota.', 'error');
-                });
-            }
-        });
-    }
-</script>
-
 @endsection
