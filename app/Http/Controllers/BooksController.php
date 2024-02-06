@@ -208,6 +208,8 @@ class BooksController extends Controller
 			$book->hitungTersedia();
 		}
 
+		$book->hitungTersedia();
+
 		$book->save();
 
 		return redirect('/all-books')->with('success', 'Book updated successfully.');

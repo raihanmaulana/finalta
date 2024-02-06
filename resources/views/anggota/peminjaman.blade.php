@@ -39,7 +39,11 @@
                             <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id_buku" value="{{ $buku->id_buku }}">
+                                @if ($buku->status_buku === 'Not Available')
+                                <button type="button" class="btn btn-danger" disabled>Tidak Tersedia</button>
+                                @else
                                 <button type="submit" class="btn btn-warning">Pinjam</button>
+                                @endif
                             </form>
                         </td>
                     </tr>
