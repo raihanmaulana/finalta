@@ -63,6 +63,7 @@
                                     <div class="mb-3">
                                         <label for="password" class="form-label">Kata Sandi</label>
                                         <input type="password" class="form-control" id="password" name="password" required placeholder="Masukkan Kata Sandi Anda" />
+                                        <div id="passwordError" class="invalid-feedback" style="display: none;">Kata sandi salah. Silakan coba lagi.</div>
                                     </div>
                                     <div class="module-foot">
                                         <div class="control-group">
@@ -86,6 +87,30 @@
         </div>
     </div>
 
+    <script>
+    // JavaScript to handle form submission
+    document.getElementById('loginForm').addEventListener('submit', function(event) {
+        // Prevent the form from submitting
+        event.preventDefault();
 
+        // Get the password input and error message elements
+        var passwordInput = document.getElementById('password');
+        var passwordError = document.getElementById('passwordError');
+
+        // Validate the password (example: the correct password is "password")
+        if (passwordInput.value !== 'password') {
+            // If password is invalid, display error message
+            passwordError.style.display = 'block';
+        } else {
+            // If password is valid, submit the form
+            this.submit();
+        }
+    });
+
+    // JavaScript to hide error message when password input changes
+    document.getElementById('password').addEventListener('input', function() {
+        document.getElementById('passwordError').style.display = 'none';
+    });
+</script>
 
     @stop
