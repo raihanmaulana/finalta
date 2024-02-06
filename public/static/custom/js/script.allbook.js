@@ -139,29 +139,6 @@ function showBookDetail(button) {
     window.location.href = "/books/" + bookId + "/detail";
 }
 
-function destroyBook(button) {
-    var bookId = $(button).data("id");
-
-    if (confirm("Apakah Anda yakin ingin menghapus buku ini?")) {
-        var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
-        $.ajax({
-            url: "/all-books/" + bookId + "/delete",
-            type: "DELETE",
-            headers: {
-                "X-CSRF-TOKEN": csrfToken,
-            },
-            success: function (result) {
-                $(button).closest("tr").remove();
-                alert("Buku berhasil dihapus.");
-            },
-            error: function (error) {
-                alert("Gagal menghapus buku. Silakan coba lagi.");
-            },
-        });
-    }
-}
-
 // Menambahkan event listener untuk tombol-tombol aksi
 $(document).ready(function () {
     $(".edit-btn").click(function () {
