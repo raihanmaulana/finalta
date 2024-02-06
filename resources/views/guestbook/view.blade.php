@@ -5,62 +5,64 @@
 
     <body>
         <div class="page page1">
-            <div class="container d-flex justify-content-center align-items-center vh-100">
-                <div class="col-6">
-                    <!-- Form Buku Tamu Umum -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2>Buku Tamu Umum</h2>
+            <div class="container-fluid d-flex justify-content-center align-items-center vh-100">
+                <div class="row g-5">
+                    <div class="col-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
+                        <!-- Form Buku Tamu Umum -->
+                        <div class="card h-100  w-100 w-lg-75">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>Buku Tamu Umum</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <form method="post" action="{{ route('guestbook.store') }}" class="row-6">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Nama</label>
-                                    <input type="text" name="name" class="form-control" id="name"
-                                        placeholder="Masukkan Nama Anda" />
-                                </div>
-                                <div class="mb-3">
-                                    <label for="message" class="form-label">Asal Daerah</label>
-                                    <input type="text" name="message" class="form-control" id="message"
-                                        placeholder="Masukkan Asal Daerah Anda" />
-                                </div>
+                                <form method="post" action="{{ route('guestbook.store') }}" class="row-6">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nama</label>
+                                        <input type="text" name="name" class="form-control" id="name"
+                                            placeholder="Masukkan Nama Anda" />
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message" class="form-label">Asal Daerah</label>
+                                        <input type="text" name="message" class="form-control" id="message"
+                                            placeholder="Masukkan Asal Daerah Anda" />
+                                    </div>
 
-                                <div class="row-6 text-center center-content">
-                                    <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
-                                </div>
-                            </form>
+                                    <div class="row-6 text-center center-content">
+                                        <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-6">
-                    <!-- Form Buku Tamu Anggota -->
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="card-title">
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h2>Buku Tamu Anggota</h2>
+                    <div class="col-12 col-md-12 col-lg-6 d-flex justify-content-center align-items-center">
+                        <!-- Form Buku Tamu Anggota -->
+                        <div class="card h-100  w-100 w-lg-75">
+                            <div class="card-body">
+                                <div class="card-title">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <h3>Buku Tamu Anggota</h3>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <form method="post" action="{{ route('bukutamu_anggota.store') }}" class="row-6">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="nomor_anggota" class="form-label">Nomor Anggota</label>
-                                    <input type="text" name="nomor_anggota" class="form-control" id="nomor_anggota"
-                                        placeholder="Masukkan Nomor Anggota Anda" />
-                                </div>
+                                <form method="post" action="{{ route('bukutamu_anggota.store') }}" class="row-6">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="nomor_anggota" class="form-label">Nomor Anggota</label>
+                                        <input type="text" name="nomor_anggota" class="form-control" id="nomor_anggota"
+                                            placeholder="Masukkan Nomor Anggota Anda" />
+                                    </div>
 
-                                <div class="row-6 text-center center-content">
-                                    <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
-                                </div>
-                            </form>
+                                    <div class="row-6 text-center center-content">
+                                        <button type="submit" class="btn btn-dark btn-lg btn-block">Masuk</button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
