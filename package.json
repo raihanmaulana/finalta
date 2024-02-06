@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "sweetalert2": "^11.10.5",
         "turbolinks": "^5.2.0"
     }
 }

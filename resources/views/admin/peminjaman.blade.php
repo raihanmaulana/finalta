@@ -1,5 +1,7 @@
 @extends('layout.index')
 @section('custom_top_script')
+    <!-- Tambahkan SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
 @stop
 
 @section('content')
@@ -39,11 +41,10 @@
                                 <td>
                                     @if ($peminjaman->status == 0)
                                         <!-- Tombol Setujui -->
-                                        <form action="{{ route('admin.peminjaman.approve', $peminjaman->id) }}"
-                                            method="POST">
+                                        <form id="approveForm{{ $peminjaman->id }}" action="{{ route('admin.peminjaman.approve', $peminjaman->id) }}" method="POST">
                                             @csrf
                                             @method('PUT')
-                                            <button type="submit" class="btn btn-success">Setujui</button>
+                                            <button type="button" class="btn btn-success" onclick="approvePeminjaman({{ $peminjaman->id }})">Setujui</button>
                                         </form>
                                     @else
                                         <span class="text-success">Sudah Disetujui</span>
@@ -60,4 +61,36 @@
             </div>
         </div>
     </div>
+
+    <!-- Tambahkan SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+    <!-- JavaScript untuk menampilkan SweetAlert2 saat tombol Setujui ditekan -->
+    <script>
+        function approvePeminjaman(id) {
+    Swal.fire({
+        title: 'Konfirmasi',
+        text: 'Apakah Anda yakin ingin menyetujui peminjaman ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Setujui',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Berhasil!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+            });
+            setTimeout(function() {
+                document.getElementById('approveForm' + id).submit();
+            }, 2000); // Menunda submit form selama 2 detik setelah tampilan SweetAlert muncul
+        }
+    });
+}
+
+    </script>
 @endsection
