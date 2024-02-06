@@ -46,3 +46,5 @@
     </div>
 
 @endsection
+
+@include('layout.template_footer')
