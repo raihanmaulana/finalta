@@ -136,22 +136,22 @@ class BooksController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($string)
-	{
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
-			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
-			->where('judul_buku', 'like', '%' . $string . '%')
-			->orWhere('pengarang', 'like', '%' . $string . '%')
-			->orderBy('id_buku')
-			->get();
+	// public function show($string)
+	// {
+	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
+	// 		->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
+	// 		->where('judul_buku', 'like', '%' . $string . '%')
+	// 		->orWhere('pengarang', 'like', '%' . $string . '%')
+	// 		->orderBy('id_buku')
+	// 		->get();
 
-		foreach ($list_buku as $book) {
-			$book->available = $this->calculateAvailableForBorrow($book->id_buku);
-			$book->status_buku = ($book->available > 0) ? 'Available' : 'Not Available';
-		}
+	// 	foreach ($list_buku as $book) {
+	// 		$book->available = $this->calculateAvailableForBorrow($book->id_buku);
+	// 		$book->status_buku = ($book->available > 0) ? 'Available' : 'Not Available';
+	// 	}
 
-		return $list_buku;
-	}
+	// 	return $list_buku;
+	// }
 
 
 
@@ -275,10 +275,12 @@ class BooksController extends Controller
 
 	public function renderAllBooks()
 	{
-		$db_control = new HomeController();
+		$kategoriBuku = Kategori::all(); // Mengambil semua kategori buku
+		// Mendapatkan daftar tahun terbit buku
+		$tahunTerbit = Buku::distinct('tahun_terbit')->pluck('tahun_terbit');
+		$books = Buku::all(); // Misalnya Book adalah model yang merepresentasikan buku
 
-		return view('panel.allbook')
-			->with('kategori_list', $db_control->kategori_list);
+		return view('panel.allbook', compact('kategoriBuku', 'tahunTerbit', 'books'));
 	}
 
 
