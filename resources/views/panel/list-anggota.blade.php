@@ -1,4 +1,4 @@
-@extends('layout.index')
+<!-- @extends('layout.index') -->
 @section('custom_top_script')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
@@ -28,9 +28,17 @@
                         // Handle the response from the server
                         if (response.ok) {
                             // If the deletion was successful, show a success message
-                            Swal.fire('Berhasil!', 'Anggota telah dihapus.', 'success');
-                            // Reload the page to update the list of anggota
-                            location.reload();
+                            Swal.fire({
+                                title: "Berhasil!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 2000, // Mengatur timer selama 2 detik (2000 milidetik)
+                                onClose: () => {
+                                    // Reload the page after the timer finishes
+                                    location.reload();
+                                }
+                            });
+
                         } else {
                             // If there was an error, show an error message
                             Swal.fire('Gagal!', 'Terjadi kesalahan saat menghapus anggota.', 'error');
@@ -79,7 +87,12 @@
                         <td>
                             <a href="{{ route('list-anggota-detail', ['id' => $anggota->id_anggota]) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('list-anggota-edit', ['id' => $anggota->id_anggota]) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="deleteAnggota('{{ $anggota->id_anggota }}')">Delete</button>
+                            <form id="deleteAnggota{{ $anggota->id_anggota }}" action="{{ route('list-anggota-delete', $anggota->id_anggota) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="button" class="btn btn-success" onclick="deleteAnggota('{{ $anggota->id_anggota }}')">Hapus</button>
+                            </form>
+
                         </td>
 
                     </tr>

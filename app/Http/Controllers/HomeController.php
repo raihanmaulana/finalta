@@ -60,9 +60,16 @@ class HomeController extends Controller
     public function destroy($id)
     {
         $anggota = AnggotaPerpustakaan::find($id);
-        $anggota->delete();
+        if (!$anggota) {
+            return response()->json(['error' => 'Anggota tidak ditemukan'], 404);
+        }
 
-        return redirect()->route('list-anggota')->with('success', 'Anggota berhasil dihapus.');
+        try {
+            $anggota->delete();
+            return response()->json(['success' => true], 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Gagal menghapus anggota: ' . $e->getMessage()], 500);
+        }
     }
 
     public function showDaftarPeminjaman()
