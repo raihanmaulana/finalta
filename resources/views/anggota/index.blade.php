@@ -45,6 +45,19 @@
             color: #ffffff;
         }
 
+        .module-head h2 {
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .module-body h3 {
+            color: #555555;
+        }
+
+        .text {
+            text-align: center;
+        }
+
         .widget-menu {
             background: #025E9B;
             color: #ffffff;
