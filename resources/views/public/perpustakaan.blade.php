@@ -60,5 +60,3 @@
 </div>
 <!-- end -->
 @endsection
-
-@include('layout.template_footer')

@@ -2,8 +2,8 @@
 <html lang="en">
 
 <body>
-        <!-- navbar -->
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="{{ asset('css\images\logo.png') }}" alt="SMA N 1 Tunjungan" width="30" height="auto" />
@@ -42,9 +42,11 @@
 
     @section('app')
     <div id="app">
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>
-    {{-- </body>
+    {{--
+</body>
+
 </html> --}}

@@ -21,7 +21,7 @@
 </head>
 
 <body>
-    
+
     @extends('account.layout')
     <!-- navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -66,5 +66,7 @@
             @yield('content')
         </main>
     </div>
-    {{-- </body>
+    {{--
+</body>
+
 </html> --}}
