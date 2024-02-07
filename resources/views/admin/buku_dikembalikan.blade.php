@@ -13,6 +13,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
+                        <th>No</th>
                         <th>Nomor Anggota</th>
                         <th>Nama Anggota</th>
                         <th>Judul Buku</th>
@@ -25,6 +26,7 @@
                     @if($data->status == 2) {{-- Hanya tampilkan buku yang telah dikembalikan --}}
                     <tr>
                         <td>{{ $data->anggota->nomor_anggota }}</td>
+                        <td>{{ $data->anggota->nomor_anggota }}</td>
                         <td>{{ $data->anggota->nama_anggota }}</td>
                         <td>{{ $data->buku->judul_buku }}</td>
                         <td>{{ $data->tanggal_peminjaman ? $data->tanggal_peminjaman->format('Y-m-d H:i:s') : 'Belum Dikembalikan' }}</td>
@@ -34,6 +36,7 @@
                     @endforeach
                 </tbody>
             </table>
+            {{ $bukuDikembalikan->links() }}
         </div>
     </div>
 </div>

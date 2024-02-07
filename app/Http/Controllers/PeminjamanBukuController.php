@@ -147,7 +147,7 @@ class PeminjamanBukuController extends Controller
             ->where('status', 2) // Status 'Dikembalikan'
             ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
             ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
-            ->get();
+            ->paginate(10);
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
