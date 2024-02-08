@@ -102,7 +102,9 @@ class BooksController extends Controller
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
 			'added_by'      => $user_id,
+			'kondisi' => 1,
 			'image'         => $books['image'] ?? null,
+
 		]);
 		if ($request->hasFile('image')) {
 			$imagePath = $request->file('image')->store('book_images', 'public');
@@ -311,7 +313,23 @@ class BooksController extends Controller
 		return $list_buku;
 	}
 
+	public function activateBook($id)
+	{
+		$book = Buku::findOrFail($id);
+		$book->kondisi = true;
+		$book->save();
 
+		return redirect()->back()->with('success', 'Buku berhasil diaktifkan');
+	}
+
+	public function deactivateBook($id)
+	{
+		$book = Buku::findOrFail($id);
+		$book->kondisi = false;
+		$book->save();
+
+		return redirect()->back()->with('success', 'Buku berhasil dinonaktifkan');
+	}
 
 
 	// 	for ($i = 0; $i < count($list_buku); $i++) {
@@ -345,6 +363,25 @@ class BooksController extends Controller
 	// 	return $list_buku;
 	// }
 
+	public function bukutidakaktif()
+	{
+		// Mengambil daftar buku yang tidak aktif
+		$bukuTidakaktif = Buku::where('kondisi', 0)->get();
+		$kategoriBuku = Kategori::all(); // Mengambil semua kategori buku
+		// Mendapatkan daftar tahun terbit buku
+		$tahunTerbit = Buku::distinct('tahun_terbit')->pluck('tahun_terbit');
+
+		return view('admin.buku-tidak-aktif', compact('bukuTidakaktif', 'kategoriBuku', 'tahunTerbit'));
+	}
+
+	public function activate($id)
+	{
+		$book = Buku::findOrFail($id);
+		$book->kondisi = 1;
+		$book->save();
+
+		return redirect()->route('inactive-books.index')->with('success', 'Buku berhasil diaktifkan.');
+	}
 
 	public function searchBook()
 	{

@@ -205,6 +205,50 @@
         const detailCard = document.getElementById("detailCard");
         detailCard.style.display = "none";
     }
+
+    // Fungsi untuk melakukan pencarian buku
+    function searchBooks() {
+        // Ambil nilai input pencarian
+        var searchQuery = document.getElementById('searchInput').value.toLowerCase();
+
+        // Ambil daftar buku
+        var books = {
+            !!$books!!
+        };
+
+        // Filter buku berdasarkan judul
+        var filteredBooks = books.filter(function(book) {
+            return book.judul_buku.toLowerCase().includes(searchQuery);
+        });
+
+        // Tampilkan hasil pencarian
+        displayBooks(filteredBooks);
+    }
+
+    // Fungsi untuk menampilkan daftar buku
+    function displayBooks(books) {
+        var bookListContainer = document.getElementById('bookList');
+        bookListContainer.innerHTML = '';
+
+        // Tampilkan buku yang telah difilter
+        books.forEach(function(book) {
+            var html = `
+                <div class="col-6 col-md-4 col-lg-2">
+                    <div class="card h-100">
+                        <img src="${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}" class="card-img-top mt-3 mx-auto" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal${book.id_buku}">
+                        <div class="card-body text-center">
+                            <h6 class="card-title">${book.judul_buku}</h6>
+                            <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#detailModal${book.id_buku}" onclick="showBookDetails('${book.id_buku}')">Detail</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            bookListContainer.innerHTML += html;
+        });
+    }
+
+    // Panggil fungsi pencarian saat input berubah
+    document.getElementById('searchInput').addEventListener('input', searchBooks);
 </script>
 @endsection
 

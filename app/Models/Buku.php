@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Buku extends Model
 {
-    protected $fillable = ['id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by', 'stok', 'image', 'status_buku', 'tersedia'];
+    protected $fillable = [
+        'id_buku', 'nomor_buku', 'judul_buku',
+        'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by',
+        'stok', 'image', 'status_buku', 'tersedia', 'kondisi'
+    ];
 
     public $timestamps = true;
 
@@ -17,7 +21,6 @@ class Buku extends Model
 
     public function getImagePathAttribute($value)
     {
-        // Any custom logic for getting the image path
         return $value;
     }
     public function issues()

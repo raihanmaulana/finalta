@@ -29,7 +29,7 @@ class AnggotaController extends Controller
         if ($user && $user instanceof AnggotaPerpustakaan) {
 
             // Mendapatkan daftar permintaan peminjaman yang diajukan oleh anggota
-            $daftarPeminjaman = $user->peminjaman()->latest()->get();
+            $daftarPeminjaman = $user->peminjaman()->latest()->paginate(10);
 
             return view('anggota.list', compact('daftarPeminjaman'));
         }

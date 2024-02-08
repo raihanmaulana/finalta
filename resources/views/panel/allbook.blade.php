@@ -68,11 +68,20 @@
                                     <!-- Tombol edit, detail, hapus -->
                                     <button class="btn btn-primary btn-sm edit-btn" style="margin-bottom: 2px; width: 60px;" data-id="{{ $book->id_buku }}">Edit</button>
                                     <button class="btn btn-info btn-sm detail-btn" style="margin-bottom: 2px; width: 60px;" data-id="{{ $book->id_buku }}">Detail</button>
-                                    <form id="deleteBook{{ $book->id_buku }}" action="{{ route('books.destroy', $book->id_buku) }}" method="POST">
+                                    <!-- <form id="deleteBook{{ $book->id_buku }}" action="{{ route('books.destroy', $book->id_buku) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="button" class="btn btn-danger" onclick="deleteBook({{ $book->id_buku }})">Hapus</button>
+                                    </form> -->
+                                    @if ($book->kondisi == 1)
+                                    <form action="{{ route('books.deactivate', $book->id_buku) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-danger">Nonaktif</button>
                                     </form>
+                                    @else
+                                    <button class="btn btn-danger" disabled>Nonaktif</button>
+                                    @endif
+                                    </>
                                 </div>
                             </td>
                         </tr>

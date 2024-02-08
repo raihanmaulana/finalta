@@ -34,6 +34,9 @@ class PeminjamanBukuController extends Controller
         // Mendapatkan buku berdasarkan ID
         $buku = Buku::findOrFail($request->input('id_buku'));
 
+        if ($buku->kondisi != 1) {
+            throw ValidationException::withMessages(['id_buku' => 'Buku tidak aktif dan tidak dapat dipinjam.']);
+        }
         // Memeriksa apakah stok buku tersedia
         if ($buku->stok <= 0) {
             throw ValidationException::withMessages(['id_buku' => 'Stok buku habis. Peminjaman tidak dapat dilakukan.']);
@@ -71,11 +74,6 @@ class PeminjamanBukuController extends Controller
     public function kembalikanBukuAnggota($id)
     {
         $peminjaman = PeminjamanBuku::findOrFail($id);
-
-        // Memastikan status peminjaman masih pending (status = 0)
-        // if ($peminjaman->status == 0) {
-        //     return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan karena status peminjaman belum disetujui.');
-        // }
 
         // Memastikan status buku dipinjam (status = 1) sebelum dikembalikan
         if ($peminjaman->status == 1) {
@@ -147,7 +145,7 @@ class PeminjamanBukuController extends Controller
             ->where('status', 2) // Status 'Dikembalikan'
             ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
             ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
-            ->paginate(10);
+            ->paginate(6);
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
@@ -167,10 +165,20 @@ class PeminjamanBukuController extends Controller
         $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomor_anggota)->first();
 
         // Cari buku berdasarkan nomor_buku
-        $buku = Buku::where('nomor_buku', $nomor_buku)->where('tersedia', '>', 0)->first();
+        $buku = Buku::where('nomor_buku', $nomor_buku)->first();
 
         // Periksa apakah anggota dan buku ditemukan dan buku tersedia
         if ($anggota && $buku) {
+            // Periksa kondisi buku
+            if ($buku->kondisi != 1) {
+                return redirect()->back()->with('error', 'Buku tidak aktif dan tidak dapat dipinjam.');
+            }
+
+            // Periksa stok buku
+            if ($buku->stok <= 0) {
+                return redirect()->back()->with('error', 'Stok buku habis. Peminjaman tidak dapat dilakukan.');
+            }
+
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
             $peminjaman = PeminjamanBuku::create([
                 'id_buku' => $buku->id_buku,
@@ -189,6 +197,7 @@ class PeminjamanBukuController extends Controller
             return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
         }
     }
+
 
     public function findBorrowedBook($nomor_buku)
     {

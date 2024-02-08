@@ -45,4 +45,17 @@ class BukuTamuAnggotaController extends Controller
 
         return response()->json(['error' => 'Anggota not found'], 404);
     }
+
+    public function index(Request $request)
+    {
+        $perPage = 10; // Jumlah item per halaman
+        $page = $request->input('page', 1); // Ambil nomor halaman dari query string, default 1
+
+        $bukutamuAnggota = BukuTamuAnggota::paginate($perPage);
+
+        // Hitung nomor pertama pada setiap halaman
+        $firstNumber = ($page - 1) * $perPage + 1;
+
+        return view('panel.bukutamuanggota', compact('bukutamuAnggota', 'firstNumber'));
+    }
 }

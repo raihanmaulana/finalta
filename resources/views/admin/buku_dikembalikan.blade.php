@@ -25,7 +25,7 @@
                     @foreach($bukuDikembalikan as $data)
                     @if($data->status == 2) {{-- Hanya tampilkan buku yang telah dikembalikan --}}
                     <tr>
-                        <td>{{ $data->anggota->nomor_anggota }}</td>
+                        <td>{{ $loop->index + 1 }}</td> {{-- Tambahkan +1 untuk menghindari nomor 0 --}}
                         <td>{{ $data->anggota->nomor_anggota }}</td>
                         <td>{{ $data->anggota->nama_anggota }}</td>
                         <td>{{ $data->buku->judul_buku }}</td>

@@ -12,6 +12,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ URL::route('tidakaktif.index') }}">
+                    <i class="menu-icon icon-book"></i>Kelola Status Buku
+                </a>
+            </li>
+            <li>
                 <a href="{{ URL::route('list-anggota') }}">
                     <i class="menu-icon icon-group"></i>Kelola Anggota
                 </a>
@@ -34,6 +39,11 @@
             <li>
                 <a href="{{ URL::route('guestbook.view') }}">
                     <i class="menu-icon icon-list-ul"></i>Buku Tamu Umum
+                </a>
+            </li>
+            <li>
+                <a href="{{ URL::route('panel.bukutamuanggota') }}">
+                    <i class="menu-icon icon-list-ul"></i>Buku Tamu Anggota
                 </a>
             </li>
         </ul>

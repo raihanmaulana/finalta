@@ -46,6 +46,7 @@ Route::get('/galeri', [PublicController::class, 'galeri'])->name('galeri');
 
 Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 
+
 Route::post('/bukutamu-anggota/store', [BukuTamuAnggotaController::class, 'store'])->name('bukutamu_anggota.store');
 Route::get('/getAnggotaInfo/{nomorAnggota}', [BukuTamuAnggotaController::class, 'getAnggotaInfo'])->name('bukutamu_anggota.getAnggotaInfo');
 
@@ -199,6 +200,12 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/books/{id}/edit', 'BooksController@edit')->name('books.edit');
 	Route::put('/books/{id}', 'BooksController@update')->name('books.update');
 
+	Route::post('/buku-tidak-aktif/{id}/activate', [BooksController::class, 'activateBook'])->name('books.activate');
+	Route::post('/books/{id}/deactivate', [BooksController::class, 'deactivateBook'])->name('books.deactivate');
+
+	Route::get('/buku-tidak-aktif', 'BooksController@bukutidakaktif')->name('tidakaktif.index');
+
+	Route::get('/bukutamu-anggota', [BukutamuAnggotaController::class, 'index'])->name('panel.bukutamuanggota');
 	//Detail Buku
 	Route::get('/books/{id}/detail', 'BooksController@showDetail')->name('books.detail');
 
