@@ -1,6 +1,6 @@
 .banner {
     padding-left: 20%;
-    padding-bottom: 310px;
+    padding-bottom: 250px;
     font-weight: bold;
     color: rgb(0, 0, 0);
     line-height: 2;
@@ -8,7 +8,7 @@
 p {
     padding-top: 10%;
     font-family: sans-serif;
-    font-size: 300%;
+    font-size: 200%;
     line-height: 0.5;
 }
 

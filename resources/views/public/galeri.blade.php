@@ -2,6 +2,7 @@
 
 
 @section('customcss')
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,36 +16,34 @@
 
 @section('content')
 <div class="container">
-        <div class="box">
-            <div class="dream">
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-            </div>
-
-            <div class="dream">
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-            </div>
-
-            <div class="dream">
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-                <img src="{{ asset('css\images\130x190.png') }}" />
-            </div>
+    <div class="box">
+        <div class="dream">
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
         </div>
-        <div class="btn">
-            <a href="#">More</a>
+
+        <div class="dream">
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+        </div>
+
+        <div class="dream">
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
+            <img src="{{ asset('css\images\130x190.png') }}" />
         </div>
     </div>
+    <div class="btn">
+        <a href="#">More</a>
+    </div>
+</div>
 
 @endsection
-
-@include('layout.template_footer')
