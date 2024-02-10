@@ -63,6 +63,7 @@ class PeminjamanBukuController extends Controller
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
+            'nomor_buku' => $buku->nomor_buku, // Tambahkan nomor_buku ke dalam peminjaman
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
         ]);
@@ -134,7 +135,7 @@ class PeminjamanBukuController extends Controller
     {
         $bukuDipinjam = PeminjamanBuku::with(['anggota', 'buku'])
             ->where('status', 1) // Status 'Approved'
-            ->get();
+            ->paginate(10);
 
         return view('admin.buku_dipinjam', compact('bukuDipinjam'));
     }
@@ -145,7 +146,7 @@ class PeminjamanBukuController extends Controller
             ->where('status', 2) // Status 'Dikembalikan'
             ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
             ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
-            ->paginate(6);
+            ->paginate(10);
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
@@ -183,6 +184,7 @@ class PeminjamanBukuController extends Controller
             $peminjaman = PeminjamanBuku::create([
                 'id_buku' => $buku->id_buku,
                 'id_anggota' => $anggota->id_anggota,
+                'nomor_buku' => $nomor_buku, // Tambahkan nomor_buku ke dalam peminjaman
                 'status' => 1,
             ]);
 
@@ -197,23 +199,4 @@ class PeminjamanBukuController extends Controller
             return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
         }
     }
-
-
-    public function findBorrowedBook($nomor_buku)
-    {
-        // Query untuk mendapatkan informasi buku yang dipinjam berdasarkan nomor buku
-        $result = DB::table('peminjaman_buku')
-            ->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
-            ->join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
-            ->select('buku.nomor_buku', 'buku.judul_buku', 'anggota_perpustakaan.nomor_anggota', 'peminjaman_buku.created_at as tanggal_peminjaman', 'peminjaman_buku.status')
-            ->where('buku.nomor_buku', $nomor_buku)
-            ->get();
-
-        // Kirim data ke tampilan
-        return view('admin.find_borrowed_book')->with('result', $result);
-    }
-
-
-
-    // return redirect()->route('admin.peminjaman.daftar')->with('error', 'Permintaan peminjaman sudah disetujui sebelumnya.');
 }

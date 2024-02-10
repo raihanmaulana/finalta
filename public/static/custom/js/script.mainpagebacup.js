@@ -1,7 +1,7 @@
-function loadSearchedBooks(judulBuku) {
-    var url = "/search-books/" + encodeURIComponent(judulBuku);
+function loadSearchedBooks(string) {
+    var url = "/books/" + string;
 
-    var table = $("#buku-results"),
+    var table = $("#book-results"),
         table_parent_div = table.parents("table"),
         default_tpl = _.template($("#search_book").html());
 
@@ -12,13 +12,16 @@ function loadSearchedBooks(judulBuku) {
         success: function (data) {
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="99">No such book found in library</td></tr>'
+                    '<tr><td colspan="99">No such books found in library</td></tr>'
                 );
             } else {
                 table.html("");
-                for (var bukus in data) {
-                    var buku = data[bukus];
-                    table.append(default_tpl(buku));
+                for (var books in data) {
+                    var book = data[books];
+                    book.status_buku =
+                        book.available > 0 ? "Available" : "Not Available";
+                    buku.kategori = buku.kategori.nama_kategori;
+                    table.append(default_tpl(book));
                 }
             }
         },
@@ -31,39 +34,27 @@ function loadSearchedBooks(judulBuku) {
     });
 }
 
-function showBookDetail(button) {
-    var bookId = $(button).data("id");
-    // Redirect to the detail page using the bookId
-    window.location.href = "/books/" + bookId + "/detail";
-}
+function findBorrowedBook($peminjamanID) {
+    var url = "/find-borrowed-book/" + $peminjamanID;
+    var module_box = $("#module-body-results");
 
-function findBorrowedBook(nomorBuku) {
-    var url = "/find-issued-book/" + nomorBuku;
+    var default_tpl = _.template($("#search_issue").html());
 
-    var table = $("#issue-results"),
-        table_parent_div = table.parents("table"),
-        default_tpl = _.template($("#search_issue").html());
-
-    table_parent_div.show();
+    module_box.html("");
 
     $.ajax({
         url: url,
         success: function (data) {
-            console.log("Data diterima:", data); // Tambahkan pesan debug untuk melihat data yang diterima
-            if ($.isEmptyObject(data)) {
-                table.html(
-                    '<tr><td colspan="3">No issued book found with this number</td></tr>'
-                );
-            } else {
-                table.html("");
-                for (var issuedBooks in data) {
-                    var issuedBook = data[issuedBooks];
-                    table.append(default_tpl(issuedBook));
-                }
-            }
+            module_box.append(default_tpl(data));
         },
-        error: function (xhr, status, error) {
-            console.error("Error:", xhr.responseText); // Tambahkan pesan debug untuk melihat pesan error
+        error: function (xhr, _status, error) {
+            var err = eval("(" + xhr.responseText + ")");
+            module_box.prepend(
+                templates.alert_box({
+                    type: "danger",
+                    message: err.error.message,
+                })
+            );
         },
         beforeSend: function () {
             table.css({ opacity: 0.4 });
@@ -74,10 +65,29 @@ function findBorrowedBook(nomorBuku) {
     });
 }
 
+function showFormModule(formid) {
+    var form = $("body").find("#" + formid),
+        module = form.parents(".module");
+    parent_div = module.parents(".content");
+
+    parent_div.children(".module").hide();
+    module.show();
+}
+
+$(document).ready(function () {
+    $(".homepage-form-box").click(function () {
+        var formid = $(this).attr("id");
+
+        formid = formid.substring(0, formid.length - 3) + "form";
+        showFormModule(formid);
+    });
+});
+
+// Tambahkan fungsi pencarian anggota
 function searchAnggotaByNumber(nomorAnggota) {
     var url = "/cari-anggota/" + nomorAnggota;
 
-    var table = $("#anggota_perpustakaan-results"),
+    var table = $("#anggota_perpustakaan-results"), // Ganti dengan id yang sesuai pada halaman Anda
         table_parent_div = table.parents("table"),
         default_tpl = _.template($("#search_anggota").html());
 
@@ -128,8 +138,13 @@ $(document).ready(function () {
                 break;
 
             case "issue":
-                var search_query = form.find("textarea").val();
-                if (search_query != "") findBorrowedBook(search_query);
+                var searched_book = form.find("input").val(),
+                    module_box = form
+                        .parents(".module")
+                        .find("#module-body-results");
+
+                if (searched_book != "")
+                    findBorrowedBook(searched_book, module_box);
                 break;
 
             case "anggota":
@@ -140,11 +155,8 @@ $(document).ready(function () {
     });
 });
 
-function showFormModule(formid) {
-    var form = $("body").find("#" + formid),
-        module = form.parents(".module");
-    parent_div = module.parents(".content");
-
-    parent_div.children(".module").hide();
-    module.show();
+function showBookDetail(button) {
+    var bookId = $(button).data("id");
+    // Redirect to the detail page using the bookId
+    window.location.href = "/books/" + bookId + "/detail";
 }

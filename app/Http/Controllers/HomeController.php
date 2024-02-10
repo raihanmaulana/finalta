@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\PeminjamanBuku;
+use App\Models\Buku;
 use App\Models\StudentCategories;
 use App\Models\AnggotaPerpustakaan;
 use App\Models\Branch;
@@ -22,11 +23,19 @@ class HomeController extends Controller
 
     public $nomor_anggota = array();
 
+    public $judul_buku = array();
+
+    public $nomor_buku = array();
+
     public function __construct()
     {
         $this->kategori_list = Kategori::select()->orderBy('kategori')->get();
 
         $this->nomor_anggota = AnggotaPerpustakaan::select()->orderBy('nomor_anggota')->get();
+
+        $this->judul_buku = Buku::select()->orderBy('judul_buku')->get();
+
+        $this->nomor_buku = PeminjamanBuku::select()->orderBy('nomor_buku')->get();
     }
 
     public function listAnggota()
@@ -136,11 +145,22 @@ class HomeController extends Controller
         }
     }
 
+    public function search(Request $request)
+    {
+        $searchQuery = $request->input('search_query');
+
+        // Lakukan pencarian buku berdasarkan judul atau kriteria lain yang diinginkan
+        $books = Buku::where('judul', 'like', '%' . $searchQuery . '%')->get();
+
+        return response()->json($books);
+    }
     public function index()
     {
         return view('panel.index')
             ->with('kategori_list', $this->kategori_list)
-            ->with('nomor_anggota', $this->nomor_anggota);
+            ->with('nomor_anggota', $this->nomor_anggota)
+            ->with('judul_buku', $this->judul_buku)
+            ->with('nomor_buku', $this->nomor_buku);
     }
 
     public function home()
@@ -148,6 +168,7 @@ class HomeController extends Controller
         return view('panel.index')
             ->with('kategori_list', $this->kategori_list)
             ->with('nomor_anggota', $this->nomor_anggota)
-            ->with('student_categories_list', $this->student_categories_list);
+            ->with('judul_buku', $this->judul_buku)
+            ->with('nomor_buku', $this->nomor_buku);
     }
 }

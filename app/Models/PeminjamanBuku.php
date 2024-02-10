@@ -16,6 +16,7 @@ class PeminjamanBuku extends Model
     protected $fillable = [
         'id',
         'id_buku', // ID buku yang dipinjam
+        'nomor_buku',
         'id_anggota', // ID anggota yang melakukan peminjaman
         'status', // Status peminjaman (misalnya: menunggu, disetujui, ditolak)
         'tanggal_peminjaman',

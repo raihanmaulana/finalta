@@ -225,7 +225,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 	//Caribuku yang dipinjam
 
-	Route::get('/find-issue-book/{bookId}', [BooksController::class, 'findBorrowedBook']);
+	Route::get('/find-issued-book/{nomorBuku}', 'BooksController@findBorrowedBook');
+	Route::get('/search-books/{judulBuku}', 'BooksController@cariBukubyJudulBuku');
+
 
 
 

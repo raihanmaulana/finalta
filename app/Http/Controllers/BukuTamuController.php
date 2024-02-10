@@ -8,12 +8,7 @@ use Log;
 
 class BukuTamuController extends Controller
 {
-    // Display the guestbook entries
-    // public function adminView()
-    // {
-    //     $guests = Guest::all();
-    //     return view('guestbook.admin-view', compact('guests'));
-    // }
+
     public function viewbukutamuumum()
     {
         $guests = Guest::all();
