@@ -1,37 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('public.index') <!-- Meng-extend template utama -->
 
+@section('css')
+    <!-- Konten CSS spesifik untuk halaman ini -->
+    <link rel="stylesheet" href="{{ asset('css/utama/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/utama/dashboard.css') }}" />
+@endsection
 
-<body>
-
-    @extends ('layouts.navbar')
-    @extends ('layouts.css')
-    @section('customcss')
-    <!----======== CSS ======== -->
-    <link rel="stylesheet" href="{{asset('css/utama/style.css')}}" />
-    <link rel="stylesheet" href="{{asset('css/utama/dashboard.css')}}" />
-
-
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="{{ asset('css/images/logo.png') }}" type="image/x-icon">
-        <script src="https://kit.fontawesome.com/d94b3a5809.js" crossorigin="anonymous"></script>
-        <title>Perpustakaan SMAN 1 Tunjungan</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous" />
-    </head>
-
-    @endsection
-
-    @section('content')
+@section('content')
     <!-- Two content sections -->
     <div class="container-fluid">
         <div class="row">
@@ -72,4 +47,4 @@
         </div>
     </div>
     <!-- end -->
-    @endsection
+@endsection
