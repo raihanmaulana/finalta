@@ -22,7 +22,7 @@ h2 {
 }
 
 dd {
-    font-size:  0%;
+    font-size: 0%;
 }
 
 /* style.css */
@@ -36,6 +36,7 @@ dd {
     background-attachment: fixed; /* Membuat gambar tetap di latar belakang saat menggulir halaman */
     background-position: center center; /* Posisi gambar di tengah latar belakang */
     height: 100vh; /* Mengisi tinggi viewport */
+    font-family: "Poppins", sans-serif;
 }
 
 .transparent-bg {
@@ -63,4 +64,27 @@ dd {
     background-color: #fef5a4; /* Change the background color on hover */
     color: #ffffff; /* Change the text color on hover */
     cursor: pointer; /* Change the cursor to a pointer on hover */
+}
+
+/* Gaya font default */
+.form-control {
+    font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+}
+.form-label {
+    font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+}
+.content-card {
+    font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+}
+/* Media queries untuk mengubah ukuran font ketika layar diperkecil */
+@media (max-width: 768px) {
+    .form-control {
+        font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+    }
+    .form-label {
+        font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+    }
+    .content-card {
+        font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
+    }
 }
