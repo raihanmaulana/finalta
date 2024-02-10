@@ -284,19 +284,27 @@ class BooksController extends Controller
 	}
 
 
-	public function findBorrowedBook($nomor_buku)
+	public function findBorrowedBook($nomorBuku)
 	{
-		// Query untuk mendapatkan informasi buku yang dipinjam berdasarkan nomor buku
-		$result = Buku::table('peminjaman_buku')
+		// Query untuk mendapatkan informasi peminjaman buku berdasarkan nomor buku
+		$result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
 			->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
-			->join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
-			->select('buku.nomor_buku', 'buku.judul_buku', 'anggota_perpustakaan.nomor_anggota', 'peminjaman_buku.created_at as tanggal_peminjaman', 'peminjaman_buku.status')
-			->where('buku.nomor_buku', $nomor_buku)
+			->select('peminjaman_buku.nomor_buku', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
+			->where('peminjaman_buku.nomor_buku', $nomorBuku)
+			->whereIn('peminjaman_buku.status', [0, 1]) // Memilih buku dengan status 0 (pending) atau 1 (sedang dipinjam)
 			->get();
 
-		// Kirim data ke tampilan
-		return view('admin.find_borrowed_book')->with('result', $result);
+		// Mengisi nilai default untuk status jika status null
+		foreach ($result as $item) {
+			if (is_null($item->status)) {
+				$item->status = -1; // Misalnya -1 sebagai nilai default
+			}
+		}
+
+		return response()->json($result);
 	}
+
+
 
 	public function BookByCategory($cat_id)
 	{
@@ -363,6 +371,37 @@ class BooksController extends Controller
 	// 	return $list_buku;
 	// }
 
+	public function cariBukuByJudulBuku($judulBuku)
+	{
+		// Menggunakan operator LIKE dengan wildcard (%) di awal dan akhir kata kunci
+		$buku = Buku::with('kategori')->where('judul_buku', 'LIKE', '%' . $judulBuku . '%')->get();
+
+		$formattedBooks = [];
+
+		if ($buku->isNotEmpty()) {
+			foreach ($buku as $item) {
+				// Ambil nama kategori dari objek kategori
+				$kategori = $item->kategori->kategori;
+
+				$available = $this->calculateAvailableForBorrow($item->id_buku);
+				// Buat format baru untuk buku termasuk nama kategori
+				$formattedBooks[] = [
+					'id_buku' => $item->id_buku,
+					'nomor_buku' => $item->nomor_buku,
+					'judul_buku' => $item->judul_buku,
+					'pengarang' => $item->pengarang,
+					'tahun_terbit' => $item->tahun_terbit,
+					'kategori' => $kategori,
+					'stok' => $item->stok,
+					'tersedia' => $available
+				];
+			}
+		}
+
+		return response()->json($formattedBooks);
+	}
+
+
 	public function bukutidakaktif()
 	{
 		// Mengambil daftar buku yang tidak aktif
@@ -383,11 +422,11 @@ class BooksController extends Controller
 		return redirect()->route('inactive-books.index')->with('success', 'Buku berhasil diaktifkan.');
 	}
 
-	public function searchBook()
-	{
-		$db_control = new HomeController();
+	// public function searchBook()
+	// {
+	// 	$db_control = new HomeController();
 
-		return view('public.book-search')
-			->with('kategori_list', $db_control->kategori_list);
-	}
+	// 	return view('public.book-search')
+	// 		->with('kategori_list', $db_control->kategori_list);
+	// }
 }

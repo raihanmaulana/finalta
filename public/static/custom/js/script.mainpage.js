@@ -1,7 +1,7 @@
-function loadSearchedBooks(string) {
-    var url = "/books/" + string;
+function loadSearchedBooks(judulBuku) {
+    var url = "/search-books/" + encodeURIComponent(judulBuku);
 
-    var table = $("#book-results"),
+    var table = $("#buku-results"),
         table_parent_div = table.parents("table"),
         default_tpl = _.template($("#search_book").html());
 
@@ -12,16 +12,13 @@ function loadSearchedBooks(string) {
         success: function (data) {
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="99">No such books found in library</td></tr>'
+                    '<tr><td colspan="99">No such book found in library</td></tr>'
                 );
             } else {
                 table.html("");
-                for (var books in data) {
-                    var book = data[books];
-                    book.status_buku =
-                        book.available > 0 ? "Available" : "Not Available";
-
-                    table.append(default_tpl(book));
+                for (var bukus in data) {
+                    var buku = data[bukus];
+                    table.append(default_tpl(buku));
                 }
             }
         },
@@ -34,28 +31,53 @@ function loadSearchedBooks(string) {
     });
 }
 
-// Tambahkan script ini pada bagian script.mainpage.js
-function findBorrowedBook($peminjamanID) {
-    var url = "/find-borrowed-book/" + $peminjamanID;
-    var module_box = $("#module-body-results");
+function showBookDetail(button) {
+    var bookId = $(button).data("id");
+    // Redirect to the detail page using the bookId
+    window.location.href = "/books/" + bookId + "/detail";
+}
 
-    var default_tpl = _.template($("#search_issue").html());
+function findBorrowedBook(nomorBuku) {
+    var url = "/find-issued-book/" + nomorBuku;
 
-    module_box.html("");
+    var table = $("#issue-results"),
+        table_parent_div = table.parents("table"),
+        default_tpl = _.template($("#search_issue").html());
+
+    table_parent_div.show();
 
     $.ajax({
         url: url,
         success: function (data) {
-            module_box.append(default_tpl(data));
+            console.log("Data diterima:", data); // Tambahkan pesan debug untuk melihat data yang diterima
+            if ($.isEmptyObject(data)) {
+                table.html(
+                    '<tr><td colspan="3">No issued book found with this number</td></tr>'
+                );
+            } else {
+                table.html("");
+                for (var i = 0; i < data.length; i++) {
+                    var issuedBook = data[i];
+
+                    if (issuedBook.status !== null) {
+                        statusText =
+                            issuedBook.status === 0 ? "Pending" : "Approved";
+                        statusClass =
+                            issuedBook.status === 0
+                                ? "badge-warning"
+                                : "badge-success";
+                    }
+
+                    issuedBook.statusText = statusText;
+                    issuedBook.statusClass = statusClass;
+
+                    var row = default_tpl(issuedBook);
+                    table.append(row);
+                }
+            }
         },
-        error: function (xhr, _status, error) {
-            var err = eval("(" + xhr.responseText + ")");
-            module_box.prepend(
-                templates.alert_box({
-                    type: "danger",
-                    message: err.error.message,
-                })
-            );
+        error: function (xhr, status, error) {
+            console.error("Error:", xhr.responseText); // Tambahkan pesan debug untuk melihat pesan error
         },
         beforeSend: function () {
             table.css({ opacity: 0.4 });
@@ -66,29 +88,10 @@ function findBorrowedBook($peminjamanID) {
     });
 }
 
-function showFormModule(formid) {
-    var form = $("body").find("#" + formid),
-        module = form.parents(".module");
-    parent_div = module.parents(".content");
-
-    parent_div.children(".module").hide();
-    module.show();
-}
-
-$(document).ready(function () {
-    $(".homepage-form-box").click(function () {
-        var formid = $(this).attr("id");
-
-        formid = formid.substring(0, formid.length - 3) + "form";
-        showFormModule(formid);
-    });
-});
-
-// Tambahkan fungsi pencarian anggota
 function searchAnggotaByNumber(nomorAnggota) {
     var url = "/cari-anggota/" + nomorAnggota;
 
-    var table = $("#anggota_perpustakaan-results"), // Ganti dengan id yang sesuai pada halaman Anda
+    var table = $("#anggota_perpustakaan-results"),
         table_parent_div = table.parents("table"),
         default_tpl = _.template($("#search_anggota").html());
 
@@ -118,6 +121,11 @@ function searchAnggotaByNumber(nomorAnggota) {
     });
 }
 
+function showAnggota(button) {
+    var idAnggota = $(button).data("id");
+    window.location.href = "/list-anggota/" + idAnggota;
+}
+
 $(document).ready(function () {
     $(".homepage-form-box").click(function () {
         var formid = $(this).attr("id");
@@ -139,13 +147,8 @@ $(document).ready(function () {
                 break;
 
             case "issue":
-                var searched_book = form.find("input").val(),
-                    module_box = form
-                        .parents(".module")
-                        .find("#module-body-results");
-
-                if (searched_book != "")
-                    findBorrowedBook(searched_book, module_box);
+                var search_query = form.find("textarea").val();
+                if (search_query != "") findBorrowedBook(search_query);
                 break;
 
             case "anggota":
@@ -154,10 +157,18 @@ $(document).ready(function () {
                 break;
         }
     });
+    $(".close-form").click(function () {
+        var form = $(this).parents(".module").find("form");
+        form.trigger("reset"); // Mengosongkan formulir
+        $(this).parents(".module").hide(); // Menyembunyikan modul
+    });
 });
 
-function showBookDetail(button) {
-    var bookId = $(button).data("id");
-    // Redirect to the detail page using the bookId
-    window.location.href = "/books/" + bookId + "/detail";
+function showFormModule(formid) {
+    var form = $("body").find("#" + formid),
+        module = form.parents(".module");
+    parent_div = module.parents(".content");
+
+    parent_div.children(".module").hide();
+    module.show();
 }
