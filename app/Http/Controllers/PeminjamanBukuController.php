@@ -168,7 +168,7 @@ class PeminjamanBukuController extends Controller
         // Cari buku berdasarkan nomor_buku
         $buku = Buku::where('nomor_buku', $nomor_buku)->first();
 
-        // Periksa apakah anggota dan buku ditemukan dan buku tersedia
+        // Periksa apakah anggota dan buku ditemukan
         if ($anggota && $buku) {
             // Periksa kondisi buku
             if ($buku->kondisi != 1) {
@@ -176,8 +176,13 @@ class PeminjamanBukuController extends Controller
             }
 
             // Periksa stok buku
-            if ($buku->stok <= 0) {
-                return redirect()->back()->with('error', 'Stok buku habis. Peminjaman tidak dapat dilakukan.');
+            // if ($buku->stok <= 0) {
+            //     return redirect()->back()->with('error', 'Stok buku habis. Peminjaman tidak dapat dilakukan.');
+            // }
+
+            // Periksa apakah buku tersedia
+            if ($buku->tersedia <= 0) {
+                return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
             }
 
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
@@ -191,6 +196,7 @@ class PeminjamanBukuController extends Controller
             // Update tanggal peminjaman saat buku berhasil dipinjam
             $peminjaman->update(['tanggal_peminjaman' => now()]);
 
+            // Kurangi stok dan tersedia buku
             $buku->tersedia -= 1;
             $buku->save();
 
