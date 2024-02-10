@@ -56,6 +56,6 @@ class BukuTamuAnggotaController extends Controller
         // Hitung nomor pertama pada setiap halaman
         $firstNumber = ($page - 1) * $perPage + 1;
 
-        return view('panel.bukutamuanggota', compact('bukutamuAnggota', 'firstNumber'));
+        return view('admin.bukutamuanggota', compact('bukutamuAnggota', 'firstNumber'));
     }
 }

@@ -32,13 +32,13 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('guestbook.view') }}">
+                <a href="{{ URL::route('bukutamu.view') }}">
                     <i class="menu-icon icon-list-ul"></i>Buku Tamu
                 </a>
             </li>
 
         </ul>
-        {{-- 
+        {{--
         <ul class="widget widget-menu unstyled">
             <li><a href="{{ URL::route('account-sign-out') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
         </ul> --}}

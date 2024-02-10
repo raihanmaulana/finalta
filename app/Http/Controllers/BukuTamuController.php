@@ -6,7 +6,7 @@ use App\Models\Guest;
 use Illuminate\Http\Request;
 use Log;
 
-class GuestbookController extends Controller
+class BukuTamuController extends Controller
 {
     // Display the guestbook entries
     // public function adminView()
@@ -14,13 +14,17 @@ class GuestbookController extends Controller
     //     $guests = Guest::all();
     //     return view('guestbook.admin-view', compact('guests'));
     // }
-    public function viewbook()
+    public function viewbukutamuumum()
     {
         $guests = Guest::all();
         $guests = Guest::paginate(10); // Mengambil data tamu dengan pagination
-        return view('guestbook.adminview', compact('guests'));
+        return view('admin.bukutamuumum', compact('guests'));
     }
 
+    public function viewbukutamu()
+    {
+        return view('panel.bukutamu');
+    }
     public function viewform()
     {
         return view('guestbook.view');
