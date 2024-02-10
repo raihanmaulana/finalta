@@ -22,8 +22,8 @@
 
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-inverse span2" id="addbookcategory">Tambah</button>
-                            <a href="{{ URL::route('all-books') }}" class="btn btn-inverse span2">Batal</a>
+                            <button type="submit" class="btn btn-inverse">Tambah</button>
+                            <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                         </div>
                     </div>
                 </form>

@@ -92,8 +92,8 @@
 
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-inverse span2">Simpan</button>
-                            <a href="{{ URL::route('all-books') }}" class="btn btn-inverse span2">Batal</a>
+                            <button type="submit" class="btn btn-inverse">Simpan</button>
+                            <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                         </div>
                     </div>
                 </form>
