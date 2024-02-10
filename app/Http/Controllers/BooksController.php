@@ -289,13 +289,21 @@ class BooksController extends Controller
 		// Query untuk mendapatkan informasi peminjaman buku berdasarkan nomor buku
 		$result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
 			->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
-			->select('peminjaman_buku.nomor_buku', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota')
+			->select('peminjaman_buku.nomor_buku', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
 			->where('peminjaman_buku.nomor_buku', $nomorBuku)
-			->where('peminjaman_buku.status', 1) // Hanya buku yang sedang dipinjam (status = 1)
+			->whereIn('peminjaman_buku.status', [0, 1]) // Memilih buku dengan status 0 (pending) atau 1 (sedang dipinjam)
 			->get();
+
+		// Mengisi nilai default untuk status jika status null
+		foreach ($result as $item) {
+			if (is_null($item->status)) {
+				$item->status = -1; // Misalnya -1 sebagai nilai default
+			}
+		}
 
 		return response()->json($result);
 	}
+
 
 
 	public function BookByCategory($cat_id)

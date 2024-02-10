@@ -88,6 +88,7 @@
                                 <th>Nomor Buku</th>
                                 <th>Nomor Anggota</th>
                                 <th>Nama Anggota</th>
+                                <th>Status Buku</th>
                             </tr>
                         </thead>
                         <tbody id="issue-results"></tbody>

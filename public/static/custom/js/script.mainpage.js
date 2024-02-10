@@ -56,9 +56,23 @@ function findBorrowedBook(nomorBuku) {
                 );
             } else {
                 table.html("");
-                for (var issuedBooks in data) {
-                    var issuedBook = data[issuedBooks];
-                    table.append(default_tpl(issuedBook));
+                for (var i = 0; i < data.length; i++) {
+                    var issuedBook = data[i];
+
+                    if (issuedBook.status !== null) {
+                        statusText =
+                            issuedBook.status === 0 ? "Pending" : "Approved";
+                        statusClass =
+                            issuedBook.status === 0
+                                ? "badge-warning"
+                                : "badge-success";
+                    }
+
+                    issuedBook.statusText = statusText;
+                    issuedBook.statusClass = statusClass;
+
+                    var row = default_tpl(issuedBook);
+                    table.append(row);
                 }
             }
         },
@@ -107,6 +121,11 @@ function searchAnggotaByNumber(nomorAnggota) {
     });
 }
 
+function showAnggota(button) {
+    var idAnggota = $(button).data("id");
+    window.location.href = "/list-anggota/" + idAnggota;
+}
+
 $(document).ready(function () {
     $(".homepage-form-box").click(function () {
         var formid = $(this).attr("id");
@@ -137,6 +156,11 @@ $(document).ready(function () {
                 if (search_query != "") searchAnggotaByNumber(search_query);
                 break;
         }
+    });
+    $(".close-form").click(function () {
+        var form = $(this).parents(".module").find("form");
+        form.trigger("reset"); // Mengosongkan formulir
+        $(this).parents(".module").hide(); // Menyembunyikan modul
     });
 });
 
