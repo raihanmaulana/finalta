@@ -16,13 +16,14 @@
                         <label class="control-label">Kategori</label>
                         <div class="controls">
                             <input type="text" name="kategori" id="kategori" data-form-field="kategori"
-                                placeholder="Enter the kategori of the book here..." class="span8">
+                                placeholder="Masukkan kategori baru..." class="span8">
                         </div>
                     </div>
 
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-inverse" id="addbookcategory">Tambah Kategori</button>
+                            <button type="submit" class="btn btn-inverse span2" id="addbookcategory">Tambah</button>
+                            <a href="{{ URL::route('all-books') }}" class="btn btn-inverse span2">Batal</a>
                         </div>
                     </div>
                 </form>

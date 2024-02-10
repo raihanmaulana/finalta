@@ -12,11 +12,6 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('tidakaktif.index') }}">
-                    <i class="menu-icon icon-book"></i>Kelola Status Buku
-                </a>
-            </li>
-            <li>
                 <a href="{{ URL::route('list-anggota') }}">
                     <i class="menu-icon icon-group"></i>Kelola Anggota
                 </a>
@@ -28,28 +23,24 @@
             </li>
             <li>
                 <a href="{{ URL::route('admin.buku-dipinjam') }}">
-                    <i class="menu-icon icon-list-ul"></i>List Peminjam
+                    <i class="menu-icon icon-list-ul"></i>Daftar Peminjam
                 </a>
             </li>
             <li>
                 <a href="{{ URL::route('admin.buku-dikembalikan') }}">
-                    <i class="menu-icon icon-signout"></i>Pengembalian Buku
+                    <i class="menu-icon icon-signout"></i>Riwayat Peminjaman
                 </a>
             </li>
             <li>
                 <a href="{{ URL::route('guestbook.view') }}">
-                    <i class="menu-icon icon-list-ul"></i>Buku Tamu Umum
+                    <i class="menu-icon icon-list-ul"></i>Buku Tamu
                 </a>
             </li>
-            <li>
-                <a href="{{ URL::route('panel.bukutamuanggota') }}">
-                    <i class="menu-icon icon-list-ul"></i>Buku Tamu Anggota
-                </a>
-            </li>
-        </ul>
 
+        </ul>
+        {{-- 
         <ul class="widget widget-menu unstyled">
             <li><a href="{{ URL::route('account-sign-out') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
-        </ul>
+        </ul> --}}
     </div>
 </div>

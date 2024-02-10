@@ -17,9 +17,9 @@
                 </a>
             </li>
         </ul>
-
+        {{-- 
         <ul class="widget widget-menu unstyled">
             <li><a href="{{ URL::route('anggota.logout') }}"><i class="menu-icon icon-wrench"></i>Logout </a></li>
-        </ul>
+        </ul> --}}
     </div>
 </div>

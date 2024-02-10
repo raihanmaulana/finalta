@@ -9,7 +9,7 @@
                 <h3>Daftar Peminjam</h3>
             </div>
             <div class="module-body">
-                <table class="table table-striped">
+                <table class="table table-striped table-bordered table-condensed">
                     <thead>
                         <tr>
                             <th>No</th>
