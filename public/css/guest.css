@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+.text-shadow {
+    /* color: #1d67a1; */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Bayangan teks */
+}
+#header {
+    background-image: linear-gradient(
+            rgba(255, 255, 255, 0.9),
+            rgba(0, 0, 0, 0.7)
+        ),
+        url("images/bg5.jpg");
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+svg.wave {
+    position: absolute;
+    bottom: 0px;
+}
+@media (min-width: 768px) {
+    svg.wave {
+        display: block;
+    }
+}
+.middle {
+    display: flex;
+    flex-direction: column; /* Menetapkan tata letak menjadi satu kolom */
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+.middle h1 {
+    font-size: 48px;
+}
+
+.middle h1,
+.middle p,
+.middle button,
+.social-icons i {
+    margin-bottom: 16px; /* Ganti nilai ini sesuai kebutuhan Anda */
+}
+
+.social-container {
+    display: flex; /* Menggunakan flex container */
+    align-items: center; /* Memposisikan anak-anak secara vertikal di tengah */
+}
+
+.follow-container {
+    margin-right: 10px; /* Menambahkan jarak antara teks dan ikon */
+}
+
+.social-icons {
+    display: flex; /* Menggunakan flex container untuk ikon */
+    gap: 16px;
+}
+
+.follow-text {
+    margin: 0; /* Menghilangkan margin default pada teks */
+}
+
+.round {
+    border-radius: 16px; /* Atur radius border sesuai keinginan Anda */
+}

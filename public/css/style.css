@@ -29,7 +29,7 @@ dd {
 
 .page.page1 {
     /* Menentukan gambar latar belakang */
-    background-image: url("images/bg.jpg");
+    background-image: url("images/bg4.png");
     /* Menentukan gaya latar belakang */
     background-size: cover; /* Mengisi seluruh area dengan gambar */
     background-repeat: no-repeat; /* Menghindari pengulangan gambar */
