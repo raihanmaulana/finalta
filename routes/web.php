@@ -12,6 +12,7 @@
 */
 
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\GaleriController;
 use App\Http\Controllers\BukuTamuAnggotaController;
 use App\Http\Controllers\PeminjamanBukuController;
 use App\Http\Controllers\AnggotaController;
@@ -227,6 +228,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/find-issued-book/{nomorBuku}', 'BooksController@findBorrowedBook');
 	Route::get('/search-books/{judulBuku}', 'BooksController@cariBukubyJudulBuku');
+
+
+	Route::get('/contoh/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+	Route::get('/contoh/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
+	Route::post('/contoh/galeri', [GaleriController::class, 'store'])->name('galeri.store');
+
 
 
 
