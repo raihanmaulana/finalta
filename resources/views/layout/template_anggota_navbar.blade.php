@@ -9,7 +9,7 @@
                 <ul class="nav pull-right">
                     <li class="nav-user dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" style="margin-top: auto;">
-                            {{ auth()->user()->nama_anggota }}
+                            {{ auth()->user()->username }}
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">

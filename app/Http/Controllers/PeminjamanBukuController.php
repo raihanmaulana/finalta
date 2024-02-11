@@ -175,14 +175,18 @@ class PeminjamanBukuController extends Controller
                 return redirect()->back()->with('error', 'Buku tidak aktif dan tidak dapat dipinjam.');
             }
 
-            // Periksa stok buku
-            // if ($buku->stok <= 0) {
-            //     return redirect()->back()->with('error', 'Stok buku habis. Peminjaman tidak dapat dilakukan.');
-            // }
-
             // Periksa apakah buku tersedia
             if ($buku->tersedia <= 0) {
                 return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
+            }
+
+            // Periksa apakah anggota sudah memiliki peminjaman aktif
+            $peminjamanAktif = PeminjamanBuku::where('id_anggota', $anggota->id_anggota)
+                ->whereIn('status', [0, 1]) // Peminjaman dengan status pending atau disetujui
+                ->exists();
+
+            if ($peminjamanAktif) {
+                return redirect()->back()->with('error', 'Anggota sudah memiliki peminjaman aktif.');
             }
 
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan

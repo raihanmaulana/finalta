@@ -16,6 +16,7 @@ class AnggotaPerpustakaan extends Authenticatable
     protected $fillable = [
         'nama_anggota',
         'nomor_anggota',
+        'username',
         'email',
         'jurusan',
         'kelas',

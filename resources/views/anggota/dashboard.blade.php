@@ -8,7 +8,7 @@
             <h2>Perpustakaan SMA Negeri 1 Tunjungan</h2>
         </div>
         <div class="module-body text">
-            <h3>Selamat Datang, {{ Auth::user()->nama_anggota }}!</h3>
+            <h3>Selamat Datang, {{ Auth::user()->username }}!</h3>
             <p>Silahkan untuk meminjam buku pada tab Peminjaman Buku. Anda dapat memantau buku pada
                 tab Status
                 Peminjaman. Buku yang ingin dipinjam dapat diambil di Perpustakaan SMA Negeri 1 Tunjungan</p>
