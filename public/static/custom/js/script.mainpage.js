@@ -61,7 +61,9 @@ function findBorrowedBook(nomorBuku) {
 
                     if (issuedBook.status !== null) {
                         statusText =
-                            issuedBook.status === 0 ? "Pending" : "Approved";
+                            issuedBook.status === 0
+                                ? "Belum Disetujui"
+                                : "Sudah Disetujui";
                         statusClass =
                             issuedBook.status === 0
                                 ? "badge-warning"

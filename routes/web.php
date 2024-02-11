@@ -88,6 +88,7 @@ Route::middleware(['auth:anggota', 'anggota'])->group(function () {
 	Route::get('/anggota/profile', 'AnggotaController@showProfile')->name('anggota.profile');
 	Route::get('/anggota/profile/change-password', [AnggotaController::class, 'showChangePasswordForm'])->name('anggota.profile.change-password');
 	Route::post('/anggota/profile/change-password', [AnggotaController::class, 'changePassword'])->name('anggota.profile.change-password.post');
+	Route::get('/anggota/riwayat-peminjaman', 'AnggotaController@riwayatPeminjaman')->name('anggota.riwayat-peminjaman');
 
 	//Logout Anggota
 	Route::get('/anggota/logout', 'AnggotaAuthController@logout')->name('anggota.logout');

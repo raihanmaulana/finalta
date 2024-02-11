@@ -217,4 +217,20 @@ class AnggotaController extends Controller
             return response()->json([]);
         }
     }
+
+    public function riwayatPeminjaman()
+    {
+        $user = auth()->user();
+
+        // Pastikan user adalah anggota perpustakaan
+        if ($user && $user instanceof AnggotaPerpustakaan) {
+            // Ambil riwayat peminjaman buku dengan status 2 (dikembalikan)
+            $riwayatPeminjaman = $user->peminjaman()->where('status', 2)->latest()->paginate(10);
+
+            return view('anggota.riwayat_peminjaman', compact('riwayatPeminjaman'));
+        }
+
+        // Jika user bukan anggota perpustakaan, kembalikan ke halaman login
+        return redirect()->route('login')->with('error', 'Anda harus login sebagai anggota perpustakaan.');
+    }
 }
