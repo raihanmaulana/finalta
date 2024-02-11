@@ -209,4 +209,15 @@ class PeminjamanBukuController extends Controller
             return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
         }
     }
+
+    public function checkOverdueBooks()
+    {
+        $peminjaman = PeminjamanBuku::where('status', 1)
+            ->where('tanggal_peminjaman', '<=', now()->subDays(7)) // Masa pinjam 7 hari
+            ->get();
+
+        foreach ($peminjaman as $p) {
+            $p->update(['status' => 3]); // Mengubah status peminjaman menjadi 'Harap Dikembalikan'
+        }
+    }
 }
