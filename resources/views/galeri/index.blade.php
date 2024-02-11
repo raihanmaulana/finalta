@@ -1,18 +1,30 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Galeri</title>
-</head>
-
-<body>
-    <h2>Galeri</h2>
-    @foreach ($galeri as $item)
-    <div>
-        <h3>{{ $item->judul }}</h3>
-        <img src="{{ $item->gambar_galeri }}" alt="{{ $item->judul }}" width="300">
+@extends('public.index')
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/utama/galeri.css') }}" />
+<link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+@endsection
+@section('content')
+<div class="container px-3 pt-2 pb-5">
+    <p align="center">Dokumentasi Perpustakaan SMA Negeri 1 Tunjungan</p>
+    <div class="row">
+        @foreach ($galeri as $item)
+        <div class="column">
+            <h3>{{ $item->judul }}</h3>
+            <div class="span6">
+                <img src="{{ asset('storage/' . $item->gambar_galeri) }}" alt="Gambar Buku" style="max-width: 300px; max-height: 300px;">
+            </div>
+        </div>
+        @endforeach
     </div>
-    @endforeach
-</body>
-
-</html>
+    <div class="row">
+        <div class="column">
+            <img src="{{ asset('storage/' . $item->gambar_galeri) }}" alt="Gambar Buku" style="max-width: 300px; max-height: 300px;">
+        </div>
+        <div class="column">
+            <img src="{{ asset('storage/' . $item->gambar_galeri) }}" alt="Gambar Buku" style="max-width: 300px; max-height: 300px;">
+            <div class="column">
+                <img src="{{ asset('storage/' . $item->gambar_galeri) }}" alt="Gambar Buku" style="max-width: 300px; max-height: 300px;">
+            </div>
+        </div>
+    </div>
+    @endsection

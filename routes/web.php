@@ -26,6 +26,9 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
+Route::get('/dump/galeri', [GaleriController::class, 'index'])->name('galeri.index');
+
+
 Route::get('/', [BukuTamuController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
 // Keep the original guestbook route
 Route::post('/guestbook', [BukuTamuController::class, 'store'])->name('guestbook.store');
@@ -194,6 +197,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
 	Route::post('/admin/profile/change-password', [HomeController::class, 'changePassword'])->name('admin.profile.change-password.post');
 
+	Route::get('/dump/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
+	Route::post('/dump/galeri', [GaleriController::class, 'store'])->name('galeri.store');
+
 	// Render Guestbook View
 	Route::get('/bukutamu-umum', [BukuTamuController::class, 'viewbukutamuumum'])->name('bukutamuumum.view');
 	Route::get('/bukutamu', [BukuTamuController::class, 'viewbukutamu'])->name('bukutamu.view');
@@ -228,16 +234,6 @@ Route::group(['middleware' => ['auth']], function () {
 
 	Route::get('/find-issued-book/{nomorBuku}', 'BooksController@findBorrowedBook');
 	Route::get('/search-books/{judulBuku}', 'BooksController@cariBukubyJudulBuku');
-
-
-	Route::get('/contoh/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-	Route::get('/contoh/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
-	Route::post('/contoh/galeri', [GaleriController::class, 'store'])->name('galeri.store');
-
-
-
-
-
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 
 

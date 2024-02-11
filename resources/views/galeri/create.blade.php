@@ -2,14 +2,13 @@
 <html>
 
 <head>
-    <title>Unggah Gambar</title>
+    <title>Tambah Gambar Galeri</title>
 </head>
 
 <body>
-    <h2>Unggah Gambar</h2>
+    <h2>Tambah Gambar Galeri</h2>
     @if ($errors->any())
     <div>
-        <strong>Whoops!</strong> Ada masalah dengan inputan Anda.<br><br>
         <ul>
             @foreach ($errors->all() as $error)
             <li>{{ $error }}</li>
@@ -21,14 +20,16 @@
     <form action="{{ route('galeri.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div>
-            <strong>Judul:</strong>
-            <input type="text" name="judul" required>
+            <label for="judul">Judul Gambar:</label><br>
+            <input type="text" id="judul" name="judul"><br>
         </div>
         <div>
-            <strong>Gambar:</strong>
-            <input type="file" name="gambar_galeri" required>
+            <label for="gambar_galeri">Gambar:</label><br>
+            <input type="file" id="gambar_galeri" name="gambar_galeri"><br>
         </div>
-        <button type="submit">Unggah</button>
+        <div>
+            <button type="submit">Tambah Gambar</button>
+        </div>
     </form>
 </body>
 
