@@ -7,14 +7,7 @@
                 </h5>
             </div>
             <div class="col-6 text-end">
-                <a href="https://web.facebook.com/sman1tunjungan" title="Facebook"><i
-                        class="fa-brands fa-facebook fa-2xl" style="color: #0f7dd2;"></i></a>
-                <a href="https://twitter.com" title="Twitter"><i class="fa-brands fa-x-twitter fa-2xl"
-                        style="color: #101010;"></i></a>
-                <a href="https://www.instagram.com" title="Instagram"><i class="fab fa-instagram fa-2xl"
-                        style="color: #0f7dd2;"></i></a>
-                <a href="https://www.youtube.com" title="Youtube"><i class="fa-brands fa-youtube fa-2xl"
-                        style="color: #ff0000;"></i></a>
+
             </div>
         </div>
 

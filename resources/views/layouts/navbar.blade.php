@@ -1,4 +1,13 @@
 <!-- navbar -->
+<style>
+    .navbar {
+        font-size: 14px;
+    }
+
+    .btn {
+        font-size: 14px;
+    }
+</style>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
         <a class="navbar-brand" href="#">
