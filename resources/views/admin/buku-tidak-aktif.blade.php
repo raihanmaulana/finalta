@@ -36,26 +36,27 @@
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                         <th scope="col">No</th>
-                        <th scope="col">Image</th>
+                        <!-- <th scope="col">Image</th> -->
                         <th scope="col">Nomor Buku</th>
                         <th scope="col">Judul Buku</th>
                         <th scope="col">Penerbit</th>
                         <th scope="col">Pengarang</th>
                         <th scope="col">Tahun Terbit</th>
                         <th scope="col">Kategori</th>
+                        <th scope="col">Stok</th>
                         <th scope="col">Aksi</th>
                     </thead>
                     <tbody id="buku-tidak-aktif">
                         @forelse ($bukuTidakaktif as $books)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td><img src="{{ asset('storage/' . $books->image) }}" alt="Gambar Buku" style="max-width: 200px; max-height: 200px;"></td>
                             <td>{{ $books->nomor_buku }}</td>
                             <td class="align-middle">{{ $books->judul_buku }}</td>
                             <td>{{ $books->penerbit }}</td>
                             <td>{{ $books->pengarang }}</td>
                             <td>{{ $books->tahun_terbit }}</td>
                             <td>{{ $books->kategori->kategori }}</td>
+                            <td><a class="btn btn-warning">{{ $books->stok }}</td>
                             <td>
                                 <form action="{{ route('books.activate', $books->id_buku) }}" method="POST">
                                     @csrf
