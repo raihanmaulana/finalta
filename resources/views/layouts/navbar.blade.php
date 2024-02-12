@@ -7,6 +7,13 @@
     .btn {
         font-size: 14px;
     }
+
+    .navbar-nav li.active a {
+        font-weight: bold;
+        /* Atur gaya sesuai kebutuhan Anda */
+        color: black;
+        /* Atur warna sesuai kebutuhan Anda */
+    }
 </style>
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container">
@@ -19,17 +26,17 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="perpustakaan">Beranda</a>
+                <li class="nav-item" id="beranda">
+                    <a class="nav-link" aria-current="page" href="perpustakaan">Beranda</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="katalog">
                     <a class="nav-link" href="semuabuku">Katalog</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item" id="galeri">
                     <a class="nav-link" href="galeri">Galeri</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/contact.html">Contact</a>
+                <li class="nav-item" id="kontak">
+                    <a class="nav-link" href="kontak">Kontak</a>
                 </li>
             </ul>
             <form class="d-flex">
@@ -41,3 +48,29 @@
     </div>
 </nav>
 <!-- end -->
+
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Ambil path dari URL saat ini
+        var currentPath = window.location.pathname;
+
+        // Hapus karakter '/' pertama jika ada
+        currentPath = currentPath.replace(/^\/+/, '');
+
+        // Cek setiap elemen <li> pada navbar
+        $('.navbar-nav li').each(function() {
+            // Ambil href dari link dalam elemen <li>
+            var linkHref = $(this).find('a').attr('href');
+
+            // Hapus karakter '/' pertama jika ada
+            linkHref = linkHref.replace(/^\/+/, '');
+
+            // Bandingkan dengan path saat ini
+            if (linkHref === currentPath) {
+                // Jika cocok, tambahkan kelas 'active'
+                $(this).addClass('active');
+            }
+        });
+    });
+</script>
