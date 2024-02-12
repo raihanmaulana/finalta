@@ -46,8 +46,8 @@
                         </tr>
                         @endif
                         @empty
-                        <tr class="text-center">
-                            <td colspan="4">Tidak ada Peminjaman.</td>
+                        <tr>
+                            <td colspan="10" class="text-center">Tidak ada peminjaman</td>
                         </tr>
                         @endforelse
                     </tbody>
