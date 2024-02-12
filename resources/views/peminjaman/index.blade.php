@@ -14,7 +14,7 @@
     <link rel="icon" href="{{ asset('css/images/logo.png') }}" type="image/x-icon">
     <link rel="canonical" href="" />
 
-    <title>Online Library Management System</title>
+    <title>Perpustakaan SMAN 1 Tunjungan</title>
 
     <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link type="text/css" href="{{ asset('static/bootstrap/css/bootstrap-responsive.min.css') }}" rel="stylesheet">
