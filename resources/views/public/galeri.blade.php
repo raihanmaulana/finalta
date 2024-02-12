@@ -1,7 +1,6 @@
 @extends('public.index')
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/utama/galeri.css') }}" />
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/galeri.css') }}" />
 @endsection
 @section('content')
     <div class="container px-3 pt-2 pb-5">

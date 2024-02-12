@@ -8,10 +8,10 @@
     <section id ="katalog" class="py-5">
         <div class="container">
             <div class="title text-center">
-                <h2 class="position-relative d-inline-block mb-3">Katalog Buku</h2>
+                <h2 class="position-relative d-inline-block mb-3" data-aos="fade-right">Katalog Buku</h2>
             </div>
             <!-- Form Pencarian -->
-            <form action="{{ route('cari-buku') }}" method="GET" class="custom-form mb-0 mx-auto">
+            <form action="{{ route('cari-buku') }}" method="GET" class="custom-form mb-0 mx-auto" data-aos="fade-left">
                 <div class="input-group">
                     <input type="text" name="keyword" class="form-control" placeholder="Cari buku..."
                         aria-label="Search">
@@ -23,7 +23,7 @@
             @else
                 <!-- end header -->
                 <div class="row g-0">
-                    <div class="d-flex flex-wrap justify-content-center mt-3">
+                    <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
                         <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
                         <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
                         <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
@@ -33,7 +33,7 @@
 
                 <div class="collection-list mt-4 row gx-0 gy-3">
                     @foreach ($books as $book)
-                        <div class="col-6 col-md-4 col-lg-2 col-xl-2">
+                        <div class="col-6 col-md-4 col-lg-2 col-xl-2" data-aos="zoom-in-up">
                             <div class="card text-center" style="width: 170px;">
                                 <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}"
                                     class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;"
