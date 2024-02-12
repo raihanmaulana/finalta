@@ -84,69 +84,70 @@
             @endif
         </div>
 </section>
+
 <!-- jquery -->
 <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
-<!-- boostrap js and popper -->
+<!-- bootstrap js and popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-    </script>
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-    </script>
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
 <!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
-    // Fungsi untuk menampilka        rd deta        uku
-    functio tail(bu
-            const detailCard = document.get yId("detail                    detai        d.s        .display = "
-                k ";         }
+    // Fungsi untuk menampilkan detail buku
+    function showBookDetails(bookId) {
+        const detailCard = document.getElementById("detailModal" + bookId);
+        detailCard.style.display = "block";
+    }
 
-    // Fungsi        uk menyembunyikan card d               uku
-    function hideDet
-                const detai document.getElementById(
-        "detail                            detailCard.style.display =         e               }
+    // Fungsi untuk menyembunyikan card detail buku
+    function hideDetails() {
+        const detailCard = document.getElementById("detailModal" + bookId);
+        detailCard.style.display = "none";
+    }
 
-                    // Fungsi u            akukan pencari        uku
-                    f searchBo // Ambil nilai input pe                    var sear            = document.getElement            archInput').value.toLowerC                               Ambil daft                    var        ks = {
-    !!$ s!!
-                };
+    // Fungsi untuk melakukan pencarian buku
+    function searchBooks() {
+        // Ambil nilai input pencarian
+        var searchInput = document.getElementById('searchInput').value.toLowerCase();
+        // Ambil daftar buku
+        var books = {!!$books!!};
+    // Filter buku berdasarkan input
+    var filteredBooks = books.filter(function (book) {
+        return book.judul_buku.toLowerCase().includes(searchInput);
+    });
 
-    /             buku berdasarka        dul
-    var filteredBooks = books.fi(func(
-                        return.judul_buku.toLowerCase().includes(s h y);
-                    );
+    // Tampilkan hasil pencarian
+    displayBooks(filteredBooks);
+    }
 
-                    // Tampilk        asil pe        ian
-                    displayB teredBooks);
-            }
+    // Fungsi untuk menampilkan daftar buku
+    function displayBooks(books) {
+        var bookListContainer = document.getElementById('bookContainer');
+        bookListContainer.innerHTML = "";
+        // Tampilkan buku yang telah difilter
+        books.forEach(function (book) {
+            var html = '
+                < div class="col-6 col-md-4 col-lg-2" >
+                    <div class="card h-100">
+                        <img src="${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}" class="card-img-top mt-3 mx-auto" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal${book.id_buku}">
+                            <div class="card-body text-center">
+                                <h6 class="card-title">${book.judul_buku}</h6>
+                                <button class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#detailModal${book.id_buku}" onclick="showBookDetails('${book.id_buku}')">Detail</button>
+                            </div>
+                    </div>
+                </div > ';
+            bookListContainer.innerHTML += html;
+        });
+    }
 
-    // Fungsi untuk menampilkan daft             ku
-    function displayBooks(b var bookListContainer = documen mentById(
-        'bookntainer.innerHTML  // Tampilkan buku yang telah d                    books.forEach(function (                        var html = ` <
-                    div class = "col-6 col-md-4 col-lg-2" >
-        <
-                    div class="card h-100" >
-            <
-                img src="${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
-                class="card-img-top mt-3 mx-auto"
-                alt="Book Image"
-                data - bs - toggle = "modal"
-            data - bs - target = "#detailModal${book.id_buku}" >
-            <
-                    div class="card-body text-center" >
-                <
-                    h6 class="card-title" > $ {
-                        book.judul_buku
-                    } < /h6> <
-                        button class="btn btn-dark"
-                        data - bs - toggle = "modal"
-                    data - bs - target = "#detailModal${book.id_buku}"
-                    onclick = "showBookDetai                d_buku}')" > Detail < /button>
-                    div < /div> < /
-                    div > bookListContainer.innerHTML +
-                }
-                    document.getElementById('searchInput').addEventListener('input', searchBooks);
+    // Tambahkan event listener untuk input pencarian
+    document.getElementById('searchInput').addEventListener('input', searchBooks);
 </script>
+
 @endsection
