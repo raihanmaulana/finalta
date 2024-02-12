@@ -5,11 +5,13 @@
 @endsection
 
 @section('content')
+
 <section id="katalog" class="py-5">
     <div class="container">
         <div class="title text-center">
             <h2 class="position-relative d-inline-block mb-3" data-aos="fade-right">Katalog Buku</h2>
         </div>
+
         <!-- Form Pencarian -->
         <form action="{{ route('cari-buku') }}" method="GET" class="custom-form mb-0 mx-auto" data-aos="fade-left">
             <div class="input-group">
@@ -20,7 +22,9 @@
         @if ($books->isEmpty())
         <p>Tidak ada buku.</p>
         @else
+
         <!-- end header -->
+
         <div class="row g-0">
             <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
                 <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
@@ -34,12 +38,16 @@
             @foreach ($books as $book)
             <div class="col-6 col-md-4 col-lg-2 col-xl-2" data-aos="zoom-in-up">
                 <div class="card text-center" style="width: 170px;">
-                    <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}" class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}">
+                    <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}"
+                        class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image"
+                        data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}">
                     <div class="card-body px-2 pt-1 pb-2">
                         <p class="card-title" style="max-height: 20px; overflow: hidden;">
                             {{ $book->judul_buku }}
                         </p>
-                        <button class="btn btn-dark" style="font-size: 12px; padding: 5px 10px;" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}" onclick="showBookDetails('{{ $book->id_buku }}')">Detail</button>
+                        <button class="btn btn-dark" style="font-size: 12px; padding: 5px 10px;" data-bs-toggle="modal"
+                            data-bs-target="#detailModal{{ $book->id_buku }}"
+                            onclick="showBookDetails('{{ $book->id_buku }}')">Detail</button>
                     </div>
                 </div>
             </div>
@@ -60,7 +68,8 @@
                             <p>Deskripsi: {{ $book->deskripsi }}</p>
                             <!-- Gambar buku -->
                             @if ($book->image)
-                            <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;">
+                            <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku"
+                                style="max-width: 100px; max-height: 100px;">
                             @else
                             No Image
                             @endif
@@ -78,12 +87,15 @@
 <!-- jquery -->
 <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
 <!-- boostrap js and popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
-</script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
-</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous">
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
+    </script>
 <!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
     // Fungsi untuk menampilka        rd deta        uku
@@ -91,18 +103,18 @@
             const detailCard = document.get yId("detail                    detai        d.s        .display = "
                 k ";         }
 
-                // Fungsi        uk menyembunyikan card d               uku
-                function hideDet
+    // Fungsi        uk menyembunyikan card d               uku
+    function hideDet
                 const detai document.getElementById(
-                    "detail                            detailCard.style.display =         e               }
+        "detail                            detailCard.style.display =         e               }
 
                     // Fungsi u            akukan pencari        uku
                     f searchBo // Ambil nilai input pe                    var sear            = document.getElement            archInput').value.toLowerC                               Ambil daft                    var        ks = {
-                    !!$ s!!
+    !!$ s!!
                 };
 
-                /             buku berdasarka        dul
-                var filteredBooks = books.fi(func(
+    /             buku berdasarka        dul
+    var filteredBooks = books.fi(func(
                         return.judul_buku.toLowerCase().includes(s h y);
                     );
 
@@ -110,32 +122,31 @@
                     displayB teredBooks);
             }
 
-            // Fungsi untuk menampilkan daft             ku
-            function displayBooks(b
-                var bookListContainer = documen mentById(
-                    'book                                  ntainer.innerHTML                    // Tampilkan buku yang telah d                    books.forEach(function (                        var html = ` <
+    // Fungsi untuk menampilkan daft             ku
+    function displayBooks(b var bookListContainer = documen mentById(
+        'bookntainer.innerHTML  // Tampilkan buku yang telah d                    books.forEach(function (                        var html = ` <
                     div class = "col-6 col-md-4 col-lg-2" >
-                    <
-                    div class = "card h-100" >
-                    <
-                    img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
-                    class = "card-img-top mt-3 mx-auto"
-                    alt = "Book Image"
-                    data - bs - toggle = "modal"
-                    data - bs - target = "#detailModal${book.id_buku}" >
-                    <
-                    div class = "card-body text-center" >
-                    <
-                    h6 class = "card-title" > $ {
+        <
+                    div class="card h-100" >
+            <
+                img src="${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
+                class="card-img-top mt-3 mx-auto"
+                alt="Book Image"
+                data - bs - toggle = "modal"
+            data - bs - target = "#detailModal${book.id_buku}" >
+            <
+                    div class="card-body text-center" >
+                <
+                    h6 class="card-title" > $ {
                         book.judul_buku
                     } < /h6> <
-                    button class = "btn btn-dark"
-                    data - bs - toggle = "modal"
+                        button class="btn btn-dark"
+                        data - bs - toggle = "modal"
                     data - bs - target = "#detailModal${book.id_buku}"
                     onclick = "showBookDetai                d_buku}')" > Detail < /button>
                     div < /div> < /
                     div > bookListContainer.innerHTML +
                 }
-                document.getElementById('searchInput').addEventListener('input', searchBooks);
+                    document.getElementById('searchInput').addEventListener('input', searchBooks);
 </script>
 @endsection
