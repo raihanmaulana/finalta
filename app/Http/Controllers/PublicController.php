@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Buku;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -15,8 +16,9 @@ class PublicController extends Controller
     public function semuabuku()
     {
         $books = Buku::all();
+        $kategoriBuku = Kategori::all();
 
-        return view('public.semuabuku', compact('books'));
+        return view('public.semuabuku', compact('books', 'kategoriBuku'));
     }
 
     public function galeri()
@@ -35,5 +37,16 @@ class PublicController extends Controller
             ->get();
 
         return view('public.semuabuku', compact('books', 'keyword'));
+    }
+
+    public function filterByCategory($kategori)
+    {
+        // Ambil buku berdasarkan kategori yang dipilih
+        $books = Buku::whereHas('kategori', function ($query) use ($kategori) {
+            $query->where('kategori', $kategori);
+        })->get();
+
+        // Kembalikan tampilan buku yang difilter
+        return view('public.filteredbooks', compact('books'));
     }
 }

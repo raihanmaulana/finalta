@@ -237,6 +237,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/search-books/{judulBuku}', 'BooksController@cariBukubyJudulBuku');
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 
+	Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
+
 
 
 	// Sign out (GET) 
