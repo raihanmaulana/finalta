@@ -21,18 +21,16 @@
         <p>Tidak ada buku.</p>
         @else
         <!-- end header -->
-        <div class="row g-0">
-            <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-            </div>
+        <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
+            <button type="button" class="btn btn-outline-dark round m-2" onclick="showAllBooks()">Semua Kategori</button>
+            @foreach ($kategoriBuku as $kategori)
+            <button type="button" class="btn btn-outline-dark round m-2" onclick="filterByCategory('{{ $kategori->kategori }}')">{{ $kategori->kategori }}</button>
+            @endforeach
         </div>
 
-        <div class="collection-list mt-4 row gx-0 gy-3">
+        <div class="collection-list mt-4 row gx-0 gy-3" id="bookCollection">
             @foreach ($books as $book)
-            <div class="col-6 col-md-4 col-lg-2 col-xl-2" data-aos="zoom-in-up">
+            <div class="col-6 col-md-4 col-lg-2 col-xl-2 book" data-aos="zoom-in-up">
                 <div class="card text-center" style="width: 170px;">
                     <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}" class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}">
                     <div class="card-body px-2 pt-1 pb-2">
@@ -57,6 +55,7 @@
                             <p>Penerbit: {{ $book->penerbit }}</p>
                             <p>Pengarang: {{ $book->pengarang }}</p>
                             <p>Tahun Terbit: {{ $book->tahun_terbit }}</p>
+                            <p>Kategori : {{ $book->kategori->kategori }}</p>
                             <p>Deskripsi: {{ $book->deskripsi }}</p>
                             <!-- Gambar buku -->
                             @if ($book->image)
@@ -72,9 +71,29 @@
                 </div>
             </div>
             @endforeach
-            @endif
         </div>
+        @endif
+    </div>
 </section>
+
+<!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function filterByCategory(kategori) {
+        // Mengirimkan permintaan AJAX ke URL yang sesuai dengan kategori yang dipilih
+        $.ajax({
+            type: 'GET',
+            url: '/books/by-category/' + kategori,
+            success: function(response) {
+                // Mengganti isi dari div dengan id 'bookCollection' dengan data buku yang baru
+                $('#bookCollection').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
 <!-- jquery -->
 <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
 <!-- boostrap js and popper -->
@@ -137,5 +156,23 @@
                     div > bookListContainer.innerHTML +
                 }
                 document.getElementById('searchInput').addEventListener('input', searchBooks);
+</script>
+<script>
+    function filterBooks(kategori) {
+        // Ambil semua elemen buku
+        var books = document.getElementsByClassName('book');
+
+        // Loop melalui semua elemen buku
+        for (var i = 0; i < books.length; i++) {
+            var book = books[i];
+
+            // Jika kategori buku tidak sama dengan kategori yang dipilih atau 'Semua' yang dipilih, sembunyikan buku tersebut
+            if (kategori !== 'Semua' && book.dataset.kategori !== kategori) {
+                book.style.display = 'none';
+            } else {
+                book.style.display = 'block'; // Tampilkan buku jika sesuai dengan kategori yang dipilih
+            }
+        }
+    }
 </script>
 @endsection
