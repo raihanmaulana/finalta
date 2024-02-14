@@ -49,6 +49,9 @@ svg.wave {
     margin-bottom: 16px; /* Ganti nilai ini sesuai kebutuhan Anda */
 }
 
+.slide-container {
+    max-width: 1000px;
+}
 .social-container {
     display: flex; /* Menggunakan flex container */
     align-items: center; /* Memposisikan anak-anak secara vertikal di tengah */
@@ -99,4 +102,20 @@ svg.wave {
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     transition: transform 0.6s ease-in-out;
+}
+
+/* Custom CSS for displaying books in a single row */
+#bookCollection {
+    display: flex;
+    overflow-x: auto;
+    /* Allow horizontal scrolling if books exceed the container width */
+    padding-bottom: 10px;
+    /* Add some bottom padding to separate from other content */
+}
+
+.book {
+    flex: 0 0 auto;
+    /* Let the book cards shrink or grow to fit the available space */
+    margin-right: 10px;
+    /* Add some right margin to separate the books */
 }

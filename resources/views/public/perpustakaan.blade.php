@@ -1,8 +1,53 @@
-@extends('public.index') <!-- Meng-extend template utama -->
+@extends('public.index')
 
 @section('css')
 <!-- Konten CSS spesifik untuk halaman ini -->
 <link rel="stylesheet" href="{{ asset('css/guest.css') }}" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    html,
+    body {
+        position: relative;
+        height: 100%;
+    }
+
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color: #000;
+        margin: 0;
+        padding: 0;
+    }
+
+    .swiper {
+        width: 100%;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
+
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 300px;
+        height: 330px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(360, 360, 360, 0.01);
+        /* Nilai Alpha 0.5 membuatnya 50% transparan */
+    }
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+    }
+
+    .swiper-container {
+        display: flex;
+        justify-content: center;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -14,34 +59,32 @@
             <h1 class="text-black text-shadow fw-bold text-center">Selamat Datang!</h1>
             <p class="text-shadow">Perpustakaan SMA Negeri 1 Tunjungan</p>
 
-            <div class="card round">
-                <div class="card-body">
-                    <div class="social-container">
-                        <div class="follow-container">
-                            <p class="follow-text"><small>Ikuti Kami :</small></p>
-                        </div>
-                        <div class="social-icons">
-                            <a href="https://web.facebook.com/sman1tunjungan" title="Facebook"><i
-                                    class="fa-brands fa-facebook fa-2xl" style="color: #0f7dd2;"></i></a>
-                            <a href="https://twitter.com" title="Twitter"><i class="fa-brands fa-x-twitter fa-2xl"
-                                    style="color: #101010;"></i></a>
-                            <a href="https://www.instagram.com" title="Instagram"><i class="fab fa-instagram fa-2xl"
-                                    style="color: #ac2bac;"></i></a>
-                            <a href="https://www.youtube.com" title="Youtube"><i class="fa-brands fa-youtube fa-2xl"
-                                    style="color: #ff0000;"></i></a>
+            <!-- Perbaikan disini: ubah kelas dari slide-container swiper menjadi hanya swiper -->
+            <div class="swiper">
+                <div class="slide-content swiper-wrapper">
+                    @foreach ($books as $book)
+                    <div class="card swiper-slide">
+                        <div class="collection-list mt-4" id="bookCollection">
+                            <div class="book" data-aos="zoom-in-up">
+                                <div class="card text-center" style="width: 170px;">
+                                    <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}"
+                                        class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;"
+                                        alt="Book Image" data-bs-toggle="modal"
+                                        data-bs-target="#detailModal{{ $book->id_buku }}">
+                                    <div class="card-body px-2 pt-1 pb-2">
+                                        <p class="card-title" style="max-height: 20px; overflow: hidden;">
+                                            {{ $book->judul_buku }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
-
-
         </div>
     </div>
-    <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-        <path fill="#fff" fill-opacity="1"
-            d="M0,192L60,181.3C120,171,240,149,360,133.3C480,117,600,107,720,106.7C840,107,960,117,1080,122.7C1200,128,1320,128,1380,128L1440,128L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
-        </path>
-    </svg>
 </section>
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -49,4 +92,32 @@
     integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous">
     </script>
 <!-- end -->
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper(".swiper", {
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: {
+            delay: 2500,
+            disableOnInteraction: false,
+        },
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        coverflowEffect: {
+            rotate: 50,
+            stretch: 0,
+            depth: 100,
+            modifier: 1,
+            slideShadows: true,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+        },
+    });
+</script>
 @endsection

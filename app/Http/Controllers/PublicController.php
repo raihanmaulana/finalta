@@ -10,7 +10,8 @@ class PublicController extends Controller
 {
     public function perpustakaan()
     {
-        return view('public.perpustakaan');
+        $books = Buku::all();
+        return view('public.perpustakaan', compact('books'));
     }
 
     public function semuabuku()

@@ -1,4 +1,4 @@
-@extends('public.index') <!-- Meng-extend template utama -->
+@extends('public.index')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/katalog.css') }}" />
@@ -37,12 +37,16 @@
             @foreach ($books as $book)
             <div class="col-6 col-md-4 col-lg-2 col-xl-2 book" data-aos="zoom-in-up">
                 <div class="card text-center" style="width: 170px;">
-                    <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}" class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}">
+                    <img src="{{ $book->image ? asset('storage/' . $book->image) : 'img/130x190.png' }}"
+                        class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image"
+                        data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}">
                     <div class="card-body px-2 pt-1 pb-2">
                         <p class="card-title" style="max-height: 20px; overflow: hidden;">
                             {{ $book->judul_buku }}
                         </p>
-                        <button class="btn btn-dark" style="font-size: 12px; padding: 5px 10px;" data-bs-toggle="modal" data-bs-target="#detailModal{{ $book->id_buku }}" onclick="showBookDetails('{{ $book->id_buku }}')">Detail</button>
+                        <button class="btn btn-dark" style="font-size: 12px; padding: 5px 10px;" data-bs-toggle="modal"
+                            data-bs-target="#detailModal{{ $book->id_buku }}"
+                            onclick="showBookDetails('{{ $book->id_buku }}')">Detail</button>
                     </div>
                 </div>
             </div>
@@ -64,7 +68,8 @@
                             <p>Deskripsi: {{ $book->deskripsi }}</p>
                             <!-- Gambar buku -->
                             @if ($book->image)
-                            <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;">
+                            <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku"
+                                style="max-width: 100px; max-height: 100px;">
                             @else
                             No Image
                             @endif
@@ -83,9 +88,15 @@
 <!-- jquery -->
 <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
 <!-- bootstrap js and popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
 <!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
     // Fungsi untuk menampilkan detail buku
@@ -107,14 +118,14 @@
         // Ambil daftar buku
         var books = {
             !!$books!!
-        };
-        // Filter buku berdasarkan input
-        var filteredBooks = books.filter(function(book) {
-            return book.judul_buku.toLowerCase().includes(searchInput);
-        });
+    };
+    // Filter buku berdasarkan input
+    var filteredBooks = books.filter(function (book) {
+        return book.judul_buku.toLowerCase().includes(searchInput);
+    });
 
-        // Tampilkan hasil pencarian
-        displayBooks(filteredBooks);
+    // Tampilkan hasil pencarian
+    displayBooks(filteredBooks);
     }
 
     // Fungsi untuk menampilkan daftar buku
@@ -122,35 +133,35 @@
         var bookListContainer = document.getElementById('bookContainer');
         bookListContainer.innerHTML = "";
         // Tampilkan buku yang telah difilter
-        books.forEach(function(book) {
+        books.forEach(function (book) {
             var html = ' <
                 div class = "col-6 col-md-4 col-lg-2" >
                 <
-                div class = "card h-100" >
-                <
-                img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
-            class = "card-img-top mt-3 mx-auto"
-            alt = "Book Image"
-            data - bs - toggle = "modal"
-            data - bs - target = "#detailModal${book.id_buku}" >
-                <
-                div class = "card-body text-center" >
-                <
-                h6 class = "card-title" > $ {
-                    book.judul_buku
-                } < /h6> <
-                button class = "btn btn-dark"
-            data - bs - toggle = "modal"
-            data - bs - target = "#detailModal${book.id_buku}"
-            onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> <
+                div class="card h-100" >
+                    <
+                        img src="${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
+                        class="card-img-top mt-3 mx-auto"
+                        alt="Book Image"
+                        data - bs - toggle = "modal"
+                    data - bs - target = "#detailModal${book.id_buku}" >
+                    <
+                div class="card-body text-center" >
+                        <
+                h6 class="card-title" > $ {
+                                book.judul_buku
+                            } < /h6> <
+                                button class="btn btn-dark"
+                                data - bs - toggle = "modal"
+                            data - bs - target = "#detailModal${book.id_buku}"
+                            onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> <
                 /div> <
                 /div> <
                 /div > ';
-            bookListContainer.innerHTML += html;
+                            bookListContainer.innerHTML += html;
         });
     }
 
-    // Tambahkan event listener untuk input pencarian
-    document.getElementById('searchInput').addEventListener('input', searchBooks);
+                            // Tambahkan event listener untuk input pencarian
+                            document.getElementById('searchInput').addEventListener('input', searchBooks);
 </script>
 @endsection
