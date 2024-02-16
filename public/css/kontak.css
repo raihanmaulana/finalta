@@ -1,0 +1,8 @@
+.home {
+    position: relative;
+    z-index: 1; /* Nilai ini bisa disesuaikan berdasarkan kebutuhan */
+}
+.home img,
+.home p {
+    position: relative; /* atau position: static; */
+}
