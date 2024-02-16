@@ -19,7 +19,7 @@
     background-position: center;
     background-size: cover;
     width: 100%;
-    height: 100vh;
+    height: 50vh;
     position: relative;
 }
 svg.wave {
@@ -36,7 +36,7 @@ svg.wave {
     flex-direction: column; /* Menetapkan tata letak menjadi satu kolom */
     justify-content: center;
     align-items: center;
-    height: 80vh;
+    height: 50vh;
 }
 .middle h1 {
     font-size: 48px;

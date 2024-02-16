@@ -27,6 +27,11 @@ class PublicController extends Controller
 
         return view('public.galeri');
     }
+    public function kontak()
+    {
+
+        return view('public.kontak');
+    }
 
     public function searchBooks(Request $request)
     {

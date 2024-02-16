@@ -47,6 +47,7 @@ Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('pe
 Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
 Route::get('/katalog', [PublicController::class, 'semuabuku'])->name('semuabuku');
 Route::get('/galeri', [PublicController::class, 'galeri'])->name('galeri');
+Route::get('/kontak', [PublicController::class, 'kontak'])->name('kontak');
 
 Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 
@@ -114,26 +115,30 @@ Route::group(array('before' => 'guest'), function () {
 		Route::post('/create', array(
 			'as' => 'account-create-post',
 			'uses' => 'AccountController@postCreate'
-		));
+		)
+		);
 
 		// Sign in (POST) 
 		Route::post('/sign-in', array(
 			'as' => 'account-sign-in-post',
 			'uses' => 'AccountController@postSignIn'
-		));
+		)
+		);
 	});
 
 	// Sign in (GET) 
 	Route::get('/signin', array(
-		'as' 	=> 'account-sign-in',
-		'uses'	=> 'AccountController@getSignIn'
-	));
+		'as' => 'account-sign-in',
+		'uses' => 'AccountController@getSignIn'
+	)
+	);
 
 	// Create an account (GET) 
 	Route::get('/create', array(
-		'as' 	=> 'account-create',
-		'uses' 	=> 'AccountController@getCreate'
-	));
+		'as' => 'account-create',
+		'uses' => 'AccountController@getCreate'
+	)
+	);
 
 
 
@@ -141,7 +146,8 @@ Route::group(array('before' => 'guest'), function () {
 	Route::get('/book', array(
 		'as' => 'search-book',
 		'uses' => 'BooksController@searchBook'
-	));
+	)
+	);
 
 	Route::post('book/create', [BooksController::class, 'store'])->name('book.store');
 });
@@ -155,20 +161,23 @@ Route::group(['middleware' => ['auth']], function () {
 
 	// Home Page of Control Panel
 	Route::get('/home', array(
-		'as' 	=> 'home',
-		'uses'	=> 'HomeController@home'
-	));
+		'as' => 'home',
+		'uses' => 'HomeController@home'
+	)
+	);
 
 	// Render Add Books panel
 	Route::get('/add-books', array(
 		'as' => 'add-books',
 		'uses' => 'BooksController@renderAddBooks'
-	));
+	)
+	);
 
 	Route::get('/add-book-category', array(
 		'as' => 'add-book-category',
 		'uses' => 'BooksController@renderAddBookCategory'
-	));
+	)
+	);
 
 	Route::post('/kategoribuku', 'BooksController@KategoriBukuStore')->name('bookcategory.store');
 
@@ -177,13 +186,15 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/all-books', array(
 		'as' => 'all-books',
 		'uses' => 'BooksController@renderAllBooks'
-	));
+	)
+	);
 
 
 	Route::get('/bookBycategory/{cat_id}', array(
 		'as' => 'bookBycategory',
 		'uses' => 'BooksController@BookByCategory'
-	));
+	)
+	);
 
 	Route::get('/list-anggota/{id}/edit', 'HomeController@editAnggota')->name('list-anggota-edit');
 	Route::put('/list-anggota/{id}', 'HomeController@updateAnggota')->name('list-anggota-updateAnggota');
@@ -245,6 +256,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/sign-out', array(
 		'as' => 'account-sign-out',
 		'uses' => 'AccountController@getSignOut'
-	));
+	)
+	);
 });
 Auth::routes();
