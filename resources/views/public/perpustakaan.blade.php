@@ -47,6 +47,7 @@ body {
     display: flex;
     justify-content: center;
 }
+
 </style>
 @endsection
 
@@ -160,11 +161,12 @@ body {
 <span class="ms-3"></span>
 
     
-    <h2 class="text-black text-shadow fw-semibold text-center">Video Profile </h2>
-    <h3 class="text-black text-shadow text-center">Perpustakaan Yasa Waskitha SMA N 1 Tunjungan</h3>
-    <span class="ms-3"></span>
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/C5tpb_zMOus" frameborder="0" allowfullscreen style="display: block; margin: 0 auto;"></iframe>
-    <span class="ms-3"></span>
+<h2 class="text-black text-shadow fw-semibold text-center">Video Profile </h2>
+<h3 class="text-black text-shadow text-center">Perpustakaan Yasa Waskitha SMA N 1 Tunjungan</h3>
+<div class="video-container">
+    <iframe src="https://www.youtube.com/embed/C5tpb_zMOus" frameborder="0" allowfullscreen></iframe>
+</div>
+
 
 <!-- Option 1: Bootstrap Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
@@ -186,8 +188,8 @@ body {
         effect: "coverflow",
         grabCursor: true,
         centeredSlides: true,
-        slidesPerView: 5, // Menampilkan 10 gambar
-        loop: true, // Menyimpan loop aktif
+        slidesPerView: "auto",
+        loop: true,
         coverflowEffect: {
             rotate: 50,
             stretch: 0,

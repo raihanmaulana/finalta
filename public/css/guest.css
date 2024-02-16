@@ -73,7 +73,22 @@ svg.wave {
 .round {
     border-radius: 16px; /* Atur radius border sesuai keinginan Anda */
 }
+.video-container {
+    position: relative;
+    display: block;
+    width: 60%;
+    margin: 0 auto; /* Posisikan ke tengah secara horizontal */
+    padding-bottom: 35%; /* Untuk rasio aspek 16:9 */
+    overflow: hidden;
+}
 
+.video-container iframe {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    max-width: 122vh;
+    max-height: 70vh;
+}
 .carousel {
     position: relative;
 }
