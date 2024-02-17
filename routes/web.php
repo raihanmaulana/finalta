@@ -27,7 +27,7 @@ Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->
 Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
 Route::get('/dump/galeri', [GaleriController::class, 'index'])->name('galeri.index');
-
+Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
 
 Route::get('/', [BukuTamuController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
 // Keep the original guestbook route
@@ -112,41 +112,51 @@ Route::group(array('before' => 'guest'), function () {
 	Route::group(array('before' => 'csrf'), function () {
 
 		// Create an account (POST) 
-		Route::post('/create', array(
-			'as' => 'account-create-post',
-			'uses' => 'AccountController@postCreate'
-		)
+		Route::post(
+			'/create',
+			array(
+				'as' => 'account-create-post',
+				'uses' => 'AccountController@postCreate'
+			)
 		);
 
 		// Sign in (POST) 
-		Route::post('/sign-in', array(
-			'as' => 'account-sign-in-post',
-			'uses' => 'AccountController@postSignIn'
-		)
+		Route::post(
+			'/sign-in',
+			array(
+				'as' => 'account-sign-in-post',
+				'uses' => 'AccountController@postSignIn'
+			)
 		);
 	});
 
 	// Sign in (GET) 
-	Route::get('/signin', array(
-		'as' => 'account-sign-in',
-		'uses' => 'AccountController@getSignIn'
-	)
+	Route::get(
+		'/signin',
+		array(
+			'as' => 'account-sign-in',
+			'uses' => 'AccountController@getSignIn'
+		)
 	);
 
 	// Create an account (GET) 
-	Route::get('/create', array(
-		'as' => 'account-create',
-		'uses' => 'AccountController@getCreate'
-	)
+	Route::get(
+		'/create',
+		array(
+			'as' => 'account-create',
+			'uses' => 'AccountController@getCreate'
+		)
 	);
 
 
 
 	// Render search books panel
-	Route::get('/book', array(
-		'as' => 'search-book',
-		'uses' => 'BooksController@searchBook'
-	)
+	Route::get(
+		'/book',
+		array(
+			'as' => 'search-book',
+			'uses' => 'BooksController@searchBook'
+		)
 	);
 
 	Route::post('book/create', [BooksController::class, 'store'])->name('book.store');
@@ -160,40 +170,50 @@ Route::resource('/books', 'BooksController');
 Route::group(['middleware' => ['auth']], function () {
 
 	// Home Page of Control Panel
-	Route::get('/home', array(
-		'as' => 'home',
-		'uses' => 'HomeController@home'
-	)
+	Route::get(
+		'/home',
+		array(
+			'as' => 'home',
+			'uses' => 'HomeController@home'
+		)
 	);
 
 	// Render Add Books panel
-	Route::get('/add-books', array(
-		'as' => 'add-books',
-		'uses' => 'BooksController@renderAddBooks'
-	)
+	Route::get(
+		'/add-books',
+		array(
+			'as' => 'add-books',
+			'uses' => 'BooksController@renderAddBooks'
+		)
 	);
 
-	Route::get('/add-book-category', array(
-		'as' => 'add-book-category',
-		'uses' => 'BooksController@renderAddBookCategory'
-	)
+	Route::get(
+		'/add-book-category',
+		array(
+			'as' => 'add-book-category',
+			'uses' => 'BooksController@renderAddBookCategory'
+		)
 	);
 
 	Route::post('/kategoribuku', 'BooksController@KategoriBukuStore')->name('bookcategory.store');
 
 
 	// Render All Books panel
-	Route::get('/all-books', array(
-		'as' => 'all-books',
-		'uses' => 'BooksController@renderAllBooks'
-	)
+	Route::get(
+		'/all-books',
+		array(
+			'as' => 'all-books',
+			'uses' => 'BooksController@renderAllBooks'
+		)
 	);
 
 
-	Route::get('/bookBycategory/{cat_id}', array(
-		'as' => 'bookBycategory',
-		'uses' => 'BooksController@BookByCategory'
-	)
+	Route::get(
+		'/bookBycategory/{cat_id}',
+		array(
+			'as' => 'bookBycategory',
+			'uses' => 'BooksController@BookByCategory'
+		)
 	);
 
 	Route::get('/list-anggota/{id}/edit', 'HomeController@editAnggota')->name('list-anggota-edit');
@@ -248,15 +268,14 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/search-books/{judulBuku}', 'BooksController@cariBukubyJudulBuku');
 	Route::get('/admin/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 
-	Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
-
-
 
 	// Sign out (GET) 
-	Route::get('/sign-out', array(
-		'as' => 'account-sign-out',
-		'uses' => 'AccountController@getSignOut'
-	)
+	Route::get(
+		'/sign-out',
+		array(
+			'as' => 'account-sign-out',
+			'uses' => 'AccountController@getSignOut'
+		)
 	);
 });
 Auth::routes();

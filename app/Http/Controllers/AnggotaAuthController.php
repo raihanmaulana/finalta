@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AnggotaPerpustakaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\AkunDibuatNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Exception;
@@ -60,11 +61,14 @@ class AnggotaAuthController extends Controller
         $anggota = AnggotaPerpustakaan::create([
             'nama_anggota' => $request->input('nama_anggota'),
             'nomor_anggota' => $request->input('nomor_anggota'),
+            'username' => $request->input('username'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'jurusan' => $request->input('jurusan'),
             'kelas' => $request->input('kelas'),
         ]);
+
+        $anggota->notify(new AkunDibuatNotification);
 
         // Redirect ke halaman login
         return redirect()->route('anggota.login')->with('success', 'Pendaftaran berhasil! Silakan masuk ke akun Anda.');

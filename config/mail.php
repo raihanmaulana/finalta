@@ -29,7 +29,7 @@ return [
     |
     */
 
-    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.mailtrap.io'),
 
     /*
     |--------------------------------------------------------------------------
@@ -116,7 +116,7 @@ return [
         'theme' => 'default',
 
         'paths' => [
-            resource_path('views/vendor/mail'),
+            resource_path('views/emails'),
         ],
     ],
 

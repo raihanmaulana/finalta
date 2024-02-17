@@ -102,6 +102,18 @@
     }
 </script>
 <script>
+    function showAllBooks() {
+        // Ambil semua elemen buku
+        var books = document.getElementsByClassName('book');
+
+        // Loop melalui semua elemen buku
+        for (var i = 0; i < books.length; i++) {
+            var book = books[i];
+            book.style.display = 'block'; // Tampilkan semua buku
+        }
+    }
+</script>
+<script>
     // Fungsi untuk menampilkan detail buku
     function showBookDetails(bookId) {
         const detailCard = document.getElementById("detailModal" + bookId);
@@ -157,9 +169,9 @@
             data - bs - toggle = "modal"
             data - bs - target = "#detailModal${book.id_buku}"
             onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> < /
-                div > <
+            div > <
                 /div> < /
-                div > ';
+            div > ';
             bookListContainer.innerHTML += html;
         });
     }

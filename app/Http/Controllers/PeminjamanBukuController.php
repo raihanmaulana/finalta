@@ -9,6 +9,8 @@ use App\Models\Buku;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PeminjamanDisetujui;
 
 class PeminjamanBukuController extends Controller
 {
@@ -124,6 +126,8 @@ class PeminjamanBukuController extends Controller
 
             // Menyetujui permintaan peminjaman
             $peminjaman->update(['status' => 1]);
+
+            Mail::to($peminjaman->anggota->email)->send(new PeminjamanDisetujui($peminjaman));
 
             return redirect()->route('admin.peminjaman.daftar')->with('success', 'Permintaan peminjaman disetujui.');
         }
