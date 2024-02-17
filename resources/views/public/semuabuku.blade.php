@@ -24,13 +24,11 @@
         @else
 
         <!-- end header -->
-        <div class="row g-0">
-            <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-                <button type="button" class="btn btn-outline-dark round m-2">Semua</button>
-            </div>
+        <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
+            <button type="button" class="btn btn-outline-dark round m-2" onclick="showAllBooks()">Semua Kategori</button>
+            @foreach ($kategoriBuku as $kategori)
+            <button type="button" class="btn btn-outline-dark round m-2" onclick="filterByCategory('{{ $kategori->kategori }}')">{{ $kategori->kategori }}</button>
+            @endforeach
         </div>
 
         <div class="collection-list mt-4 row gx-0 gy-3" id="bookCollection">
@@ -88,6 +86,22 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
 <!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
+    function filterByCategory(kategori) {
+        // Mengirimkan permintaan AJAX ke URL yang sesuai dengan kategori yang dipilih
+        $.ajax({
+            type: 'GET',
+            url: '/books/by-category/' + kategori,
+            success: function(response) {
+                // Mengganti isi dari div dengan id 'bookCollection' dengan data buku yang baru
+                $('#bookCollection').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
+<script>
     // Fungsi untuk menampilkan detail buku
     function showBookDetails(bookId) {
         const detailCard = document.getElementById("detailModal" + bookId);
@@ -124,11 +138,11 @@
         // Tampilkan buku yang telah difilter
         books.forEach(function(book) {
             var html = ' <
-                div class = "col-6 col-md-4 col-lg-2" >
-                <
-                div class = "card h-100" >
-                <
-                img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
+            div class = "col-6 col-md-4 col-lg-2" >
+            <
+            div class = "card h-100" >
+            <
+            img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
             class = "card-img-top mt-3 mx-auto"
             alt = "Book Image"
             data - bs - toggle = "modal"
@@ -139,13 +153,13 @@
                 h6 class = "card-title" > $ {
                     book.judul_buku
                 } < /h6> <
-                button class = "btn btn-dark"
+            button class = "btn btn-dark"
             data - bs - toggle = "modal"
             data - bs - target = "#detailModal${book.id_buku}"
-            onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> <
-                /div> <
-                /div> <
-                /div > ';
+            onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> < /
+            div > <
+                /div> < /
+            div > ';
             bookListContainer.innerHTML += html;
         });
     }
