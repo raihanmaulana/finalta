@@ -1,7 +1,17 @@
 <!-- navbar -->
 <style>
     .navbar {
-        font-size: 14px;
+        font-size: 16px;
+        background-color: transparent;
+        transition: background-color 0.3s ease;
+        position: fixed;
+        width: 100%;
+        z-index: 1000;
+    }
+
+    .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 0.9);
+        /* Adjust the background color and transparency as needed */
     }
 
     .btn {
@@ -15,7 +25,7 @@
         /* Atur warna sesuai kebutuhan Anda */
     }
 </style>
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light">
     <div class="container">
         <a class="navbar-brand" href="#">
             <img src="{{ asset('css\images\logo.png') }}" alt="SMA N 1 Tunjungan" width="30" height="auto" />
@@ -52,6 +62,15 @@
 <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
 <script>
     $(document).ready(function() {
+        $(window).scroll(function() {
+            var scroll = $(window).scrollTop();
+            if (scroll >
+                50) { // Adjust the scroll value based on when you want the background to change
+                $(".navbar").addClass("scrolled");
+            } else {
+                $(".navbar").removeClass("scrolled");
+            }
+        });
         // Ambil path dari URL saat ini
         var currentPath = window.location.pathname;
 

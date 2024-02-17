@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         .text {
-            font-weight: bold;
             text-align: center;
             text: black;
         }
@@ -38,6 +37,7 @@
             /* Menggunakan flex container untuk ikon */
             gap: 16px;
         }
+
     </style>
 </head>
 
@@ -52,23 +52,30 @@
                     </h5>
                 </div>
                 <!-- Bagian Container Kanan -->
-                <div class="col-lg-6 text-end">
-                    <div class="social-icons d-flex flex-column">
-                        <div class="text">
-                            <span class="fs-5">IKUTI KAMI</span>
-                        </div>
+                <div class="col-lg-6">
+                    <div class="text text-end justify-content-end">
+                        <span class="fs-5 me-5 fw-bold">IKUTI KAMI</span>
                         <a href="https://web.facebook.com/sman1tunjungan" title="Facebook">
                             <i class="fa-brands fa-facebook fa-2xl" style="color: #0f7dd2;"></i>
                             <span class="ms-3" style="color: #101010;">sman1tunjungan</span>
                         </a>
+                    </div>
+                        <div class="text text-end justify-content-end">
+                            <span class="fs-3"></span>
                         <a href="https://twitter.com" title="Twitter">
                             <i class="fa-brands fa-x-twitter fa-2xl" style="color: #101010;"></i>
                             <span class="ms-3" style="color: #101010;">sman1tunjungan</span>
-                        </a>
+                            </a>
+                        </div>
+                        <div class="text text-end justify-content-end">
+                            <span class="fs-3"></span>
                         <a href="https://www.instagram.com" title="Instagram">
                             <i class="fab fa-instagram fa-2xl" style="color: #ac2bac;"></i>
                             <span class="ms-3" style="color: #101010;">sman1tunjungan</span>
                         </a>
+                    </div>
+                        <div class="text text-end justify-content-end">
+                            <span class="fs-3"></span>
                         <a href="https://www.youtube.com" title="Youtube">
                             <i class="fa-brands fa-youtube fa-2xl" style="color: #ff0000;"></i>
                             <span class="ms-3" style="color: #101010;">sman1tunjungan</span>
@@ -89,6 +96,7 @@
             </div>
         </div>
     </footer>
+
 </body>
 
 </html>

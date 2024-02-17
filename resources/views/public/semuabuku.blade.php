@@ -1,4 +1,4 @@
-@extends('public.index') <!-- Meng-extend template utama -->
+@extends('public.index')
 
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/katalog.css') }}" />
@@ -157,9 +157,9 @@
             data - bs - toggle = "modal"
             data - bs - target = "#detailModal${book.id_buku}"
             onclick = "showBookDetails('${book.id_buku}')" > Detail < /button> < /
-            div > <
+                div > <
                 /div> < /
-            div > ';
+                div > ';
             bookListContainer.innerHTML += html;
         });
     }

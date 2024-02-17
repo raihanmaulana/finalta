@@ -5,6 +5,11 @@
         .btn {
             font-size: 12px;
         }
+
+        .text-shadow {
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            /* Bayangan teks */
+        }
     </style>
 
     <body>
@@ -19,9 +24,10 @@
                                 <div class="col-3">
                                     <img src="{{ asset('css/images/logo.png') }}" alt="Logo" class="img-fluid logo-image">
                                 </div>
-                                <div class="col-9 text-black">
+                                <div class="col-9 text-black text-shadow">
                                     <h2>Perpustakaan SMA Negeri 1 Tunjungan</h2>
-                                    <p style="font-weight: 500">Silahkan mengisi Buku Tamu untuk mengakses
+                                    <p class=" text-shadow" style="font-weight: 500">Silahkan mengisi Buku Tamu untuk
+                                        mengakses
                                         Perpustakaan ini
                                     </p>
                                 </div>
