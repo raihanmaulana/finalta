@@ -156,64 +156,6 @@ class PeminjamanBukuController extends Controller
     }
 
 
-    public function showForm()
-    {
-        return view('peminjaman.form');
-    }
-
-    public function pinjamBuku(Request $request)
-    {
-        $nomor_anggota = $request->input('nomor_anggota');
-        $nomor_buku = $request->input('nomor_buku');
-
-        // Cari anggota berdasarkan nomor_anggota
-        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomor_anggota)->first();
-
-        // Cari buku berdasarkan nomor_buku
-        $buku = Buku::where('nomor_buku', $nomor_buku)->first();
-
-        // Periksa apakah anggota dan buku ditemukan
-        if ($anggota && $buku) {
-            // Periksa kondisi buku
-            if ($buku->kondisi != 1) {
-                return redirect()->back()->with('error', 'Buku tidak aktif dan tidak dapat dipinjam.');
-            }
-
-            // Periksa apakah buku tersedia
-            if ($buku->tersedia <= 0) {
-                return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
-            }
-
-            // Periksa apakah anggota sudah memiliki peminjaman aktif
-            $peminjamanAktif = PeminjamanBuku::where('id_anggota', $anggota->id_anggota)
-                ->whereIn('status', [0, 1]) // Peminjaman dengan status pending atau disetujui
-                ->exists();
-
-            if ($peminjamanAktif) {
-                return redirect()->back()->with('error', 'Anggota sudah memiliki peminjaman aktif.');
-            }
-
-            // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
-            $peminjaman = PeminjamanBuku::create([
-                'id_buku' => $buku->id_buku,
-                'id_anggota' => $anggota->id_anggota,
-                'nomor_buku' => $nomor_buku, // Tambahkan nomor_buku ke dalam peminjaman
-                'status' => 1,
-            ]);
-
-            // Update tanggal peminjaman saat buku berhasil dipinjam
-            $peminjaman->update(['tanggal_peminjaman' => now()]);
-
-            // Kurangi stok dan tersedia buku
-            $buku->tersedia -= 1;
-            $buku->save();
-
-            return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
-        } else {
-            return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
-        }
-    }
-
     public function checkOverdueBooks()
     {
         $peminjaman = PeminjamanBuku::where('status', 1)

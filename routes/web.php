@@ -33,8 +33,10 @@ Route::get('/', [BukuTamuController::class, 'viewform'])->name('guestbook.view')
 // Keep the original guestbook route
 Route::post('/guestbook', [BukuTamuController::class, 'store'])->name('guestbook.store');
 
-Route::get('/offline', [PeminjamanBukuController::class, 'showForm'])->name('peminjaman.form');
-Route::post('/offline', [PeminjamanBukuController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
+Route::get('/offline', [PublicController::class, 'showForm'])->name('peminjaman.form');
+Route::post('/offline', [PublicController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
+Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
+Route::get('/cari-buku/{id}/detail', 'BooksController@showDetail')->name('books.detail');
 
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');

@@ -53,7 +53,6 @@
                                 <th>Pengarang</th>
                                 <th>Tahun Terbit</th>
                                 <th>Kategori</th>
-                                <th>Stok</th>
                                 <th>Tersedia</th>
                                 <th>Detail</th>
                             </tr>
@@ -140,15 +139,13 @@
 
 @section('custom_bottom_script')
 
-
-
-<script type="text/javascript" src="{{ asset('static/custom/js/script.mainpage.js') }}"></script>
+<script type="text/javascript" src="{{ asset('static/custom/js/script.public.js') }}"></script>
 
 <script type="text/template" id="search_issue">
     @include('underscore.search_issue')
 </script>
-<script type="text/template" id="search_book">
-    @include('underscore.search_book')
+<script type="text/template" id="caribuku_offline">
+    @include('underscore.caribuku_offline')
 </script>
 </script>
 <script type="text/template" id="search_anggota">
