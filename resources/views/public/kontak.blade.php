@@ -7,11 +7,11 @@
 
 @section('content')
     <section id="kontak" class="py-5">
-        <div class="container">
+        <div class="container py-5">
             <div class="title text-center">
-                <h1 class="position-relative d-inline-block mb-3" data-aos="fade-right">Kontak Kami</h1>
+                <h1 class="text-black text-shadow fw-bold text-center" data-aos="zoom-in">Kontak Kami</h1>
             </div>
-            <div class="card">
+            <div class="card" data-aos="zoom-in">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
