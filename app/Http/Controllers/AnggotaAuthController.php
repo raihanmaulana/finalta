@@ -50,13 +50,15 @@ class AnggotaAuthController extends Controller
         // Validasi data pendaftaran
         $this->validate($request, [
             'nama_anggota' => 'required|string|max:255',
-            'nomor_anggota' => 'required|string|max:20',
+            'nomor_anggota' => 'required|string|max:20|exists:anggota_perpustakaan,nomor_anggota',
             'email' => 'required|string|max:255|unique:anggota_perpustakaan,email',
             'username' => 'required|string|max:15',
             'nomor_hp' => 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed', // Konfirmasi kata sandi harus sesuai
             'jurusan' => 'required|in:IPA,IPS', // Menambahkan validasi jurusan
             'kelas' => 'required_if:jurusan,IPA,IPS', // Menambahkan validasi kelas jika jurusan adalah IPA atau IPS
+        ], [
+            'nomor_anggota.exists' => 'Nomor anggota tidak terdaftar.',
         ]);
 
         // Buat anggota baru
@@ -76,6 +78,7 @@ class AnggotaAuthController extends Controller
         // Redirect ke halaman login
         return redirect()->route('anggota.login')->with('success', 'Pendaftaran berhasil! Silakan masuk ke akun Anda.');
     }
+
 
 
     public function dashboard()
