@@ -17,6 +17,7 @@ class AnggotaPerpustakaan extends Authenticatable
         'nama_anggota',
         'nomor_anggota',
         'username',
+        'nomor_hp',
         'email',
         'jurusan',
         'kelas',

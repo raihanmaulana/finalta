@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUsernameToAnggotaPerpustakaan extends Migration
+class AddPhoneNumberToAnggotaPerpustakaanTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddUsernameToAnggotaPerpustakaan extends Migration
     public function up()
     {
         Schema::table('anggota_perpustakaan', function (Blueprint $table) {
-            $table->string('username')->unique()->after('nomor_anggota');
+            $table->string('nomor_hp', 20)->nullable()->after('username');
         });
     }
 

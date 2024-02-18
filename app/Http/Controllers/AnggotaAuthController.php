@@ -50,8 +50,10 @@ class AnggotaAuthController extends Controller
         // Validasi data pendaftaran
         $this->validate($request, [
             'nama_anggota' => 'required|string|max:255',
-            'nomor_anggota' => 'required|string|max:255',
+            'nomor_anggota' => 'required|string|max:20',
             'email' => 'required|string|max:255|unique:anggota_perpustakaan,email',
+            'username' => 'required|string|max:15',
+            'nomor_hp' => 'required|string|max:20',
             'password' => 'required|string|min:8|confirmed', // Konfirmasi kata sandi harus sesuai
             'jurusan' => 'required|in:IPA,IPS', // Menambahkan validasi jurusan
             'kelas' => 'required_if:jurusan,IPA,IPS', // Menambahkan validasi kelas jika jurusan adalah IPA atau IPS
@@ -62,6 +64,7 @@ class AnggotaAuthController extends Controller
             'nama_anggota' => $request->input('nama_anggota'),
             'nomor_anggota' => $request->input('nomor_anggota'),
             'username' => $request->input('username'),
+            'nomor_hp' => $request->input('nomor_hp'),
             'email' => $request->input('email'),
             'password' => bcrypt($request->input('password')),
             'jurusan' => $request->input('jurusan'),
