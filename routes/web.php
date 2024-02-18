@@ -36,7 +36,7 @@ Route::post('/guestbook', [BukuTamuController::class, 'store'])->name('guestbook
 Route::get('/offline', [PublicController::class, 'showForm'])->name('peminjaman.form');
 Route::post('/offline', [PublicController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
 Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
-Route::get('/cari-buku/{id}/detail', 'BooksController@showDetail')->name('books.detail');
+Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
 
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');

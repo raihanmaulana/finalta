@@ -38,8 +38,7 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <a href="{{ route('books.edit', ['id' => $book->id_buku]) }}" class="btn btn-inverse">Edit</a>
-                    <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Kembali</a>
+                    <a href="/offline" class="btn btn-primary">Kembali ke Halaman Offline</a>
                 </div>
             </div>
         </div>

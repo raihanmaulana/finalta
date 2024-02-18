@@ -100,7 +100,7 @@ class PublicController extends Controller
         // Ambil data kategori untuk ditampilkan di detail
         $category = Kategori::find($book->kategori_id);
 
-        return view('peminjaman.detail.buku', compact('book', 'category'));
+        return view('peminjaman.detail_buku', compact('book', 'category'));
     }
 
     protected function calculateAvailableForBorrow($bookId)

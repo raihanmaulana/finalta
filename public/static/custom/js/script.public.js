@@ -34,7 +34,7 @@ function loadSearchedBooks(judulBuku) {
 function showBookDetail(button) {
     var bookId = $(button).data("id");
     // Redirect to the detail page using the bookId
-    window.location.href = "/books/" + bookId + "/detail";
+    window.location.href = "/cari-buku/" + bookId + "/detail";
 }
 
 function findBorrowedBook(nomorBuku) {
