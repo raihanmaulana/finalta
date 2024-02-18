@@ -17,29 +17,36 @@
                         <form class="row g-3" method="POST" action="{{ route('anggota.register') }}">
                             @csrf
                             <div class="mt-4 text-start content-card">
+                                <div><small>Hanya yang memiliki Nomor Anggota yang dapat melakukan
+                                        registrasi</small></div>
                                 <strong>Semua wajib diisi!</strong>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-12">
                                 <label for="nama_anggota" class="form-label">Nama</label>
                                 <input type="text" class="form-control" name="nama_anggota" id="nama_anggota"
                                     value="{{ old('nama_anggota') }}" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
+                                <label for="nomor_anggota" class="form-label">Nomor Anggota</label>
+                                <input type="text" class="form-control" name="nomor_anggota" id="nomor_anggota"
+                                    value="{{ old('nomor_anggota') }}" required>
+                            </div>
+                            <div class="col-6">
                                 <label for="username" class="form-label">Username</label>
                                 <input type="text" class="form-control" name="username" id="username"
                                     value="{{ old('username') }}" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <label for="email" class="form-label">Email</label>
                                 <input type="text" class="form-control" name="email" id="email"
                                     value="{{ old('email') }}" required>
                             </div>
-                            <div class="col-md-6">
-                                <label for="nomor_anggota" class="form-label">Nomor HP</label>
-                                <input type="text" class="form-control" name="nomor_anggota" id="nomor_anggota"
-                                    value="{{ old('nomor_anggota') }}" required>
+                            <div class="col-6">
+                                <label for="nomor_hp" class="form-label">Nomor Hp</label>
+                                <input type="text" class="form-control" name="nomor_hp" id="nomor_hp"
+                                    value="{{ old('nomor_hp') }}" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <label for="jurusan" class="form-label">Jurusan</label>
                                 <select name="jurusan" class="form-control" id="jurusan" required>
                                     <option value="" selected disabled>Pilih Jurusan</option>
@@ -47,7 +54,7 @@
                                     <option value="IPS">IPS</option>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <label for="kelas" class="form-label">Kelas</label>
                                 <select name="kelas" class="form-control" id="kelas" required>
                                     <option value="" selected disabled>Pilih Kelas</option>
@@ -70,12 +77,12 @@
                                     </optgroup>
                                 </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <label for="password" class="form-label">Kata Sandi (min. 8
                                     karakter)</label>
                                 <input type="password" class="form-control" name="password" id="password" required>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-6">
                                 <label for="password_confirmation" class="form-label">Konfirmasi Kata Sandi</label>
                                 <input type="password" class="form-control" name="password_confirmation"
                                     id="password_confirmation" required>
