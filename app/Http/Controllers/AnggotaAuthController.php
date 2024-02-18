@@ -36,8 +36,9 @@ class AnggotaAuthController extends Controller
             return redirect()->intended('/anggota/dashboard');
         }
 
-        return back()->withErrors(['nomor_anggota' => 'Login failed.']);
+        return redirect('/anggota/login')->withErrors(['nomor_anggota' => 'Login failed.']);
     }
+
 
 
     public function showRegisterForm()

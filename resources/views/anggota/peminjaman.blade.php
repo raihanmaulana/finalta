@@ -134,6 +134,7 @@
                         <th>Penerbit</th>
                         <th>Tahun Terbit</th>
                         <th>Kategori</th>
+                        <th>Tersedia</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -147,6 +148,7 @@
                         <td>{{ $buku->penerbit }}</td>
                         <td>{{ $buku->tahun_terbit }}</td>
                         <td>{{ $buku->kategori->kategori }}</td>
+                        <td><a class="btn btn-success">{{ $buku->tersedia }}</td>
                         <td>
                             <form action="{{ route('anggota.peminjaman.store') }}" method="POST">
                                 @csrf

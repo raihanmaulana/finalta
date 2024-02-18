@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PeminjamanDisetujui;
+use Carbon\Carbon;
 
 class PeminjamanBukuController extends Controller
 {
@@ -59,9 +60,8 @@ class PeminjamanBukuController extends Controller
             return redirect()->route('anggota.list')->with('error', 'Anda sudah membuat permintaan peminjaman untuk buku ini. Harap tunggu persetujuan admin.');
         }
 
-
         // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
-        $tanggalPeminjaman = now(); //->addDays(7);
+        $tanggalPeminjaman = Carbon::now(); // Mengambil waktu saat ini dari zona waktu aplikasi
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
@@ -69,7 +69,6 @@ class PeminjamanBukuController extends Controller
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
         ]);
-
 
         return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');
     }
@@ -125,7 +124,10 @@ class PeminjamanBukuController extends Controller
             $buku->save();
 
             // Menyetujui permintaan peminjaman
-            $peminjaman->update(['status' => 1]);
+            $peminjaman->update([
+                'status' => 1,
+                'tanggal_peminjaman' => Carbon::now(), // Menyimpan tanggal peminjaman saat disetujui
+            ]);
 
             Mail::to($peminjaman->anggota->email)->send(new PeminjamanDisetujui($peminjaman));
 
@@ -150,10 +152,12 @@ class PeminjamanBukuController extends Controller
             ->where('status', 2) // Status 'Dikembalikan'
             ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
             ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
+            ->orderBy('tanggal_pengembalian', 'desc') // Urutkan berdasarkan tanggal pengembalian, terbaru dulu
             ->paginate(10);
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }
+
 
 
     public function checkOverdueBooks()

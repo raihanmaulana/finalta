@@ -7,7 +7,10 @@ use App\Models\Kategori;
 use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
 use App\Models\AnggotaPerpustakaan;
+<<<<<<< HEAD
 
+=======
+>>>>>>> b9ac1d41b9706a79be8800b277323c0c75d13e21
 
 class PublicController extends Controller
 {

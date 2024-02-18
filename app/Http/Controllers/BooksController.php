@@ -103,6 +103,7 @@ class BooksController extends Controller
 			'stok'         => $books['stok'] ?? 0, // Add this line
 			'added_by'      => $user_id,
 			'kondisi' => 1,
+			'tautan_buku'    => $books['tautan_buku'] ?? null,
 			'image'         => $books['image'] ?? null,
 
 		]);
@@ -192,6 +193,7 @@ class BooksController extends Controller
 			'kategori_id'   => 'required|exists:kategoribuku,id',
 			'stok'          => 'required|numeric',
 			'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+			'tautan_buku'    => 'required',
 		]);
 
 		// Update book properties
@@ -202,13 +204,13 @@ class BooksController extends Controller
 		$book->tahun_terbit = $request->input('tahun_terbit');
 		$book->kategori_id = $request->input('kategori_id');
 		$book->stok = $request->input('stok');
-
-		// Handle image upload
 		if ($request->hasFile('image')) {
 			$imagePath = $request->file('image')->store('book_images', 'public');
 			$book->image = $imagePath;
 			$book->hitungTersedia();
 		}
+
+		$book->tautan_buku = $request->input('tautan_buku');
 
 		$book->hitungTersedia();
 
@@ -339,38 +341,6 @@ class BooksController extends Controller
 		return redirect()->back()->with('success', 'Buku berhasil dinonaktifkan');
 	}
 
-
-	// 	for ($i = 0; $i < count($list_buku); $i++) {
-
-	// 		$id = $list_buku[$i]['id_buku'];
-	// 		$conditions = array(
-	// 			'id_buku'			=> $id,
-	// 			'available_status'	=> 1
-	// 		);
-
-	// 		$list_buku[$i]['total_buku'] = Issue::select()
-	// 			->where('book_id', '=', $id)
-	// 			->count();
-
-	// 		$list_buku[$i]['avaliable'] = Issue::select()
-	// 			->where($conditions)
-	// 			->count();
-	// 	}
-
-
-
-	// public function BookByCategory(Request $request)
-	// {
-	// 	$cat_id = $request->input('kategori_id');
-
-	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'kategoribuku.kategori')
-	// 		->join('kategori_buku', 'kategori_buku.id', '=', 'buku.kategori_id')
-	// 		->where('kategori_id', $cat_id)->orderBy('id_buku')
-	// 		->get();
-
-	// 	return $list_buku;
-	// }
-
 	public function cariBukuByJudulBuku($judulBuku)
 	{
 		// Menggunakan operator LIKE dengan wildcard (%) di awal dan akhir kata kunci
@@ -421,12 +391,4 @@ class BooksController extends Controller
 
 		return redirect()->route('inactive-books.index')->with('success', 'Buku berhasil diaktifkan.');
 	}
-
-	// public function searchBook()
-	// {
-	// 	$db_control = new HomeController();
-
-	// 	return view('public.book-search')
-	// 		->with('kategori_list', $db_control->kategori_list);
-	// }
 }
