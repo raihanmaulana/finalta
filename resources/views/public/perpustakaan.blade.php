@@ -66,9 +66,9 @@
     </section>
 
     <div class="container">
-        <div class="row mt-3 mb-3" data-aos="zoom-out">
+        {{-- <div class="row mt-3 mb-3" data-aos="zoom-out">
             <h1 class="text-black text-shadow fw-bold text-center">Profile</h1>
-        </div>
+        </div> --}}
         <div class="row" data-aos="zoom-in-up">
             <div class="col-12 col-md-12 col-lg-4">
                 <img src="{{ asset('css/images/bg5.jpg') }}" alt="Perpustakaan" style="width: 100%; height:85%;" />

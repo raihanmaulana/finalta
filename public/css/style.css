@@ -88,3 +88,7 @@ dd {
         font-size: 12px; /* Sesuaikan dengan ukuran font ketika layar diperkecil */
     }
 }
+
+.full-width-button {
+    width: 100%;
+}

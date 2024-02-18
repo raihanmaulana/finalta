@@ -16,6 +16,9 @@
                         </div>
                         <form class="row-6" action="{{ URL::route('account-create-post') }}" method="POST">
                             @csrf
+                            <div class="mt-3 text-start content-card">
+                                <strong>Semua wajib diisi!</strong>
+                            </div>
                             <div class="mb-3">
                                 <label for="exampleFormControlInput1" class="form-label">Nama</label>
                                 <input type="text" class="form-control" id="exampleFormControlInput1"
@@ -42,7 +45,8 @@
                                 @endif
                             </div>
                             <div class="mb-3">
-                                <label for="exampleFormControlInput1" class="form-label">Kata Sandi</label>
+                                <label for="exampleFormControlInput1" class="form-label">Kata Sandi (min. 8
+                                    karakter)</label>
                                 <input type="password" class="form-control" name="password"
                                     placeholder="Masukkan Kata Sandi Anda" />
                                 @if ($errors->has('password'))

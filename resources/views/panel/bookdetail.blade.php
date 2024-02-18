@@ -39,8 +39,9 @@
                             style="max-width: 200px; max-height: 200px;">
                     </div>
                 </div>
-                <div class="row-fluid" style="margin-top: 10px">
-                    <div class="span12">
+                <div class="control-group">
+                    <div class="controls">
+                        <a href="{{ route('books.edit', ['id' => $book->id_buku]) }}"class="btn btn-inverse">Edit</a>
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Kembali</a>
                     </div>
                 </div>
