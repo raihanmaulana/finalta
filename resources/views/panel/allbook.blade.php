@@ -38,6 +38,7 @@
                     <a href="{{ URL::route('tidakaktif.index') }}" style="margin-bottom:10px" class="btn btn-inverse">Buku Non Aktif</a>
                 </div>
                 <!-- Tabel daftar buku -->
+                <!-- Tabel daftar buku -->
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                         <tr>
@@ -54,10 +55,16 @@
                         </tr>
                     </thead>
                     <tbody id="all-books">
-                        @forelse($books as $index => $book)
+                        @php
+                        $activeBooksCount = 0;
+                        @endphp
+                        @forelse($books as $book)
                         @if($book->kondisi == 1) <!-- Filter buku yang aktif -->
+                        @php
+                        $activeBooksCount++;
+                        @endphp
                         <tr>
-                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $activeBooksCount }}</td> <!-- Menggunakan variabel $activeBooksCount sebagai nomor urutan -->
                             <td>{{ $book->nomor_buku }}</td>
                             <td>{{ $book->judul_buku }}</td>
                             <td> {{ $book->penerbit }}</td>
@@ -72,11 +79,6 @@
 
                                     <button class="btn btn-primary detail-btn" style="margin-bottom: 2px; width: 75px;" data-id="{{ $book->id_buku }}">Detail</button>
                                     <button class="btn btn-info edit-btn" style="margin-bottom: 2px; width: 75px;" data-id="{{ $book->id_buku }}">Edit</button>
-                                    <!-- <form id="deleteBook{{ $book->id_buku }}" action="{{ route('books.destroy', $book->id_buku) }}" method="POST">
-                                                                                                                @csrf
-                                                                                                                @method('DELETE')
-                                                                                                                <button type="button" class="btn btn-danger" onclick="deleteBook({{ $book->id_buku }})">Hapus</button>
-                                                                                                            </form> -->
                                     <form action="{{ route('books.deactivate', $book->id_buku) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-danger">Nonaktif</button>
@@ -92,6 +94,7 @@
                         @endforelse
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>

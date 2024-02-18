@@ -24,6 +24,7 @@
                             <th>Nama Anggota</th>
                             <th>Judul Buku</th>
                             <th>Status</th>
+                            <th>Batas Pengembalian</th> <!-- Kolom baru -->
                         </tr>
                     </thead>
                     <tbody>
@@ -43,6 +44,13 @@
                                 Harap Dikembalikan
                                 @endif
                             </td>
+                            <td>
+                                @if($peminjaman->status == 1)
+                                {{ $peminjaman->tanggal_peminjaman->addDays(7)->isoFormat('D MMMM YYYY') }}
+                                @elseif($peminjaman->status == 0)
+                                -
+                                @endif
+                            </td>
                         </tr>
                         @endif
                         @empty
@@ -51,6 +59,7 @@
                         </tr>
                         @endforelse
                     </tbody>
+
                 </table>
                 @if($showNextButton)
                 {{ $daftarPeminjaman->links() }}
