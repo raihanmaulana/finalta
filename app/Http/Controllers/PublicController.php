@@ -6,6 +6,7 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
+use App\Models\AnggotaPerpustakaan;
 
 
 class PublicController extends Controller
