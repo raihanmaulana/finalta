@@ -222,6 +222,9 @@ Route::group(['middleware' => ['auth']], function () {
 		)
 	);
 
+
+	Route::get('/list-anggota/add-member', 'AdminController@showAddMemberForm')->name('admin.tambah-anggota');
+	Route::post('/list-anggota/add-member', 'AdminController@addMember')->name('admin.tambah-anggota.submit');
 	Route::get('/list-anggota/{id}/edit', 'HomeController@editAnggota')->name('list-anggota-edit');
 	Route::put('/list-anggota/{id}', 'HomeController@updateAnggota')->name('list-anggota-updateAnggota');
 

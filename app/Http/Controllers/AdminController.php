@@ -9,7 +9,7 @@ class AdminController extends Controller
 {
     public function showAddMemberForm()
     {
-        return view('admin.add_member');
+        return view('admin.tambah-anggota');
     }
 
     public function addMember(Request $request)
@@ -22,6 +22,6 @@ class AdminController extends Controller
             'nomor_anggota' => $request->nomor_anggota,
         ]);
 
-        return redirect()->route('admin.add-member')->with('success', 'Anggota berhasil ditambahkan.');
+        return redirect()->route('admin.tambah-anggota')->with('success', 'Anggota berhasil ditambahkan.');
     }
 }
