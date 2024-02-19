@@ -129,9 +129,13 @@ function showAnggota(button) {
 }
 
 $(document).ready(function () {
+    var formOpen = localStorage.getItem("formOpen"); // Ambil status terakhir formulir dari localStorage
+    if (formOpen === "true") {
+        $("#pinjambukuform").parent().show(); // Tampilkan formulir jika terakhir kali terbuka
+    }
+
     $(".homepage-form-box").click(function () {
         var formid = $(this).attr("id");
-
         formid = formid.substring(0, formid.length - 3) + "form";
         showFormModule(formid);
     });
@@ -139,7 +143,6 @@ $(document).ready(function () {
     $(".homepage-form-submit").click(function () {
         var form = $(this).parents("form");
         mode = form.attr("id");
-
         mode = mode.substring(4, mode.length - 4);
 
         switch (mode) {
@@ -158,11 +161,23 @@ $(document).ready(function () {
                 if (search_query != "") searchAnggotaByNumber(search_query);
                 break;
         }
+
+        // Simpan status terakhir formulir ke localStorage
+        localStorage.setItem("formOpen", "true");
+
+        // Periksa apakah tombol submit mengarah ke formulir pinjam buku
+        if (mode === "pinjam") {
+            form.parent().show(); // Tampilkan formulir setelah melakukan peminjaman
+        }
     });
+
     $(".close-form").click(function () {
         var form = $(this).parents(".module").find("form");
         form.trigger("reset"); // Mengosongkan formulir
         $(this).parents(".module").hide(); // Menyembunyikan modul
+
+        // Simpan status terakhir formulir ke localStorage
+        localStorage.setItem("formOpen", "false");
     });
 });
 

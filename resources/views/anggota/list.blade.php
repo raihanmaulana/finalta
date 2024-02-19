@@ -12,7 +12,7 @@
         <div class="module-body">
             <div class="controls">
                 @php
-                $startIndex = ($daftarPeminjaman->currentPage() - 1) * $daftarPeminjaman->perPage() + 1;
+                $startIndex = $daftarPeminjaman->firstItem(); // Menggunakan firstItem() untuk mendapatkan nomor awal
                 $showNextButton = $daftarPeminjaman->count() > 10;
                 @endphp
 

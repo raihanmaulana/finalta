@@ -7,6 +7,9 @@ use App\Models\Kategori;
 use App\Models\PeminjamanBuku;
 use Illuminate\Http\Request;
 use App\Models\AnggotaPerpustakaan;
+use App\Models\BukuTamuAnggota;
+use Illuminate\Support\Facades\Log;
+
 
 class PublicController extends Controller
 {
@@ -48,17 +51,6 @@ class PublicController extends Controller
         return view('public.kontak');
     }
 
-    public function searchBooks(Request $request)
-    {
-        $keyword = $request->input('keyword');
-        $books = Buku::where('judul_buku', 'like', '%' . $keyword . '%')
-            ->orWhere('pengarang', 'like', '%' . $keyword . '%')
-            ->orWhere('penerbit', 'like', '%' . $keyword . '%')
-            ->orWhere('tahun_terbit', 'like', '%' . $keyword . '%')
-            ->get();
-
-        return view('public.semuabuku', compact('books', 'keyword'));
-    }
 
     public function filterByCategory($kategori)
     {
@@ -168,13 +160,14 @@ class PublicController extends Controller
                 return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
             }
 
-            // Periksa apakah anggota sudah memiliki peminjaman aktif
-            $peminjamanAktif = PeminjamanBuku::where('id_anggota', $anggota->id_anggota)
+            // Periksa apakah anggota sudah meminjam buku dengan nomor_buku yang sama
+            $peminjamanSama = PeminjamanBuku::where('id_anggota', $anggota->id_anggota)
+                ->where('id_buku', $buku->id_buku)
                 ->whereIn('status', [0, 1]) // Peminjaman dengan status pending atau disetujui
                 ->exists();
 
-            if ($peminjamanAktif) {
-                return redirect()->back()->with('error', 'Anggota sudah memiliki peminjaman aktif.');
+            if ($peminjamanSama) {
+                return redirect()->back()->with('error', 'Anda sudah meminjam buku ini.');
             }
 
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
@@ -198,6 +191,42 @@ class PublicController extends Controller
         }
     }
 
+
+    public function storeAnggota(Request $request)
+    {
+        $request->validate([
+            'nomor_anggota' => 'required|exists:anggota_perpustakaan,nomor_anggota',
+        ]);
+
+        try {
+            $anggota = AnggotaPerpustakaan::where('nomor_anggota', $request->input('nomor_anggota'))->first();
+
+            BukuTamuAnggota::create([
+                'nomor_anggota' => $anggota->nomor_anggota,
+                'nama_anggota' => $anggota->nama_anggota,
+                'email' => $anggota->email,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Error saving bukutamu_anggota entry: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Failed to save the bukutamu_anggota entry.');
+        }
+
+        return redirect()->route('peminjaman.form'); // Ganti dengan route yang sesuai
+    }
+
+    public function getAnggota($nomorAnggota)
+    {
+        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->first();
+
+        if ($anggota) {
+            return response()->json([
+                'nama_anggota' => $anggota->nama_anggota,
+                'email' => $anggota->email,
+            ]);
+        }
+
+        return response()->json(['error' => 'Anggota not found'], 404);
+    }
     public function index()
     {
         return view('panel.index')
