@@ -45,15 +45,16 @@ class AnggotaController extends Controller
     {
         $request->validate([
             'nama_anggota' => 'required',
+            'username' => 'required',
             'email' => 'required|email',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
-            // Atribut lainnya
         ]);
 
         $anggota = AnggotaPerpustakaan::find($id);
 
         $anggota->nama_anggota = $request->input('nama_anggota');
         $anggota->email = $request->input('email');
+        $anggota->username = $request->input('username');
 
         // Proses gambar jika diunggah
         if ($request->hasFile('gambar')) {
@@ -135,30 +136,7 @@ class AnggotaController extends Controller
         return redirect()->route('login')->with('error', 'You need to be logged in to access this page.');
     }
 
-    // Memproses permintaan peminjaman buku
-    public function processPeminjaman(Request $request)
-    {
-        // Check if the user is authenticated and is an instance of AnggotaPerpustakaan
-        $user = auth()->user();
 
-        if ($user && $user instanceof AnggotaPerpustakaan) {
-            // Validasi form
-            $request->validate([
-                'id_buku' => 'required|exists:buku,id_buku',
-            ]);
-
-            // Membuat permintaan peminjaman baru
-            $user->peminjaman()->create([
-                'id_buku' => $request->input('id_buku'),
-                'status' => 0, // Status pending
-            ]);
-
-            return redirect()->route('anggota.peminjaman')->with('success', 'Permintaan peminjaman berhasil diajukan.');
-        }
-
-        // If the user is not authenticated or not an instance of AnggotaPerpustakaan, handle accordingly
-        return redirect()->route('login')->with('error', 'You need to be logged in as an AnggotaPerpustakaan to submit a borrowing request.');
-    }
 
     public function showProfile()
     {

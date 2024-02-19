@@ -139,9 +139,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($daftarBukuTersedia as $index => $buku)
+                    @php $nomorUrut = 0; @endphp <!-- Inisialisasi nomor urut -->
+                    @foreach ($daftarBukuTersedia as $buku)
+                    @if ($buku->kondisi == 1) <!-- Hanya tampilkan buku yang aktif -->
+                    @php $nomorUrut++; @endphp <!-- Tingkatkan nomor urut hanya jika buku aktif -->
                     <tr>
-                        <td>{{ $index + 1 }}</td>
+                        <td>{{ $nomorUrut }}</td>
                         <td>{{ $buku->nomor_buku }}</td>
                         <td>{{ $buku->judul_buku }}</td>
                         <td>{{ $buku->pengarang }}</td>
@@ -161,6 +164,7 @@
                             </form>
                         </td>
                     </tr>
+                    @endif
                     @endforeach
                 </tbody>
             </table>
