@@ -15,12 +15,14 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-md-6 col-lg-6">
-                            <p><i class="fas fa-home mr-3"></i> &nbsp; Jl. Gatot Subroto, Tamansetro, Tamanrejo, Kec. Blora,
+                            <p><i class="fas fa-home mr-3"></i> &nbsp; Jl. Gatot Subroto Kilometer 4, Kec. Blora,
                                 Kabupaten Blora, Jawa Tengah 58252</p>
-                            <p><i class="fas fa-clock mr-3"></i> &nbsp; Senin - Sabtu (08.00 - 15.00)</p>
-                            <p><i class="fas fa-phone mr-3"></i> &nbsp; 0296-531564</p>
+                            <p><i class="fas fa-clock mr-3"></i> &nbsp; Senin - Kamis (07.00 - 16.30) dan Jumat (07.00 - 16.00) </p>
+                            <p><i class="fas fa-phone mr-3"></i> &nbsp; <a
+                                href = "https://wa.me/085201894820">0852-0189-4820</a></p>
+                            <p><i class="fas fa-fax mr-3"></i> &nbsp; 0296-531533</p>
                             <p><i class="fas fa-envelope mr-3"></i> &nbsp;<a
-                                    href = "mailto:sman1tunjungan@gmail.com">sman1tunjungan@gmail.com</a> </p>
+                                    href = "mailto:sman1tunjungan.blora@gmail.com">sman1tunjungan.blora@gmail.com</a> </p>
                         </div>
                         <div class="col-12 col-md-6 col-lg-6">
                             <iframe
