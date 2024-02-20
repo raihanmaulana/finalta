@@ -23,6 +23,7 @@ class BukuTamuAnggotaController extends Controller
                 'nomor_anggota' => $anggota->nomor_anggota,
                 'nama_anggota' => $anggota->nama_anggota,
                 'email' => $anggota->email,
+                'kelas' => $anggota->kelas,
             ]);
         } catch (\Exception $e) {
             Log::error('Error saving bukutamu_anggota entry: ' . $e->getMessage());
@@ -40,6 +41,7 @@ class BukuTamuAnggotaController extends Controller
             return response()->json([
                 'nama_anggota' => $anggota->nama_anggota,
                 'email' => $anggota->email,
+                'kelas' => $anggota->kelas,
             ]);
         }
 
@@ -49,12 +51,10 @@ class BukuTamuAnggotaController extends Controller
     public function index(Request $request)
     {
         $perPage = 10; // Jumlah item per halaman
-        $page = $request->input('page', 1); // Ambil nomor halaman dari query string, default 1
+        $bukutamuAnggota = BukuTamuAnggota::orderBy('created_at', 'desc')->paginate($perPage); // Urutkan data berdasarkan created_at secara descending
 
-        $bukutamuAnggota = BukuTamuAnggota::paginate($perPage);
-
-        // Hitung nomor pertama pada setiap halaman
-        $firstNumber = ($page - 1) * $perPage + 1;
+        // Ambil nomor pertama pada setiap halaman
+        $firstNumber = ($bukutamuAnggota->currentPage() - 1) * $perPage + 1;
 
         return view('admin.bukutamuanggota', compact('bukutamuAnggota', 'firstNumber'));
     }

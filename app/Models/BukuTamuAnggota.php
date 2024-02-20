@@ -13,7 +13,7 @@ class BukuTamuAnggota extends Model
 
     protected $table = 'bukutamu_anggota';
 
-    protected $fillable = ['nomor_anggota', 'nama_anggota', 'email'];
+    protected $fillable = ['nomor_anggota', 'nama_anggota', 'email', 'kelas'];
 
 
     // Jika Anda memiliki relasi dengan model AnggotaPerpustakaan, Anda dapat menambahkannya di sini
