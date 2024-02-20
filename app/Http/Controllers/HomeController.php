@@ -151,7 +151,7 @@ class HomeController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'new_password' => 'required|confirmed',
+            'new_password' => 'required|confirmed|min:8',
         ]);
 
         $admin = Auth::user();
@@ -162,11 +162,13 @@ class HomeController extends Controller
             $admin->password = Hash::make($request->new_password);
             $admin->save();
 
-            return redirect()->route('admin.profile')->with('success', 'Kata sandi berhasil diubah.');
-        } else {
-            return redirect()->route('admin.profile.change-password')->with('error', 'Kata sandi saat ini tidak valid.');
+            // Tampilkan popup SweetAlert untuk keberhasilan
+            return redirect()->route('admin.profile')->with('success', 'Permintaan pengembalian berhasil');
         }
+
+        return redirect()->route('admin.profile.change-password')->with('error', 'Permintaan pengembalian gagal.');
     }
+
 
     public function search(Request $request)
     {

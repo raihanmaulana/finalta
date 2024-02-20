@@ -123,15 +123,19 @@ class BooksController extends Controller
 
 	public function KategoriBukuStore(Request $request)
 	{
-		$kategoris = $request->all();
-
-		// Create the book
-		$kategori = Kategori::create([
-			'kategori'    => $kategoris['kategori'] ?? null,
+		$request->validate([
+			'kategori' => 'required|unique:kategoribuku,kategori',
 		]);
 
-		return redirect('/add-book-category')->with('success', 'Book and issues added successfully.');
+		// Create the category
+		$kategori = Kategori::create([
+			'kategori' => $request->kategori,
+		]);
+
+		// Redirect with success message
+		return redirect()->route('add-book-category')->with('success', 'Kategori berhasil ditambahkan.');
 	}
+
 
 
 	/**

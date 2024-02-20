@@ -37,26 +37,26 @@ $(document).ready(function () {
     $(document).on("click", "#addbookcategory", function () {
         var form = $(this).parents("form"),
             module_body = $(this).parents(".module-body"),
-            sendJSON = {},
             send_flag = true,
             f$ = function (selector) {
                 return form.find(selector);
             };
 
-        kategori = f$("input[data-form-field~=kategori]").val();
-        _token = f$("input[data-form-field~=token]").val();
+        var kategori = f$("input[data-form-field~=kategori]").val();
+        var _token = f$("input[data-form-field~=token]").val();
 
         if (kategori == "") {
-            module_body.prepend(
-                templates.alert_box({
-                    type: "danger",
-                    message: "kategori Field is Required",
-                })
-            );
+            // Menampilkan popup SweetAlert2 jika kategori kosong
+            Swal.fire({
+                title: "Gagal!",
+                text: "Kategori tidak boleh kosong.",
+                icon: "error",
+                timer: 2000, // Menampilkan pesan selama 2 detik
+            });
             send_flag = false;
         }
 
-        if (send_flag == true) {
+        if (send_flag) {
             $.ajax({
                 type: "POST",
                 data: {
@@ -65,19 +65,23 @@ $(document).ready(function () {
                 },
                 url: "/kategoribuku",
                 success: function (data) {
-                    module_body.prepend(
-                        templates.alert_box({ type: "success", message: data })
-                    );
+                    // Menampilkan popup SweetAlert2 jika berhasil menambahkan kategori
+                    Swal.fire({
+                        title: "Berhasil!",
+                        text: "Kategori berhasil ditambahkan.",
+                        icon: "success",
+                        timer: 2000, // Menampilkan pesan selama 2 detik
+                    });
                     clearform();
                 },
                 error: function (xhr, status, error) {
-                    var err = eval("(" + xhr.responseText + ")");
-                    module_body.prepend(
-                        templates.alert_box({
-                            type: "danger",
-                            message: err.error.message,
-                        })
-                    );
+                    // Menampilkan popup SweetAlert2 jika gagal menambahkan kategori
+                    Swal.fire({
+                        title: "Gagal!",
+                        text: "Gagal menambahkan kategori.",
+                        icon: "error",
+                        timer: 2000, // Menampilkan pesan selama 2 detik
+                    });
                 },
                 beforeSend: function () {
                     form.css({ opacity: "0.4" });
@@ -90,8 +94,6 @@ $(document).ready(function () {
     });
 
     // add books to database
-
-    $(".alert_box").hide().delay(5000).fadeOut();
 
     loadResults();
 });
