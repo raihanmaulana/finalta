@@ -35,8 +35,10 @@ Route::post('/guestbook', [BukuTamuController::class, 'store'])->name('guestbook
 
 Route::get('/offline', [PublicController::class, 'showForm'])->name('peminjaman.form');
 Route::post('/offline', [PublicController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
-Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
-Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
+// Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
+// Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
+
+Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');
@@ -57,6 +59,8 @@ Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-b
 Route::post('/bukutamu-anggota/store', [BukuTamuAnggotaController::class, 'store'])->name('bukutamu_anggota.store');
 Route::get('/getAnggotaInfo/{nomorAnggota}', [BukuTamuAnggotaController::class, 'getAnggotaInfo'])->name('bukutamu_anggota.getAnggotaInfo');
 
+Route::post('/bukutamuanggota/store', [PublicController::class, 'storeAnggota'])->name('bukutamu_offline.store');
+Route::get('/getAnggota/{nomorAnggota}', [PublicController::class, 'getAnggota'])->name('bukutamu_offline.getAnggotaInfo');
 //Peminjaman Offline Anggota
 // Route untuk halaman peminjaman
 
@@ -218,6 +222,9 @@ Route::group(['middleware' => ['auth']], function () {
 		)
 	);
 
+
+	Route::get('/list-anggota/add-member', 'AdminController@showAddMemberForm')->name('admin.tambah-anggota');
+	Route::post('/list-anggota/add-member', 'AdminController@addMember')->name('admin.tambah-anggota.submit');
 	Route::get('/list-anggota/{id}/edit', 'HomeController@editAnggota')->name('list-anggota-edit');
 	Route::put('/list-anggota/{id}', 'HomeController@updateAnggota')->name('list-anggota-updateAnggota');
 
