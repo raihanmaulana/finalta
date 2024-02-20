@@ -12,16 +12,20 @@
             <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-right">Katalog Buku</h1>
         </div>
         <!-- Tambahkan input pencarian -->
-<div class="d-flex justify-content-center mt-3" data-aos="zoom-out-up">
-    <form id="searchForm">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Cari buku..." id="searchInput">
-            <button class="btn btn-outline-secondary" type="submit">Cari</button>
+        <div class="d-flex justify-content-center mt-3" data-aos="zoom-out-up">
+            <form id="searchBooks">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Cari buku..." id="searchBooks">
+                    <button class="btn btn-outline-secondary" type="submit">Cari</button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
+        <!-- Tampilkan hasil pencarian jika ada -->
+        @if (!empty($searchKeyword))
+        <h3>Hasil pencarian untuk "{{ $searchKeyword }}"</h3>
+        @endif
         @if ($books->isEmpty())
-        <p>Tidak ada buku.</p>
+        <p>Tidak ada buku yang ditemukan.</p>
         @else
         <!-- end header -->
         <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
@@ -60,7 +64,6 @@
                             <p>Pengarang: {{ $book->pengarang }}</p>
                             <p>Tahun Terbit: {{ $book->tahun_terbit }}</p>
                             <p>Kategori : {{ $book->kategori->kategori }}</p>
-                            <p>Deskripsi: {{ $book->deskripsi }}</p>
                             <!-- Gambar buku -->
                             @if ($book->image)
                             <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;">
@@ -80,7 +83,7 @@
     </div>
 </section>
 <!-- jquery -->
-<script src="js/code.jquery.com_jquery-3.7.1.js"></script>
+<!-- <script src="js/code.jquery.com_jquery-3.7.1.js"></script> -->
 <!-- bootstrap js and popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
 </script>
@@ -88,6 +91,8 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
 <!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
     function filterByCategory(kategori) {
@@ -107,7 +112,7 @@
 
     // Fungsi pencarian buku
     function searchBooks() {
-        var keyword = $('#searchInput').val().trim();
+        var keyword = $('#searchBooks').val().trim(); // Perhatikan penggunaan id yang sesuai
         // Mengirimkan permintaan AJAX ke URL pencarian buku
         $.ajax({
             type: 'GET',

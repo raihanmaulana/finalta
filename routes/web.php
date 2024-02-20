@@ -47,7 +47,7 @@ Route::post('/anggota/register', 'AnggotaAuthController@register');
 Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
-Route::get('/semuabuku/cari', 'PublicController@search')->name('books.search');
+Route::get('/semuabuku/cari', [PublicController::class, 'search'])->name('semuabuku.search');
 Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('perpustakaan');
 Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
 Route::get('/katalog', [PublicController::class, 'semuabuku'])->name('semuabuku');
@@ -118,14 +118,7 @@ Route::group(array('before' => 'guest'), function () {
 	// CSRF protection 
 	Route::group(array('before' => 'csrf'), function () {
 
-		// Create an account (POST) 
-		Route::post(
-			'/create',
-			array(
-				'as' => 'account-create-post',
-				'uses' => 'AccountController@postCreate'
-			)
-		);
+
 
 		// Sign in (POST) 
 		Route::post(
@@ -146,14 +139,7 @@ Route::group(array('before' => 'guest'), function () {
 		)
 	);
 
-	// Create an account (GET) 
-	Route::get(
-		'/create',
-		array(
-			'as' => 'account-create',
-			'uses' => 'AccountController@getCreate'
-		)
-	);
+
 
 
 
@@ -176,6 +162,23 @@ Route::resource('/books', 'BooksController');
 // Route::group(array('before' => 'auth'), function() {
 Route::group(['middleware' => ['auth']], function () {
 
+	// Create an account (POST) 
+	Route::post(
+		'/create',
+		array(
+			'as' => 'account-create-post',
+			'uses' => 'AccountController@postCreate'
+		)
+	);
+
+	// Create an account (GET) 
+	Route::get(
+		'/create',
+		array(
+			'as' => 'account-create',
+			'uses' => 'AccountController@getCreate'
+		)
+	);
 	// Home Page of Control Panel
 	Route::get(
 		'/home',
@@ -265,6 +268,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	// Menyetujui permintaan peminjaman
 	Route::put('/peminjaman/approve/{id}', [PeminjamanBukuController::class, 'approve'])->name('admin.peminjaman.approve');
+	Route::put('/admin/peminjaman/{id}/reject', [PeminjamanBukuController::class, 'reject'])->name('admin.peminjaman.reject');
 
 	//Kembalikan Buku
 	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');

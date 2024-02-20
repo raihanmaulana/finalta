@@ -137,6 +137,23 @@ class PeminjamanBukuController extends Controller
         return redirect()->route('admin.peminjaman.daftar')->with('error', 'Permintaan peminjaman sudah disetujui sebelumnya.');
     }
 
+    public function reject($id)
+    {
+        // Mencari permintaan peminjaman berdasarkan ID
+        $peminjaman = PeminjamanBuku::findOrFail($id);
+
+        // Memastikan permintaan peminjaman belum disetujui
+        if ($peminjaman->status == 0) {
+            // Hapus permintaan peminjaman dari database
+            $peminjaman->delete();
+
+            return redirect()->route('admin.peminjaman.daftar')->with('success', 'Permintaan peminjaman ditolak.');
+        }
+
+        return redirect()->route('admin.peminjaman.daftar')->with('error', 'Permintaan peminjaman sudah disetujui sebelumnya.');
+    }
+
+
     public function bukuDipinjam()
     {
         $bukuDipinjam = PeminjamanBuku::with(['anggota', 'buku'])

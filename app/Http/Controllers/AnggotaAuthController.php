@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AnggotaPerpustakaan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\VerifikasiAnggota;
 use App\Notifications\AkunDibuatNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
@@ -48,10 +49,17 @@ class AnggotaAuthController extends Controller
 
     public function register(Request $request)
     {
+        // Validasi tambahan sebelum validasi nomor anggota
+        $nomorAnggota = $request->input('nomor_anggota');
+        $anggotaSudahTerdaftar = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->exists();
+        if ($anggotaSudahTerdaftar) {
+            return redirect()->back()->withErrors(['nomor_anggota' => 'Nomor Anggota Sudah Memiliki Akun!']);
+        }
+
         // Validasi data pendaftaran
         $this->validate($request, [
             'nama_anggota' => 'required|string|max:255',
-            'nomor_anggota' => 'required|string|max:20|exists:anggota_perpustakaan,nomor_anggota',
+            'nomor_anggota' => 'required|string|max:20|exists:verifikasi_anggota,nomor_anggota',
             'email' => 'required|string|max:255|unique:anggota_perpustakaan,email',
             'username' => 'required|string|max:15',
             'nomor_hp' => 'required|string|max:20',
@@ -79,6 +87,7 @@ class AnggotaAuthController extends Controller
         // Redirect ke halaman login
         return redirect()->route('anggota.login')->with('success', 'Pendaftaran berhasil! Silakan masuk ke akun Anda.');
     }
+
 
 
 

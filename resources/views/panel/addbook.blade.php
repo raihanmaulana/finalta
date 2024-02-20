@@ -15,41 +15,56 @@
                 <div class="control-group">
                     <label class="control-label">Judul Buku</label>
                     <div class="controls">
-                        <input type="text" name="judul_buku" id="judul_buku" placeholder="Masukkan Judul Buku" class="span8">
+                        <input type="text" name="judul_buku" id="judul_buku" placeholder="Masukkan Judul Buku" class="span8" required>
                     </div>
+                    @error('judul_buku')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">ISBN</label>
                     <div class="controls">
-                        <input type="text" name="isbn" id="isbn" placeholder="Masukkan ISBN" class="span8">
+                        <input type="text" name="isbn" id="isbn" placeholder="Masukkan ISBN" class="span8" required>
                     </div>
+                    @error('isbn')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">Penerbit</label>
                     <div class="controls">
-                        <input type="text" name="penerbit" id="penerbit" placeholder="Masukkan Nama Penerbit" class="span8">
+                        <input type="text" name="penerbit" id="penerbit" placeholder="Masukkan Nama Penerbit" class="span8" required>
                     </div>
+                    @error('penerbit')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="control-group">
                     <label class="control-label">Pengarang</label>
                     <div class="controls">
-                        <input type="text" name="pengarang" id="pengarang" placeholder="Masukkan Nama Pengarang" class="span8">
+                        <input type="text" name="pengarang" id="pengarang" placeholder="Masukkan Nama Pengarang" class="span8" required>
                     </div>
+                    @error('pengarang')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">Tahun Terbit</label>
                     <div class="controls">
-                        <input type="text" name="tahun_terbit" id="tahun_terbit" placeholder="Masukkan Tahun Terbit" class="span8">
+                        <input type="text" name="tahun_terbit" id="tahun_terbit" placeholder="Masukkan Tahun Terbit" class="span8" required>
                     </div>
+                    @error('tahun_terbit')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">
                     <label class="control-label" for="kategori_id">Kategori</label>
                     <div class="controls">
-                        <select tabindex="1" name="kategori_id" id="kategori_id" data-placeholder="Select kategori.." class="span8">
+                        <select tabindex="1" name="kategori_id" id="kategori_id" data-placeholder="Select kategori.." class="span8" required>
                             @foreach ($kategori_list as $kategori)
                             <option value="{{ $kategori->id }}">{{ $kategori->kategori }}</option>
                             @endforeach
@@ -61,15 +76,21 @@
                 <div class="control-group">
                     <label class="control-label" for="image">Book Image</label>
                     <div class="controls">
-                        <input type="file" id="image" name="image" class="span8">
+                        <input type="file" id="image" name="image" class="span8" required>
                     </div>
+                    @error('image')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">
                     <label class="control-label">Stok Buku</label>
                     <div class="controls">
-                        <input type="text" name="stok" id="stok" placeholder="Masukkan Stok Buku" class="span8">
+                        <input type="text" name="stok" id="stok" placeholder="Masukkan Stok Buku" class="span8" required>
                     </div>
+                    @error('stok')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="control-group">

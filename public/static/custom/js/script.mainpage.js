@@ -52,7 +52,7 @@ function findBorrowedBook(nomorBuku) {
             console.log("Data diterima:", data); // Tambahkan pesan debug untuk melihat data yang diterima
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="3">No issued book found with this number</td></tr>'
+                    '<tr><td colspan="3">Tidak Ada Buku atau Tidak Peminjaman</td></tr>'
                 );
             } else {
                 table.html("");

@@ -1,4 +1,5 @@
 @extends('layout.index')
+
 @section('custom_top_script')
 <!-- Tambahkan SweetAlert2 CSS -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
@@ -46,6 +47,12 @@
                                 @method('PUT')
                                 <button type="button" class="btn btn-success" onclick="approvePeminjaman({{ $peminjaman->id }})">Setujui</button>
                             </form>
+                            <!-- Tombol Tolak -->
+                            <form id="rejectForm{{ $peminjaman->id }}" action="{{ route('admin.peminjaman.reject', $peminjaman->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="button" class="btn btn-danger" onclick="rejectPeminjaman({{ $peminjaman->id }})">Tolak</button>
+                            </form>
                             @else
                             <span class="text-success">Sudah Disetujui</span>
                             @endif
@@ -87,6 +94,33 @@
                 });
                 setTimeout(function() {
                     document.getElementById('approveForm' + id).submit();
+                }, 2000); // Menunda submit form selama 2 detik setelah tampilan SweetAlert muncul
+            }
+        });
+    }
+
+    // Fungsi untuk menampilkan SweetAlert2 saat tombol Tolak ditekan
+    function rejectPeminjaman(id) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin menolak peminjaman ini?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Tolak',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: "Peminjaman telah ditolak.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                });
+                setTimeout(function() {
+                    document.getElementById('rejectForm' + id).submit();
                 }, 2000); // Menunda submit form selama 2 detik setelah tampilan SweetAlert muncul
             }
         });
