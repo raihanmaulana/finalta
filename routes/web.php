@@ -242,8 +242,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
 	Route::post('/admin/profile/change-password', [HomeController::class, 'changePassword'])->name('admin.profile.change-password.post');
 
-	Route::get('/dump/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
-	Route::post('/dump/galeri', [GaleriController::class, 'store'])->name('galeri.store');
+	Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
+	Route::post('/galeri/create', [GaleriController::class, 'store'])->name('galeri.store');
 
 	// Render Guestbook View
 	Route::get('/bukutamu-umum', [BukuTamuController::class, 'viewbukutamuumum'])->name('bukutamuumum.view');

@@ -10,5 +10,5 @@ class Galeri extends Model
     use HasFactory;
 
     protected $table = 'galeri';
-    protected $fillable = ['judul', 'gambar_galeri, deskripsi'];
+    protected $fillable = ['judul', 'gambar_galeri', 'deskripsi'];
 }

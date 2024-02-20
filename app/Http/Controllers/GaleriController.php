@@ -10,12 +10,12 @@ class GaleriController extends Controller
     public function index()
     {
         $galeri = Galeri::latest()->get();
-        return view('galeri.index', compact('galeri'));
+        return view('public.galeri', compact('galeri'));
     }
 
     public function create()
     {
-        return view('galeri.create');
+        return view('panel.tambahgambar-galeri');
     }
 
     public function store(Request $request)
@@ -24,6 +24,7 @@ class GaleriController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'gambar_galeri' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Hanya menerima file gambar dengan format tertentu dan maksimal ukuran 2MB
+            'deskripsi' => 'required|string|max:255',
         ]);
 
         // Simpan gambar ke dalam folder storage/galeri
@@ -33,8 +34,9 @@ class GaleriController extends Controller
         Galeri::create([
             'judul' => $request->judul,
             'gambar_galeri' => $gambarPath,
+            'deskripsi' => $request->deskripsi,
         ]);
 
-        return redirect()->route('galeri.index')->with('success', 'Galeri berhasil disimpan.');
+        return redirect()->route('galeri.create')->with('success', 'Galeri berhasil disimpan.');
     }
 }

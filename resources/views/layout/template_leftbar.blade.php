@@ -36,6 +36,11 @@
                     <i class="menu-icon icon-list-ul"></i>Buku Tamu
                 </a>
             </li>
+            <li>
+                <a href="{{ URL::route('galeri.create') }}">
+                    <i class="menu-icon icon-list-ul"></i>Tambah Gambar Galeri
+                </a>
+            </li>
 
         </ul>
         {{--

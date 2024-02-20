@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\AnggotaPerpustakaan;
 use App\Models\BukuTamuAnggota;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Galeri;
 
 class PublicController extends Controller
 {
@@ -42,8 +42,8 @@ class PublicController extends Controller
 
     public function galeri()
     {
-
-        return view('public.galeri');
+        $galeriItems = Galeri::all();
+        return view('public.galeri', compact('galeriItems'));
     }
     public function kontak()
     {
