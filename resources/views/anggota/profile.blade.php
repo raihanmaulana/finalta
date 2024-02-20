@@ -18,6 +18,7 @@
                             <h2>{{ $user->nama_anggota }}</h2>
                             <p>Nomor Anggota: {{ $user->nomor_anggota }}</p>
                             <p>Nama Panggilan: {{ $user->username }}</p>
+                            <p>Nomor HP: {{ $user->nomor_hp }}</p>
                             <p>Email: {{ $user->email }}</p>
                             <p>Jurusan: {{ $user->jurusan }}</p>
                             <p>Kelas: {{ $user->kelas }}</p>

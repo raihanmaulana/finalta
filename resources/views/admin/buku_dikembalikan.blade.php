@@ -43,4 +43,64 @@
         </div>
     </div>
 </div>
+
+
+@section('custom_bottom_script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.btn-kembalikan-buku');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault();
+                const url = this.getAttribute('href');
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: 'Anda akan mengembalikan buku ini.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Ya, kembalikan!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                    'Content-Type': 'application/json'
+                                },
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    Swal.fire(
+                                        'Berhasil!',
+                                        'Buku berhasil dikembalikan.',
+                                        'success'
+                                    ).then(() => {
+                                        location.reload();
+                                    });
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        'Terjadi kesalahan saat mengembalikan buku.',
+                                        'error'
+                                    );
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat mengembalikan buku.',
+                                    'error'
+                                );
+                            });
+                    }
+                });
+            });
+        });
+    });
+</script>
 @endsection

@@ -46,6 +46,7 @@ class AnggotaController extends Controller
         $request->validate([
             'nama_anggota' => 'required',
             'username' => 'required',
+            'nomor_hp' => 'required',
             'email' => 'required|email',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi gambar
         ]);
@@ -55,6 +56,7 @@ class AnggotaController extends Controller
         $anggota->nama_anggota = $request->input('nama_anggota');
         $anggota->email = $request->input('email');
         $anggota->username = $request->input('username');
+        $anggota->nomor_hp = $request->input('nomor_hp');
 
         // Proses gambar jika diunggah
         if ($request->hasFile('gambar')) {

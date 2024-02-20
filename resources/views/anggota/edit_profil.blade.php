@@ -20,6 +20,9 @@
                 <label for="email">{{ __('Alamat Email') }}</label>
                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email', $anggota->email) }}" required>
 
+                <label for="nomor_hp">{{ __('Nomor HP') }}</label>
+                <input id="nomor_hp" type="nomor_hp" class="form-control" name="nomor_hp" value="{{ old('nomor_hp', $anggota->nomor_hp) }}" required>
+
                 <label for="gambar">{{ __('Foto Profil') }} (Maksimal 2MB)</label>
                 <input id="gambar" type="file" class="form-control-file" name="gambar">
 

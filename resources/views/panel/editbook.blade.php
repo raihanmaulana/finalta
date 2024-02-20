@@ -6,7 +6,7 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Edit Book</h3>
+            <h3>Edit Buku</h3>
         </div>
         <div class="module-body">
             <form class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', ['id' => $book->id_buku]) }}" enctype="multipart/form-data">
@@ -50,6 +50,14 @@
                     <label class="control-label" for="tahun_terbit">Tahun Terbit</label>
                     <div class="controls">
                         <input type="text" id="tahun_terbit" name="tahun_terbit" value="{{ $book->tahun_terbit }}" class="span8">
+                    </div>
+                </div>
+
+                <!-- Penerbit -->
+                <div class="control-group">
+                    <label class="control-label" for="deskripsi">Deskripsi</label>
+                    <div class="controls">
+                        <input type="text" id="deskripsi" name="deskripsi" value="{{ $book->deskripsi }}" class="span8">
                     </div>
                 </div>
 

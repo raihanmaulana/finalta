@@ -47,11 +47,8 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
-                                <th>ID Buku</th>
-                                <th>ISBN</th>
                                 <th>Judul Buku</th>
                                 <th>Pengarang</th>
-                                <th>Tahun Terbit</th>
                                 <th>Kategori</th>
                                 <th>Stok</th>
                                 <th>Tersedia</th>

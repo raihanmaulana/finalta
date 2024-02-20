@@ -31,11 +31,13 @@
                         <td>
                             @if ($peminjaman->status == 1)
                             <!-- Tombol Kembalikan -->
-                            <form action="{{ route('admin.peminjaman.kembalikan', $peminjaman->id) }}" method="POST">
+                            <form id="kembalikanForm{{ $peminjaman->id }}" action="{{ route('admin.peminjaman.kembalikan', $peminjaman->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
-                                <button type="submit" class="btn btn-warning">Kembalikan</button>
+                                <button type="button" class="btn btn-warning" onclick="kembalikanBukuAnggota({{ $peminjaman->id }})">Kembalikan</button>
                             </form>
+
+
                             @endif
                         </td>
                     </tr>
@@ -50,4 +52,33 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script>
+    function kembalikanBukuAnggota(id) {
+        Swal.fire({
+            title: 'Konfirmasi',
+            text: 'Apakah Anda yakin ingin menyetujui pengembalian ini?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Setujui',
+            cancelButtonText: 'Batal'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: "Berhasil!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                });
+                setTimeout(function() {
+                    document.getElementById('kembalikanForm' + id).submit();
+                }, 2000); // Menunda submit form selama 2 detik setelah tampilan SweetAlert muncul
+            }
+        });
+    }
+</script>
 @endsection

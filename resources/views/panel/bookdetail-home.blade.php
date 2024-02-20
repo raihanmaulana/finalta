@@ -38,6 +38,10 @@
 
 
                 </div>
+
+                <h5>Deskripsi:</h5>
+                <p>{{ $book->deskripsi }}</p>
+
                 <h5>Tautan Buku:</h5>
                 @php
                 // Cek apakah tautan buku tidak kosong dan merupakan URL yang valid

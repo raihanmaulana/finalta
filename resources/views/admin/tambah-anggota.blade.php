@@ -4,7 +4,7 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Tambah Kategori</h3>
+            <h3>Tambah Nomor Anggota</h3>
         </div>
         <div class="module-body">
             <!-- Tampilkan pesan error jika ada -->

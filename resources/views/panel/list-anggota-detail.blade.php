@@ -19,10 +19,15 @@
                     <td>{{ $anggota->nama_anggota }}</td>
                 </tr>
                 <tr>
+                    <th>Nomor HP</th>
+                    <td>{{ $anggota->nomor_hp }}</td>
+                </tr>
+                <tr>
                     <th>Email</th>
                     <td>{{ $anggota->email }}</td>
                 </tr>
                 <tr>
+
                     <th>Jurusan</th>
                     <td>{{ $anggota->jurusan }}</td>
                 </tr>
@@ -30,6 +35,7 @@
                     <th>Kelas</th>
                     <td>{{ $anggota->kelas }}</td>
                 </tr>
+
             </table>
             <div class="row-fluid" style="margin-top: 10px">
                 <div class="span12">

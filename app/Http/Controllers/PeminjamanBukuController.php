@@ -94,10 +94,10 @@ class PeminjamanBukuController extends Controller
                 'tersedia' => $buku->tersedia + 1,
             ]);
 
-            return redirect()->route('admin.buku-dipinjam')->with('success', 'Buku berhasil dikembalikan.');
+            return redirect()->route('admin.buku-dipinjam')->with('success', 'Permintaan pengembalian berhasil');
         }
 
-        return redirect()->route('admin.buku-dipinjam')->with('error', 'Buku tidak dapat dikembalikan.');
+        return redirect()->route('admin.buku-dipinjam')->with('error', 'Permintaan pengembalian gagal.');
     }
 
     // Admin: Daftar Permintaan Peminjaman

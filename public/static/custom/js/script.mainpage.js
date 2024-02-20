@@ -12,7 +12,7 @@ function loadSearchedBooks(judulBuku) {
         success: function (data) {
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="99">No such book found in library</td></tr>'
+                    '<tr><td colspan="99">Tidak Ada Buku Dengan Kriteria Tersebut</td></tr>'
                 );
             } else {
                 table.html("");

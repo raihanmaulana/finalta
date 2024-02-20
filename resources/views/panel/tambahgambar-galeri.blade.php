@@ -4,7 +4,7 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Tambah Gambar Galeri</h3>
+            <h3>Kelola Galeri</h3>
         </div>
 
         <div class="module-body">

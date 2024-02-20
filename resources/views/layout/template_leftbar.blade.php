@@ -17,6 +17,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ URL::route('galeri.create') }}">
+                    <i class="menu-icon icon-list-ul"></i>Kelola Galeri
+                </a>
+            </li>
+            <li>
                 <a href="{{ URL::route('admin.peminjaman.daftar') }}">
                     <i class="menu-icon icon-filter"></i> Konfirmasi Peminjaman
                 </a>
@@ -36,12 +41,6 @@
                     <i class="menu-icon icon-list-ul"></i>Buku Tamu
                 </a>
             </li>
-            <li>
-                <a href="{{ URL::route('galeri.create') }}">
-                    <i class="menu-icon icon-list-ul"></i>Tambah Gambar Galeri
-                </a>
-            </li>
-
         </ul>
         {{--
         <ul class="widget widget-menu unstyled">

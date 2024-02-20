@@ -80,13 +80,12 @@ class AccountController extends Controller
 		]);
 
 		if ($user) {
-			return Redirect::route('account-sign-in')
-				->with('global', 'Your account has been created. We have sent you an email to activate your account');
+			return response()->json(['success' => true]);
+		} else {
+			return response()->json(['success' => false]);
 		}
-
-		// Handle if user creation fails
-
 	}
+
 
 	public function getSignIn()
 	{
