@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\PeminjamanDisetujui;
 use App\Mail\PeminjamanDitolak;
 use Carbon\Carbon;
+// use Illuminate\Support\Facades\Request;
 
 class PeminjamanBukuController extends Controller
 {
@@ -166,15 +167,28 @@ class PeminjamanBukuController extends Controller
 
         return view('admin.buku_dipinjam', compact('bukuDipinjam'));
     }
-    public function bukuDikembalikan()
+    public function bukuDikembalikan(Request $request)
     {
-        // Query langsung ke tabel peminjaman_buku untuk mendapatkan data buku yang sudah dikembalikan
+        $bulan = $request->input('bulan');
+        $tahun = $request->input('tahun');
+
+        // Jika bulan dan tahun tidak diset, ambil data semua riwayat
+        if (!$bulan || !$tahun) {
+            $bukuDikembalikan = PeminjamanBuku::with(['anggota', 'buku'])
+                ->where('status', 2) // Hanya yang telah dikembalikan
+                ->orderBy('tanggal_pengembalian', 'desc') // Urutkan berdasarkan tanggal pengembalian, terbaru dulu
+                ->paginate(10); // Sesuaikan dengan jumlah yang Anda inginkan
+
+            return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
+        }
+
+        // Jika bulan dan tahun diset, ambil data riwayat sesuai bulan dan tahun
         $bukuDikembalikan = PeminjamanBuku::with(['anggota', 'buku'])
-            ->where('status', 2) // Status 'Dikembalikan'
-            ->whereNotNull('tanggal_peminjaman') // Pastikan tanggal peminjaman tidak null
-            ->whereNotNull('tanggal_pengembalian') // Pastikan tanggal pengembalian tidak null
+            ->whereYear('tanggal_peminjaman', $tahun)
+            ->whereMonth('tanggal_peminjaman', $bulan)
+            ->where('status', 2) // Hanya yang telah dikembalikan
             ->orderBy('tanggal_pengembalian', 'desc') // Urutkan berdasarkan tanggal pengembalian, terbaru dulu
-            ->paginate(10);
+            ->paginate(10); // Sesuaikan dengan jumlah yang Anda inginkan
 
         return view('admin.buku_dikembalikan', compact('bukuDikembalikan'));
     }

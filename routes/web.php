@@ -275,9 +275,9 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 
-	//Kembalikan Buku
+	//View Kembalikan Buku
 	Route::get('/admin/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');
-
+	Route::get('/riwayat-peminjaman', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('riwayat-peminjaman');
 
 	Route::get('/cari-anggota/{nomorAnggota}', 'AnggotaController@cariAnggotaByNomorAnggota');
 
