@@ -19,12 +19,16 @@ class AdminController extends Controller
             'nomor_anggota' => 'required|string|unique:anggota_perpustakaan',
         ]);
 
-        VerifikasiAnggota::create([
-            'nomor_anggota' => $request->nomor_anggota,
-            'created_at' => now(), // Tambahkan waktu saat ini untuk created_at
-            'updated_at' => now(), // Tambahkan waktu saat ini untuk updated_at
-        ]);
+        try {
+            VerifikasiAnggota::create([
+                'nomor_anggota' => $request->nomor_anggota,
+                'created_at' => now(), // Tambahkan waktu saat ini untuk created_at
+                'updated_at' => now(), // Tambahkan waktu saat ini untuk updated_at
+            ]);
 
-        return redirect()->route('admin.tambah-anggota')->with('success', 'Anggota berhasil ditambahkan.');
+            return redirect()->route('admin.tambah-anggota')->with('success', 'Anggota berhasil ditambahkan.');
+        } catch (\Exception $e) {
+            return redirect()->route('admin.tambah-anggota')->with('error', $e->getMessage());
+        }
     }
 }

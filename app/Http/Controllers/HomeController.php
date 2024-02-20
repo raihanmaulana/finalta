@@ -40,10 +40,20 @@ class HomeController extends Controller
 
     public function listAnggota()
     {
+        // Ambil daftar anggota dari tabel anggota_perpustakaan
         $anggotaList = AnggotaPerpustakaan::all();
 
-        return view('panel.list-anggota', compact('anggotaList'));
+        // Ambil daftar unik nilai untuk kolom "jurusan"
+        $daftarJurusan = AnggotaPerpustakaan::select('jurusan')->distinct()->get();
+
+        // Ambil daftar unik nilai untuk kolom "kelas"
+        $daftarKelas = AnggotaPerpustakaan::select('kelas')->distinct()->get();
+
+        // Kirim daftar anggota, daftar jurusan, dan daftar kelas ke blade view 'list-anggota'
+        return view('panel.list-anggota', compact('anggotaList', 'daftarJurusan', 'daftarKelas'));
     }
+
+
 
     public function showAnggota($id)
     {

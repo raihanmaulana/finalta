@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PeminjamanDisetujui;
+use App\Mail\PeminjamanDitolak;
 use Carbon\Carbon;
 
 class PeminjamanBukuController extends Controller
@@ -144,6 +145,9 @@ class PeminjamanBukuController extends Controller
 
         // Memastikan permintaan peminjaman belum disetujui
         if ($peminjaman->status == 0) {
+            // Kirim email pemberitahuan ke anggota
+            Mail::to($peminjaman->anggota->email)->send(new PeminjamanDitolak($peminjaman));
+
             // Hapus permintaan peminjaman dari database
             $peminjaman->delete();
 
