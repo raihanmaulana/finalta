@@ -16,7 +16,7 @@
                 <div class="d-flex align-items-center mb-3">
 
                     <!-- Input form untuk pencarian -->
-                    <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Cari berdasarkan judul buku atau nomor buku" style="width: 45%;">
+                    <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Cari berdasarkan Judul Buku atau ISBN" style="width: 45%;">
 
                     <select id="kategoriFilter" onchange="filterBooks()" style="margin-bottom: 10px;">
                         <option value="ALL">Semua Kategori</option>
@@ -37,7 +37,7 @@
                     <thead>
                         <th scope="col">No</th>
                         <!-- <th scope="col">Image</th> -->
-                        <th scope="col">Nomor Buku</th>
+                        <th scope="col">ISBN</th>
                         <th scope="col">Judul Buku</th>
                         <th scope="col">Penerbit</th>
                         <th scope="col">Pengarang</th>

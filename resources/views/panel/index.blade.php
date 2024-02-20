@@ -48,7 +48,7 @@
                         <thead>
                             <tr>
                                 <th>ID Buku</th>
-                                <th>Nomor Buku</th>
+                                <th>ISBN</th>
                                 <th>Judul Buku</th>
                                 <th>Pengarang</th>
                                 <th>Tahun Terbit</th>
@@ -69,7 +69,7 @@
                 <div class="module-body">
                     <form class="form-horizontal row-fluid" id="findissueform">
                         <div class="control-group">
-                            <label class="control-label">Nomor Buku<br></label>
+                            <label class="control-label">ISBN<br></label>
                             <div class="controls">
                                 <div class="span9">
                                     <textarea class="span12" rows="2"></textarea>
@@ -85,7 +85,7 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
-                                <th>Nomor Buku</th>
+                                <th>ISBN</th>
                                 <th>Nomor Anggota</th>
                                 <th>Nama Anggota</th>
                                 <th>Status Buku</th>

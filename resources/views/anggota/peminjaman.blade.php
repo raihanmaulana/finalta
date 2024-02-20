@@ -106,7 +106,7 @@
         </div>
         <div class="module-body">
             <!-- Input form untuk pencarian -->
-            <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Cari berdasarkan judul buku atau nomor buku" style="width: 45%;">
+            <input type="text" id="searchInput" onkeyup="searchBooks()" placeholder="Cari berdasarkan Judul Buku atau ISBN" style="width: 45%;">
 
             <select id="kategoriFilter" onchange="filterBooks()" style="margin-bottom: 10px;">
                 <option value="ALL">Semua Kategori</option>

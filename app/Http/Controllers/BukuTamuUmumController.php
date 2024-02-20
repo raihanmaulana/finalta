@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Guest;
+use App\Models\BukuTamuUmum;
 use Illuminate\Http\Request;
 use Log;
 
-class BukuTamuController extends Controller
+class BukuTamuUmumController extends Controller
 {
 
     public function viewbukutamuumum()
     {
-        $guests = Guest::all();
-        $guests = Guest::paginate(10); // Mengambil data tamu dengan pagination
-        return view('admin.bukutamuumum', compact('guests'));
+        $bukutamu_umum = BukuTamuUmum::all();
+        $bukutamu_umum = BukuTamuUmum::paginate(10); // Mengambil data tamu dengan pagination
+        return view('admin.bukutamuumum', compact('bukutamu_umum'));
     }
 
     public function viewbukutamu()
@@ -34,7 +34,7 @@ class BukuTamuController extends Controller
         ]);
 
         try {
-            Guest::create([
+            BukuTamuUmum::create([
                 'name' => $request->input('name'),
                 'message' => $request->input('message'),
             ]);

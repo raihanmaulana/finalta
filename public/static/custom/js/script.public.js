@@ -189,3 +189,96 @@ function showFormModule(formid) {
     parent_div.children(".module").hide();
     module.show();
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document
+        .getElementById("bukutamuform")
+        .addEventListener("submit", function (event) {
+            event.preventDefault(); // Mencegah formulir untuk melakukan submit secara default
+
+            // Kirim permintaan AJAX untuk menyimpan data anggota
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+            })
+                .then((response) => response.json()) // Ubah respons menjadi objek JSON
+                .then((data) => {
+                    if (data.success) {
+                        // Jika permintaan berhasil, tampilkan pesan berhasil
+                        Swal.fire({
+                            title: "Berhasil!",
+                            text: data.message,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 2000, // Waktu tampilan popup dalam milidetik (ms)
+                        });
+                        // Reset nilai input
+                        this.reset();
+                    } else {
+                        // Jika terjadi kesalahan, tampilkan pesan kesalahan
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: data.message,
+                            icon: "error",
+                            showConfirmButton: true,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    // Tampilkan pesan kesalahan jika terjadi kesalahan pada permintaan
+                    Swal.fire({
+                        title: "Gagal!",
+                        text: "Nomor Anggota Tidak Terdaftar!",
+                        icon: "error",
+                        showConfirmButton: true,
+                    });
+                });
+        });
+});
+
+// Ambil elemen form
+const pinjamForm = document.getElementById("pinjambukuform");
+
+document.addEventListener("DOMContentLoaded", function () {
+    document
+        .getElementById("pinjambukuform")
+        .addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        Swal.fire({
+                            title: "Berhasil!",
+                            text: data.message,
+                            icon: "success",
+                            showConfirmButton: false,
+                            timer: 2000,
+                        }).then(() => {
+                            // Redirect or do something else after success
+                        });
+                    } else {
+                        Swal.fire({
+                            title: "Gagal!",
+                            text: data.message,
+                            icon: "error",
+                            showConfirmButton: true,
+                        });
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                    Swal.fire({
+                        title: "Gagal!",
+                        text: "Terjadi kesalahan saat memproses permintaan.",
+                        icon: "error",
+                        showConfirmButton: true,
+                    });
+                });
+        });
+});

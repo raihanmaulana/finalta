@@ -13,25 +13,25 @@
                 @csrf
                 @method('PUT')
 
-                <!-- Nomor Buku -->
-                <div class="control-group">
-                    <label class="control-label" for="isbn">Book Number</label>
-                    <div class="controls">
-                        <input type="text" id="isbn" name="isbn" value="{{ $book->isbn }}" class="span8">
-                    </div>
-                </div>
-
                 <!-- Judul Buku -->
                 <div class="control-group">
-                    <label class="control-label" for="judul_buku">Title Of Book</label>
+                    <label class="control-label" for="judul_buku">Judul Buku</label>
                     <div class="controls">
                         <input type="text" id="judul_buku" name="judul_buku" value="{{ $book->judul_buku }}" class="span8">
                     </div>
                 </div>
 
+                <!-- Nomor Buku -->
+                <div class="control-group">
+                    <label class="control-label" for="isbn">ISBN</label>
+                    <div class="controls">
+                        <input type="text" id="isbn" name="isbn" value="{{ $book->isbn }}" class="span8">
+                    </div>
+                </div>
+
                 <!-- Penerbit -->
                 <div class="control-group">
-                    <label class="control-label" for="penerbit">Publisher</label>
+                    <label class="control-label" for="penerbit">Penerbit</label>
                     <div class="controls">
                         <input type="text" id="penerbit" name="penerbit" value="{{ $book->penerbit }}" class="span8">
                     </div>
@@ -39,7 +39,7 @@
 
                 <!-- Pengarang -->
                 <div class="control-group">
-                    <label class="control-label" for="pengarang">Author Name</label>
+                    <label class="control-label" for="pengarang">Pengarang</label>
                     <div class="controls">
                         <input type="text" id="pengarang" name="pengarang" value="{{ $book->pengarang }}" class="span8">
                     </div>
@@ -47,7 +47,7 @@
 
                 <!-- Tahun Terbit -->
                 <div class="control-group">
-                    <label class="control-label" for="tahun_terbit">Year of Publication</label>
+                    <label class="control-label" for="tahun_terbit">Tahun Terbit</label>
                     <div class="controls">
                         <input type="text" id="tahun_terbit" name="tahun_terbit" value="{{ $book->tahun_terbit }}" class="span8">
                     </div>
@@ -55,7 +55,7 @@
 
                 <!-- Kategori -->
                 <div class="control-group">
-                    <label class="control-label" for="kategori_id">Category</label>
+                    <label class="control-label" for="kategori_id">Kategori</label>
                     <div class="controls">
                         <select id="kategori_id" name="kategori_id" class="span8">
                             @foreach ($categories_list as $category)
@@ -69,7 +69,7 @@
 
                 <!-- Stok Buku -->
                 <div class="control-group">
-                    <label class="control-label" for="stok">Stock Of Book</label>
+                    <label class="control-label" for="stok">Stok Buku</label>
                     <div class="controls">
                         <input type="text" id="stok" name="stok" value="{{ $book->stok }}" class="span8">
                     </div>
@@ -77,7 +77,7 @@
 
                 <!-- Gambar Buku -->
                 <div class="control-group">
-                    <label class="control-label" for="image">Book Image</label>
+                    <label class="control-label" for="image">Gambar Buku</label>
                     <div class="controls">
                         <input type="file" id="image" name="image" class="span8">
                     </div>

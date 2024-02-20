@@ -4,21 +4,21 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Guest extends Model
+class BukuTamuUmum extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'guests'; // Specify the table name if it's different from the default "guests" table name.
+    protected $table = 'bukutamu_umum'; // Specify the table name if it's different from the default "bukutamu_umum" table name.
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['name', 'message'];
+    protected $fillable = ['nama', 'asal_daerah'];
 
     /**
      * The attributes that should be cast to native types.
@@ -35,10 +35,10 @@ class Guest extends Model
      *
      * @return string
      */
-    public function getCreatedAtAttribute()
-    {
-        return $this->attributes['created_at']->format('Y-m-d H:i:s');
-    }
+    // public function getCreatedAtAttribute()
+    // {
+    //     return $this->attributes['created_at']->format('Y-m-d H:i:s');
+    // }
 
     /**
      * Get the date of the guestbook entry's last update.

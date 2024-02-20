@@ -53,6 +53,19 @@ class HomeController extends Controller
         return view('panel.list-anggota', compact('anggotaList', 'daftarJurusan', 'daftarKelas'));
     }
 
+    public function showDetail($id)
+    {
+        $book = Buku::find($id);
+
+        if ($book == NULL) {
+            return view('error')->with('message', 'Invalid Book ID');
+        }
+
+        // Ambil data kategori untuk ditampilkan di detail
+        $category = Kategori::find($book->kategori_id);
+
+        return view('panel.bookdetail-home', compact('book', 'category'));
+    }
 
 
     public function showAnggota($id)

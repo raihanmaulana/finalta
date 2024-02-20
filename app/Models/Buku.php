@@ -9,7 +9,7 @@ class Buku extends Model
     protected $fillable = [
         'id_buku', 'isbn', 'judul_buku',
         'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by',
-        'stok', 'image', 'status_buku', 'tersedia', 'kondisi', 'tautan_buku',
+        'stok', 'image', 'status_buku', 'tersedia', 'kondisi', 'tautan_buku', 'deskripsi',
     ];
 
     public $timestamps = true;

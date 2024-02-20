@@ -99,6 +99,7 @@ class BooksController extends Controller
 			'penerbit'      => $books['penerbit'] ?? null,
 			'pengarang'     => $books['pengarang'] ?? null,
 			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
+			'deskripsi'  => $books['deskripsi'] ?? null,
 			'kategori_id'   => $books['kategori_id'] ?? null,
 			'stok'         => $books['stok'] ?? 0, // Add this line
 			'added_by'      => $user_id,
@@ -190,6 +191,7 @@ class BooksController extends Controller
 			'penerbit'      => 'required',
 			'pengarang'     => 'required',
 			'tahun_terbit'  => 'required|numeric',
+			'deskripsi'  => 'required',
 			'kategori_id'   => 'required|exists:kategoribuku,id',
 			'stok'          => 'required|numeric',
 			'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -202,6 +204,7 @@ class BooksController extends Controller
 		$book->penerbit = $request->input('penerbit');
 		$book->pengarang = $request->input('pengarang');
 		$book->tahun_terbit = $request->input('tahun_terbit');
+		$book->deskripsi = $request->input('deskripsi');
 		$book->kategori_id = $request->input('kategori_id');
 		$book->stok = $request->input('stok');
 		if ($request->hasFile('image')) {

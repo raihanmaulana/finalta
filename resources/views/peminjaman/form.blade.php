@@ -70,7 +70,7 @@
                         <thead>
                             <tr>
                                 <th>ID Buku</th>
-                                <th>Nomor Buku</th>
+                                <th>ISBN</th>
                                 <th>Judul Buku</th>
                                 <th>Pengarang</th>
                                 <th>Tahun Terbit</th>
@@ -90,20 +90,14 @@
                         <label for="nomor_anggota">Nomor Anggota:</label>
                         <input class="span6" type="text" name="nomor_anggota" required>
                         <br>
-                        <label for="isbn">Nomor Buku:</label>
+                        <label for="isbn">ISBN:</label>
                         <input class="span6" type="text" name="isbn" required>
-                        <hr>
+                        <br>
+                        <br>
                         <button class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff" type="submit">Pinjam Buku</button>
                     </form>
-                    @if (session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
-                    @endif
-                    @if (session('error'))
-                    <div class="alert alert-danger">{{ session('error') }}</div>
-                    @endif
                 </div>
             </div>
-
         </div>
     </div>
 
@@ -117,6 +111,9 @@
 @section('custom_bottom_script')
 
 <script type="text/javascript" src="{{ asset('static/custom/js/script.public.js') }}"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
 <script type="text/template" id="search_issue">
     @include('underscore.search_issue')

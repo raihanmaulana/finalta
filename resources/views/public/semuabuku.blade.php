@@ -59,11 +59,18 @@
                         </div>
                         <div class="modal-body">
                             <!-- Informasi buku -->
-                            <p>Nomor Buku: {{ $book->nomor_buku }}</p>
+                            <p>ISBN: {{ $book->isbn }}</p>
                             <p>Penerbit: {{ $book->penerbit }}</p>
                             <p>Pengarang: {{ $book->pengarang }}</p>
                             <p>Tahun Terbit: {{ $book->tahun_terbit }}</p>
                             <p>Kategori : {{ $book->kategori->kategori }}</p>
+                            <p>Deskripsi : {{ $book->deskripsi }}</p>
+                            @if ($book->tautan_buku)
+                            <p>Tautan Buku: <a href="{{ $book->tautan_buku }}" target="_blank">{{ $book->tautan_buku }}</a></p>
+                            @else
+                            <p>Tautan Buku: " Tidak Tersedia "</p>
+                            @endif
+
                             <!-- Gambar buku -->
                             @if ($book->image)
                             <img src="{{ asset('storage/' . $book->image) }}" alt="Gambar Buku" style="max-width: 100px; max-height: 100px;">

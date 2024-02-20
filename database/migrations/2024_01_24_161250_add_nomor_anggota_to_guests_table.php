@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNomorAnggotaToGuestsTable extends Migration
+class AddNomorAnggotaTobukutamu_umumTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddNomorAnggotaToGuestsTable extends Migration
      */
     public function up()
     {
-        Schema::table('guests', function (Blueprint $table) {
+        Schema::table('bukutamu_umum', function (Blueprint $table) {
             $table->string('nomor_anggota')->nullable()->after('message');
         });
     }
@@ -25,7 +25,7 @@ class AddNomorAnggotaToGuestsTable extends Migration
      */
     public function down()
     {
-        Schema::table('guests', function (Blueprint $table) {
+        Schema::table('bukutamu_umum', function (Blueprint $table) {
             //
         });
     }

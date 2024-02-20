@@ -25,7 +25,7 @@
                 <div class="control-group">
                     <label class="control-label">ISBN</label>
                     <div class="controls">
-                        <input type="text" name="isbn" id="isbn" placeholder="Masukkan ISBN" class="span8" required>
+                        <input type="text" name="isbn" id="isbn" placeholder="Masukkan ISBN" class="span8" required maxlength="13">
                     </div>
                     @error('isbn')
                     <span class="text-danger">{{ $message }}</span>
@@ -62,6 +62,16 @@
                 </div>
 
                 <div class="control-group">
+                    <label class="control-label">Deskripsi Buku</label>
+                    <div class="controls">
+                        <input type="text" name="deskripsi" id="deskripsi" placeholder="Masukkan Deskripsi Buku" class="span8" required>
+                    </div>
+                    @error('deskripsi')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <div class="control-group">
                     <label class="control-label" for="kategori_id">Kategori</label>
                     <div class="controls">
                         <select tabindex="1" name="kategori_id" id="kategori_id" data-placeholder="Select kategori.." class="span8" required>
@@ -74,7 +84,7 @@
 
 
                 <div class="control-group">
-                    <label class="control-label" for="image">Book Image</label>
+                    <label class="control-label" for="image">Gambar Buku</label>
                     <div class="controls">
                         <input type="file" id="image" name="image" class="span8" required>
                     </div>
@@ -102,7 +112,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn btn-inverse" id="addbooks">Add Books</button>
+                        <button type="submit" class="btn btn-inverse" id="addbooks">Tambah Buku</button>
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>

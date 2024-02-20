@@ -17,9 +17,10 @@
         @foreach ($galeriItems as $item)
         <div class="col-md-4">
             <div class="card h-100">
-                <img src="{{ asset($item->path_gambar) }}" class="card-img-top" width="100%" height="240px" alt="{{ $item->judul }}">
+                <img src="{{ asset('storage/' . $item->gambar_galeri) }}" class="card-img-top" width="100%" height="240px" alt="{{ $item->judul }}">
                 <div class="card-body">
                     <h5 class="card-title">{{ $item->judul }}</h5>
+                    <p class="card-text" style="max height: 20 px; overflow: hidden;">{{ $item->deskripsi }}</p>
                 </div>
             </div>
         </div>

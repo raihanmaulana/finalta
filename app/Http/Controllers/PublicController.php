@@ -141,6 +141,7 @@ class PublicController extends Controller
 
         return response()->json($formattedBooks);
     }
+
     public function pinjamBuku(Request $request)
     {
         $nomor_anggota = $request->input('nomor_anggota');
@@ -156,12 +157,12 @@ class PublicController extends Controller
         if ($anggota && $buku) {
             // Periksa kondisi buku
             if ($buku->kondisi != 1) {
-                return redirect()->back()->with('error', 'Buku tidak aktif dan tidak dapat dipinjam.');
+                return response()->json(['success' => false, 'message' => 'Buku tidak aktif dan tidak dapat dipinjam.']);
             }
 
             // Periksa apakah buku tersedia
             if ($buku->tersedia <= 0) {
-                return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
+                return response()->json(['success' => false, 'message' => 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.']);
             }
 
             // Periksa apakah anggota sudah meminjam buku dengan isbn yang sama
@@ -171,7 +172,7 @@ class PublicController extends Controller
                 ->exists();
 
             if ($peminjamanSama) {
-                return redirect()->back()->with('error', 'Anda sudah meminjam buku ini.');
+                return response()->json(['success' => false, 'message' => 'Anda sudah meminjam buku ini.']);
             }
 
             // Lakukan peminjaman dengan 'id_buku' dan 'id_anggota' yang ditemukan
@@ -189,11 +190,13 @@ class PublicController extends Controller
             $buku->tersedia -= 1;
             $buku->save();
 
-            return redirect()->back()->with('success', 'Buku berhasil dipinjam.');
+            return response()->json(['success' => true, 'message' => 'Buku berhasil dipinjam.']);
         } else {
-            return redirect()->back()->with('error', 'Nomor anggota tidak valid atau buku tidak tersedia.');
+            return response()->json(['success' => false, 'message' => 'Nomor anggota tidak valid atau buku tidak tersedia.']);
         }
     }
+
+
 
 
     public function storeAnggota(Request $request)
@@ -205,6 +208,11 @@ class PublicController extends Controller
         try {
             $anggota = AnggotaPerpustakaan::where('nomor_anggota', $request->input('nomor_anggota'))->first();
 
+            if (!$anggota) {
+                // Jika nomor anggota tidak ditemukan, kembalikan respons dengan kesalahan
+                return response()->json(['success' => false, 'message' => 'Gagal! Anggota tidak terdaftar.'], 422);
+            }
+
             BukuTamuAnggota::create([
                 'nomor_anggota' => $anggota->nomor_anggota,
                 'nama_anggota' => $anggota->nama_anggota,
@@ -212,11 +220,12 @@ class PublicController extends Controller
             ]);
         } catch (\Exception $e) {
             Log::error('Error saving bukutamu_anggota entry: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Failed to save the bukutamu_anggota entry.');
+            return response()->json(['success' => false, 'message' => 'Gagal menyimpan entri bukutamu_anggota.'], 500);
         }
 
-        return redirect()->route('peminjaman.form'); // Ganti dengan route yang sesuai
+        return response()->json(['success' => true, 'message' => 'Buku Tamu Anggota berhasil disimpan.'], 200);
     }
+
 
     public function getAnggota($nomorAnggota)
     {

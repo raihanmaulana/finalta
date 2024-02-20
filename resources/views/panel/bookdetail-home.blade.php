@@ -1,4 +1,4 @@
-@extends('peminjaman.index')
+@extends('layout.index')
 
 @section('content')
 <div class="content">
@@ -27,17 +27,31 @@
                     <h5>Kategori:</h5>
                     <p>{{ $category->kategori }}</p>
 
+                    <h5>Stok Buku:</h5>
+                    <p>{{ $book->stok }}</p>
 
-                    <h5>Tersedia:</h5>
+                    <h5>Stok Buku:</h5>
                     <p>{{ $book->tersedia }}</p>
-                </div>
 
-                @if ($book->tautan_buku)
-                <h5>Tautan Buku: <a href="{{ $book->tautan_buku }}" target="_blank">{{ $book->tautan_buku }}</a></h5>
-                @else
+
+
+
+
+                </div>
                 <h5>Tautan Buku:</h5>
-                <p> Tidak Tersedia </p>
-                @endif
+                @php
+                // Cek apakah tautan buku tidak kosong dan merupakan URL yang valid
+                if (!empty($book->tautan_buku) && filter_var($book->tautan_buku, FILTER_VALIDATE_URL)) {
+                $url_parts = parse_url($book->tautan_buku);
+                $domain = isset($url_parts['host']) ? $url_parts['host'] : '';
+                @endphp
+                <p><a href="{{ $book->tautan_buku }}" target="_blank">{{ $domain }}</a></p>
+                @php
+                } else {
+                // Tautan buku kosong atau tidak valid, tampilkan pesan alternatif
+                echo '<p>Tautan buku tidak tersedia.</p>';
+                }
+                @endphp
 
                 <h5>Gambar Buku:</h5>
                 <div class="span6">
@@ -46,7 +60,7 @@
             </div>
             <div class="control-group">
                 <div class="controls">
-                    <a href="/offline" class="btn btn-primary">Kembali ke Halaman Offline</a>
+                    <a href="{{ URL::route('home') }}" class="btn btn-inverse">Kembali</a>
                 </div>
             </div>
         </div>

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUniqueConstraintToAnggotaPerpustakaanTable extends Migration
+class AddDeskripsiToBukuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddUniqueConstraintToAnggotaPerpustakaanTable extends Migration
      */
     public function up()
     {
-        Schema::table('anggota_perpustakaan', function (Blueprint $table) {
-            $table->unique('nomor_anggota');
+        Schema::table('buku', function (Blueprint $table) {
+            $table->string('deskripsi', 255)->nullable()->after('tahun_terbit');
         });
     }
 
@@ -25,7 +25,7 @@ class AddUniqueConstraintToAnggotaPerpustakaanTable extends Migration
      */
     public function down()
     {
-        Schema::table('anggota_perpustakaan', function (Blueprint $table) {
+        Schema::table('buku', function (Blueprint $table) {
             //
         });
     }

@@ -178,7 +178,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Informasi buku -->
-                                            <p>Nomor Buku: {{ $book->isbn }}</p>
+                                            <p>ISBN: {{ $book->isbn }}</p>
                                             <p>Penerbit: {{ $book->penerbit }}</p>
                                             <p>Pengarang: {{ $book->pengarang }}</p>
                                             <p>Tahun Terbit: {{ $book->tahun_terbit }}</p>
@@ -242,28 +242,29 @@
                 // Fungsi untuk menampilkan daft             ku
                 function displayBooks(b
                     var bookListContainer = documen mentById('book                                  ntainer.innerHTML                    // Tampilkan buku yang telah d                    books.forEach(function (                        var html = ` <
-                            div class = "col-6 col-md-4 col-lg-2" >
-                            <
-                            div class = "card h-100" >
-                            <
-                            img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
-                            class = "card-img-top mt-3 mx-auto"
-                            alt = "Book Image"
-                            data - bs - toggle = "modal"
-                            data - bs - target = "#detailModal${book.id_buku}" >
-                            <
-                            div class = "card-body text-center" >
-                            <
-                            h6 class = "card-title" > $ {
-                                book.judul_buku
-                            } < /h6> <
-                            button class = "btn btn-dark"
-                            data - bs - toggle = "modal"
-                            data - bs - target = "#detailModal${book.id_buku}"
-                            onclick = "showBookDetai                d_buku}')" > Detail < /button>
-                            div < /div> <
-                            /div>                                    bookListContainer.innerHTML +                        }
-                            document.getElementById('searchInput').addEventListener('input', searchBooks);
+                        div class = "col-6 col-md-4 col-lg-2" >
+                        <
+                        div class = "card h-100" >
+                        <
+                        img src = "${book.image ? asset('storage/' + book.image) : 'img/130x190.png'}"
+                        class = "card-img-top mt-3 mx-auto"
+                        alt = "Book Image"
+                        data - bs - toggle = "modal"
+                        data - bs - target = "#detailModal${book.id_buku}" >
+                        <
+                        div class = "card-body text-center" >
+                        <
+                        h6 class = "card-title" > $ {
+                            book.judul_buku
+                        } < /h6> <
+                        button class = "btn btn-dark"
+                        data - bs - toggle = "modal"
+                        data - bs - target = "#detailModal${book.id_buku}"
+                        onclick = "showBookDetai                d_buku}')" > Detail < /button>
+                        div < /div> < /
+                        div > bookListContainer.innerHTML +
+                    }
+                    document.getElementById('searchInput').addEventListener('input', searchBooks);
     </script>
     </body>
     @endsection

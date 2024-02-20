@@ -18,7 +18,7 @@ use App\Http\Controllers\PeminjamanBukuController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\PublicController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\BukuTamuController;
+use App\Http\Controllers\BukuTamuUmumController;
 use App\Http\Controllers\AnggotaAuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -30,14 +30,14 @@ Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.
 Route::get('/dump/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
 
-Route::get('/', [BukuTamuController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
+Route::get('/', [BukuTamuUmumController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
 // Keep the original guestbook route
-Route::post('/guestbook', [BukuTamuController::class, 'store'])->name('guestbook.store');
+Route::post('/guestbook', [BukuTamuUmumController::class, 'store'])->name('guestbook.store');
 
 Route::get('/offline', [PublicController::class, 'showForm'])->name('peminjaman.form');
 Route::post('/offline', [PublicController::class, 'pinjamBuku'])->name('peminjaman.pinjam');
-// Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
-// Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
+Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
+Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
 
 
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
@@ -246,8 +246,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::post('/galeri/create', [GaleriController::class, 'store'])->name('galeri.store');
 
 	// Render Guestbook View
-	Route::get('/bukutamu-umum', [BukuTamuController::class, 'viewbukutamuumum'])->name('bukutamuumum.view');
-	Route::get('/bukutamu', [BukuTamuController::class, 'viewbukutamu'])->name('bukutamu.view');
+	Route::get('/bukutamu-umum', [BukuTamuUmumController::class, 'viewbukutamuumum'])->name('bukutamuumum.view');
+	Route::get('/bukutamu', [BukuTamuUmumController::class, 'viewbukutamu'])->name('bukutamu.view');
 	// Update Buku
 	Route::get('/books/{id}/edit', 'BooksController@edit')->name('books.edit');
 	Route::put('/books/{id}', 'BooksController@update')->name('books.update');
@@ -260,6 +260,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/bukutamu-anggota', [BukutamuAnggotaController::class, 'index'])->name('bukutamuanggota.view');
 	//Detail Buku
 	Route::get('/books/{id}/detail', 'BooksController@showDetail')->name('books.detail');
+	Route::get('/home/{id}/detail', 'HomeController@showDetail')->name('buku.detail');
 
 	//Hapus Buku
 	Route::delete('/all-books/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
