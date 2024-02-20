@@ -17,9 +17,17 @@
                         <label for="bulan" class="mr-2">Bulan</label>
                         <select class="form-control mr-3" id="bulan" name="bulan">
                             <option value="">Pilih Bulan</option>
-                            @for ($i = 1; $i <= 12; $i++) <option value="{{ $i }}">{{ date('F', mktime(0, 0, 0, $i, 1)) }}</option>
+                            @php
+                            $namaBulan = [
+                            'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+                            ];
+                            @endphp
+                            @for ($i = 1; $i <= 12; $i++) <option value="{{ $i }}">{{ $namaBulan[$i - 1] }}</option>
                                 @endfor
                         </select>
+
+
                         <label for="tahun" class="mr-2">Tahun</label>
                         <select class="form-control mr-3" id="tahun" name="tahun">
                             <option value="">Pilih Tahun</option>
@@ -62,4 +70,5 @@
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
