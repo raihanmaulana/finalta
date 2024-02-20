@@ -8,7 +8,7 @@
     <div class="module">
         <div class="module-head">
             <meta name="csrf-token" content="{{ csrf_token() }}">
-            <h3>Buku Tidak Aktif</h3>
+            <h3>Buku Nonaktif</h3>
 
         </div>
         <div class="module-body">

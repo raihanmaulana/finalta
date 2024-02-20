@@ -104,7 +104,7 @@ function searchAnggotaByNumber(nomorAnggota) {
         success: function (data) {
             if ($.isEmptyObject(data)) {
                 table.html(
-                    '<tr><td colspan="99">No such anggota found in library</td></tr>'
+                    '<tr><td colspan="99">Tidak Ada Nomor Anggota Terdaftar</td></tr>'
                 );
             } else {
                 table.html("");

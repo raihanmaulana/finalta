@@ -79,9 +79,10 @@
 
                                     <button class="btn btn-primary detail-btn" style="margin-bottom: 2px; width: 75px;" data-id="{{ $book->id_buku }}">Detail</button>
                                     <button class="btn btn-info edit-btn" style="margin-bottom: 2px; width: 75px;" data-id="{{ $book->id_buku }}">Edit</button>
-                                    <form action="{{ route('books.deactivate', $book->id_buku) }}" method="POST">
+                                    <form id="nonaktifForm{{ $book->id_buku }}" action="{{ route('books.deactivate', $book->id_buku) }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="btn btn-danger">Nonaktif</button>
+                                        @method('POST')
+                                        <button type="button" class="btn btn-danger" onclick="deactivateBook({{ $book->id_buku }})">Nonaktif</button>
                                     </form>
                                 </div>
                             </td>
@@ -105,67 +106,4 @@
 @section('custom_bottom_script')
 <script type="text/javascript" src="{{ asset('static/custom/js/script.allbook.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script>
-    function deleteBook(id) {
-        // Show a confirmation popup
-        Swal.fire({
-            title: "Konfirmasi",
-            text: "Apakah Anda yakin ingin menghapus buku ini?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Ya, Hapus!",
-            cancelButtonText: "Batal",
-        }).then((result) => {
-            // If the user confirms, send the DELETE request
-            if (result.isConfirmed) {
-                // Send the DELETE request to the server
-                fetch("/all-books/" + id + "/delete", {
-                        method: "DELETE",
-                        headers: {
-                            "X-CSRF-TOKEN": "{{ csrf_token() }}", // Add the CSRF token to the header
-                            "Content-Type": "application/json",
-                        },
-                    })
-                    .then((response) => {
-                        // Handle the response from the server
-                        if (response.ok) {
-                            // If the deletion was successful, show a success message
-                            Swal.fire({
-                                title: "Berhasil!",
-                                text: "Buku telah dihapus.",
-                                icon: "success",
-                                showConfirmButton: false,
-                                timer: 2000, // Set timer for 2 seconds
-                                onClose: () => {
-                                    // Reload the page after the timer finishes
-                                    location.reload();
-                                },
-                            });
-                        } else {
-                            // If there was an error, show an error message
-                            Swal.fire(
-                                "Gagal!",
-                                "Terjadi kesalahan saat menghapus buku.",
-                                "error"
-                            );
-                        }
-                    })
-                    .catch((error) => {
-                        // Handle any errors that occur during the request
-                        console.error("Error:", error);
-                        Swal.fire(
-                            "Gagal!",
-                            "Terjadi kesalahan saat menghapus buku.",
-                            "error"
-                        );
-                    });
-            } else {
-                // If the user cancels, show a cancel message
-                Swal.fire("Dibatalkan!", "Penghapusan buku dibatalkan.", "info");
-            }
-        });
-    }
-</script>
 @stop

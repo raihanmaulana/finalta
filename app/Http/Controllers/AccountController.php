@@ -56,7 +56,7 @@ class AccountController extends Controller
 			'nama'            => 'required|max:255',
 			'username'        => 'required|max:20|min:3|unique:users',
 			'email'           => 'required|email|unique:users',
-			'password'        => 'required|min:5',
+			'password'        => 'required|min:8',
 			'password_again'  => 'required|same:password',
 		]);
 

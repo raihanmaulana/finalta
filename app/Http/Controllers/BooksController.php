@@ -191,11 +191,11 @@ class BooksController extends Controller
 			'penerbit'      => 'required',
 			'pengarang'     => 'required',
 			'tahun_terbit'  => 'required|numeric',
-			'deskripsi'  => 'required',
+			'deskripsi'  	=> 'required',
 			'kategori_id'   => 'required|exists:kategoribuku,id',
 			'stok'          => 'required|numeric',
 			'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-			'tautan_buku'    => 'required',
+			'tautan_buku'    => 'sometimes|required',
 		]);
 
 		// Update book properties
