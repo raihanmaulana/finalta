@@ -27,7 +27,7 @@
                     @forelse ($daftarBuku as $index => $buku)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                        <td>{{ $buku->nomor_buku }}</td>
+                        <td>{{ $buku->isbn }}</td>
                         <td>{{ $buku->judul_buku }}</td>
                         <td>{{ $buku->pengarang }}</td>
                         <td>{{ $buku->penerbit }}</td>

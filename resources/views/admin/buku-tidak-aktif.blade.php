@@ -50,7 +50,7 @@
                         @forelse ($bukuTidakaktif as $books)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $books->nomor_buku }}</td>
+                            <td>{{ $books->isbn }}</td>
                             <td class="align-middle">{{ $books->judul_buku }}</td>
                             <td>{{ $books->penerbit }}</td>
                             <td>{{ $books->pengarang }}</td>

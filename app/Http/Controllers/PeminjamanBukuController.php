@@ -65,7 +65,7 @@ class PeminjamanBukuController extends Controller
 
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
-            'nomor_buku' => $buku->nomor_buku, // Tambahkan nomor_buku ke dalam peminjaman
+            'isbn' => $buku->isbn, // Tambahkan isbn ke dalam peminjaman
             'status' => 0, // Status pending
             'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
         ]);

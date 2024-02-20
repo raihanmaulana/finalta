@@ -1,6 +1,6 @@
 <tr>
     <td><%= obj.id_buku %></td>
-    <td><%= obj.nomor_buku %></td>
+    <td><%= obj.isbn %></td>
     <td><%= obj.judul_buku %></td>
     <td><%= obj.pengarang %></td>
     <td><%= obj.tahun_terbit %></td>

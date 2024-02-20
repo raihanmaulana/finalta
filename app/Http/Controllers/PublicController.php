@@ -65,12 +65,16 @@ class PublicController extends Controller
 
     public function search(Request $request)
     {
-        $searchQuery = $request->input('search_query');
+        // Ambil keyword pencarian dari request
+        $keyword = $request->input('keyword');
 
-        // Lakukan pencarian buku berdasarkan judul atau kriteria lain yang diinginkan
-        $books = Buku::where('judul', 'like', '%' . $searchQuery . '%')->get();
+        // Lakukan pencarian berdasarkan judul buku atau pengarang
+        $books = Buku::where('judul_buku', 'like', "%$keyword%")
+            ->orWhere('pengarang', 'like', "%$keyword%")
+            ->get();
 
-        return response()->json($books);
+        // Return view dengan data buku hasil pencarian
+        return view('public.semuabuku', compact('books'));
     }
 
     public function showForm()
@@ -124,7 +128,7 @@ class PublicController extends Controller
                 // Buat format baru untuk buku termasuk nama kategori
                 $formattedBooks[] = [
                     'id_buku' => $item->id_buku,
-                    'nomor_buku' => $item->nomor_buku,
+                    'isbn' => $item->isbn,
                     'judul_buku' => $item->judul_buku,
                     'pengarang' => $item->pengarang,
                     'tahun_terbit' => $item->tahun_terbit,
@@ -140,13 +144,13 @@ class PublicController extends Controller
     public function pinjamBuku(Request $request)
     {
         $nomor_anggota = $request->input('nomor_anggota');
-        $nomor_buku = $request->input('nomor_buku');
+        $isbn = $request->input('isbn');
 
         // Cari anggota berdasarkan nomor_anggota
         $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomor_anggota)->first();
 
-        // Cari buku berdasarkan nomor_buku
-        $buku = Buku::where('nomor_buku', $nomor_buku)->first();
+        // Cari buku berdasarkan isbn
+        $buku = Buku::where('isbn', $isbn)->first();
 
         // Periksa apakah anggota dan buku ditemukan
         if ($anggota && $buku) {
@@ -160,7 +164,7 @@ class PublicController extends Controller
                 return redirect()->back()->with('error', 'Buku tidak tersedia. Peminjaman tidak dapat dilakukan.');
             }
 
-            // Periksa apakah anggota sudah meminjam buku dengan nomor_buku yang sama
+            // Periksa apakah anggota sudah meminjam buku dengan isbn yang sama
             $peminjamanSama = PeminjamanBuku::where('id_anggota', $anggota->id_anggota)
                 ->where('id_buku', $buku->id_buku)
                 ->whereIn('status', [0, 1]) // Peminjaman dengan status pending atau disetujui
@@ -174,7 +178,7 @@ class PublicController extends Controller
             $peminjaman = PeminjamanBuku::create([
                 'id_buku' => $buku->id_buku,
                 'id_anggota' => $anggota->id_anggota,
-                'nomor_buku' => $nomor_buku, // Tambahkan nomor_buku ke dalam peminjaman
+                'isbn' => $isbn, // Tambahkan isbn ke dalam peminjaman
                 'status' => 1,
             ]);
 
@@ -233,6 +237,6 @@ class PublicController extends Controller
             ->with('kategori_list', $this->kategori_list)
             ->with('nomor_anggota', $this->nomor_anggota)
             ->with('judul_buku', $this->judul_buku)
-            ->with('nomor_buku', $this->nomor_buku);
+            ->with('isbn', $this->isbn);
     }
 }

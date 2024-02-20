@@ -25,7 +25,7 @@ class HomeController extends Controller
 
     public $judul_buku = array();
 
-    public $nomor_buku = array();
+    public $isbn = array();
 
     public function __construct()
     {
@@ -35,7 +35,7 @@ class HomeController extends Controller
 
         $this->judul_buku = Buku::select()->orderBy('judul_buku')->get();
 
-        $this->nomor_buku = PeminjamanBuku::select()->orderBy('nomor_buku')->get();
+        $this->isbn = PeminjamanBuku::select()->orderBy('isbn')->get();
     }
 
     public function listAnggota()
@@ -160,7 +160,7 @@ class HomeController extends Controller
             ->with('kategori_list', $this->kategori_list)
             ->with('nomor_anggota', $this->nomor_anggota)
             ->with('judul_buku', $this->judul_buku)
-            ->with('nomor_buku', $this->nomor_buku);
+            ->with('isbn', $this->isbn);
     }
 
     public function home()
@@ -169,6 +169,6 @@ class HomeController extends Controller
             ->with('kategori_list', $this->kategori_list)
             ->with('nomor_anggota', $this->nomor_anggota)
             ->with('judul_buku', $this->judul_buku)
-            ->with('nomor_buku', $this->nomor_buku);
+            ->with('isbn', $this->isbn);
     }
 }

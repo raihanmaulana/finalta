@@ -145,7 +145,7 @@
                     @php $nomorUrut++; @endphp <!-- Tingkatkan nomor urut hanya jika buku aktif -->
                     <tr>
                         <td>{{ $nomorUrut }}</td>
-                        <td>{{ $buku->nomor_buku }}</td>
+                        <td>{{ $buku->isbn }}</td>
                         <td>{{ $buku->judul_buku }}</td>
                         <td>{{ $buku->pengarang }}</td>
                         <td>{{ $buku->penerbit }}</td>

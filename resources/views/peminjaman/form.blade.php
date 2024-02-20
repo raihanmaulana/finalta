@@ -90,8 +90,8 @@
                         <label for="nomor_anggota">Nomor Anggota:</label>
                         <input class="span6" type="text" name="nomor_anggota" required>
                         <br>
-                        <label for="nomor_buku">Nomor Buku:</label>
-                        <input class="span6" type="text" name="nomor_buku" required>
+                        <label for="isbn">Nomor Buku:</label>
+                        <input class="span6" type="text" name="isbn" required>
                         <hr>
                         <button class="btn homepage-form-submit" style="background-color:  #025E9B; color:#fff" type="submit">Pinjam Buku</button>
                     </form>

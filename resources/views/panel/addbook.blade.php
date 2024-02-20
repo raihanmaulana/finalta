@@ -22,7 +22,7 @@
                 <div class="control-group">
                     <label class="control-label">ISBN</label>
                     <div class="controls">
-                        <input type="text" name="nomor_buku" id="nomor_buku" placeholder="Masukkan ISBN" class="span8">
+                        <input type="text" name="isbn" id="isbn" placeholder="Masukkan ISBN" class="span8">
                     </div>
                 </div>
 

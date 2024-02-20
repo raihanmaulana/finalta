@@ -11,33 +11,22 @@
         <div class="title text-center">
             <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-right">Katalog Buku</h1>
         </div>
-
-        <!-- Form Pencarian -->
-        <form id="searchForm" class="custom-form mb-0 mx-auto" data-aos="fade-left">
-            <div class="input-group">
-                <input type="text" name="keyword" class="form-control" id="searchInput" placeholder="Cari buku..." aria-label="Search">
-                <button type="submit" class="btn btn-primary">Cari</button>
-            </div>
-        </form>
-        <script>
-            document.getElementById('searchForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Menghentikan aksi default form
-                searchBooks(); // Memanggil fungsi searchBooks
-            });
-
-            function searchBooks() {
-                var searchInput = document.getElementById('searchInput').value.toLowerCase();
-                // Lakukan pencarian buku dan tampilkan hasil
-                // ...
-            }
-        </script>
-
+        <!-- Tambahkan input pencarian -->
+<div class="d-flex justify-content-center mt-3" data-aos="zoom-out-up">
+    <form id="searchForm">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Cari buku..." id="searchInput">
+            <button class="btn btn-outline-secondary" type="submit">Cari</button>
+        </div>
+    </form>
+</div>
         @if ($books->isEmpty())
         <p>Tidak ada buku.</p>
         @else
         <!-- end header -->
         <div class="d-flex flex-wrap justify-content-center mt-3" data-aos="zoom-out-up">
-            <button type="button" class="btn btn-outline-dark round m-2" onclick="showAllBooks()">Semua Kategori</button>
+            <button type="button" class="btn btn-outline-dark round m-2" onclick="showAllBooks()">Semua
+                Kategori</button>
             @foreach ($kategoriBuku as $kategori)
             <button type="button" class="btn btn-outline-dark round m-2" onclick="filterByCategory('{{ $kategori->kategori }}')">{{ $kategori->kategori }}</button>
             @endforeach
@@ -90,9 +79,6 @@
         @endif
     </div>
 </section>
-@endsection
-
-@section('custom_bottom_script')
 <!-- jquery -->
 <script src="js/code.jquery.com_jquery-3.7.1.js"></script>
 <!-- bootstrap js and popper -->
@@ -102,7 +88,7 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous">
 </script>
-
+<!-- Tambahkan skrip SweetAlert2 dari CDN -->
 <script>
     function filterByCategory(kategori) {
         // Mengirimkan permintaan AJAX ke URL yang sesuai dengan kategori yang dipilih
@@ -119,6 +105,27 @@
         });
     }
 
+    // Fungsi pencarian buku
+    function searchBooks() {
+        var keyword = $('#searchInput').val().trim();
+        // Mengirimkan permintaan AJAX ke URL pencarian buku
+        $.ajax({
+            type: 'GET',
+            url: '/semuabuku/cari',
+            data: {
+                keyword: keyword
+            },
+            success: function(response) {
+                // Mengganti isi dari div dengan id 'bookCollection' dengan hasil pencarian
+                $('#bookCollection').html(response);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
+    }
+</script>
+<script>
     function showAllBooks() {
         // Ambil semua elemen buku
         var books = document.getElementsByClassName('book');
@@ -129,7 +136,8 @@
             book.style.display = 'block'; // Tampilkan semua buku
         }
     }
-
+</script>
+<script>
     // Fungsi untuk menampilkan detail buku
     function showBookDetails(bookId) {
         const detailCard = document.getElementById("detailModal" + bookId);
@@ -141,46 +149,5 @@
         const detailCard = document.getElementById("detailModal" + bookId);
         detailCard.style.display = "none";
     }
-
-    // Fungsi untuk melakukan pencarian buku
-    function searchBooks() {
-        // Ambil nilai input pencarian
-        var searchInput = document.getElementById('searchInput').value.toLowerCase();
-        // Ambil daftar buku
-        var books = {
-            !!$books!!
-        };
-        // Filter buku berdasarkan input
-        var filteredBooks = books.filter(function(book) {
-            return book.judul_buku.toLowerCase().includes(searchInput);
-        });
-
-        // Tampilkan hasil pencarian
-        displayBooks(filteredBooks);
-    }
-
-    // Fungsi untuk menampilkan daftar buku
-    function displayBooks(books) {
-        var bookListContainer = document.getElementById('bookCollection');
-        bookListContainer.innerHTML = "";
-        // Tampilkan buku yang telah difilter
-        books.forEach(function(book) {
-            var html = '<div class="col-6 col-md-4 col-lg-2 book" data-aos="zoom-in-up">' +
-                '<div class="card text-center" style="width: 170px;">' +
-                '<img src="' + (book.image ? "{{ asset('storage/') }}" + book.image : 'img/130x190.png') + '" class="card-img-top mx-auto px-2 pt-2" style="width:148px; height:210px;" alt="Book Image" data-bs-toggle="modal" data-bs-target="#detailModal' + book.id_buku + '">' +
-                '<div class="card-body px-2 pt-1 pb-2">' +
-                '<p class="card-title" style="max-height: 20px; overflow: hidden;">' + book.judul_buku + '</p>' +
-                '<button class="btn btn-dark" style="font-size: 12px; padding: 5px 10px;" data-bs-toggle="modal" data-bs-target="#detailModal' + book.id_buku + '" onclick="showBookDetails(\'' + book.id_buku + '\')">Detail</button>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
-            bookListContainer.innerHTML += html;
-        });
-    }
-
-    document.getElementById('searchButton').addEventListener('click', function() {
-        searchBooks();
-    });
 </script>
-
 @endsection

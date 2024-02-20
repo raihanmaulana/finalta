@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
+
 Route::get('/dump/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
 
@@ -38,7 +39,6 @@ Route::post('/offline', [PublicController::class, 'pinjamBuku'])->name('peminjam
 // Route::get('/cari-buku/{judulBuku}', 'PublicController@cariBukubyJudulBuku');
 // Route::get('/cari-buku/{id}/detail', 'PublicController@showDetail')->name('peminjaman.detail_buku');
 
-Route::get('/cari-buku', [PublicController::class, 'searchBooks'])->name('cari-buku');
 
 Route::get('/anggota/register', [AnggotaAuthController::class, 'showRegisterForm'])->name('anggota.register');
 Route::post('/anggota/register', 'AnggotaAuthController@register');
@@ -47,6 +47,7 @@ Route::post('/anggota/register', 'AnggotaAuthController@register');
 Route::get('/anggota/login', 'AnggotaAuthController@showLoginForm')->name('anggota.login');
 Route::post('/anggota/login', 'AnggotaAuthController@login');
 
+Route::get('/semuabuku/cari', 'PublicController@search')->name('books.search');
 Route::get('/perpustakaan', [PublicController::class, 'perpustakaan'])->name('perpustakaan');
 Route::get('/semuabuku', [PublicController::class, 'semuabuku'])->name('semuabuku');
 Route::get('/katalog', [PublicController::class, 'semuabuku'])->name('semuabuku');

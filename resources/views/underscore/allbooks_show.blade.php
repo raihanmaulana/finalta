@@ -1,6 +1,6 @@
 <tr>
     <td><%= obj.id_buku %></td>
-    <td class="hide-on-small"><%= obj.nomor_buku %></td>
+    <td class="hide-on-small"><%= obj.isbn %></td>
     <td><%= obj.judul_buku %></td>
     <td class="hide-on-small"><%= obj.penerbit %></td>
     <td class="hide-on-small"><%= obj.pengarang %></td>

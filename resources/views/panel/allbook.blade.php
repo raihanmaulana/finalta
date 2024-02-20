@@ -65,7 +65,7 @@
                         @endphp
                         <tr>
                             <td>{{ $activeBooksCount }}</td> <!-- Menggunakan variabel $activeBooksCount sebagai nomor urutan -->
-                            <td>{{ $book->nomor_buku }}</td>
+                            <td>{{ $book->isbn }}</td>
                             <td>{{ $book->judul_buku }}</td>
                             <td> {{ $book->penerbit }}</td>
                             <td> {{ $book->pengarang }}</td>

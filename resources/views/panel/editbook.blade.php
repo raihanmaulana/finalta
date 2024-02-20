@@ -15,9 +15,9 @@
 
                 <!-- Nomor Buku -->
                 <div class="control-group">
-                    <label class="control-label" for="nomor_buku">Book Number</label>
+                    <label class="control-label" for="isbn">Book Number</label>
                     <div class="controls">
-                        <input type="text" id="nomor_buku" name="nomor_buku" value="{{ $book->nomor_buku }}" class="span8">
+                        <input type="text" id="isbn" name="isbn" value="{{ $book->isbn }}" class="span8">
                     </div>
                 </div>
 

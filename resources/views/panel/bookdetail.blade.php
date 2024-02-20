@@ -13,7 +13,7 @@
                     <p>{{ $book->judul_buku }}</p>
 
                     <h5>ISBN:</h5>
-                    <p>{{ $book->nomor_buku }}</p>
+                    <p>{{ $book->isbn }}</p>
 
                     <h5>Penerbit:</h5>
                     <p>{{ $book->penerbit }}</p>

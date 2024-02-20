@@ -36,7 +36,7 @@ class BooksController extends Controller
 	public function index()
 	{
 		// ...
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'stok', 'kategoribuku.kategori',)
+		$list_buku = Buku::select('id_buku', 'isbn', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'stok', 'kategoribuku.kategori',)
 			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 			->orderBy('id_buku')->get();
 
@@ -77,11 +77,11 @@ class BooksController extends Controller
 		$books = $request->all();
 		$user_id = Auth::id();
 
-		// Validate ISBN uniqueness
+		// Validate isbn uniqueness
 		$request->validate([
-			'nomor_buku' => [
+			'isbn' => [
 				'required',
-				'unique:buku,nomor_buku', // Ensure nomor_buku is unique in the 'buku' table
+				'unique:buku,isbn', // Ensure isbn is unique in the 'buku' table
 			],
 		]);
 
@@ -94,7 +94,7 @@ class BooksController extends Controller
 		// Create the book
 		$book = Buku::create([
 			'id_buku'       => $newId, // Use the calculated id_buku
-			'nomor_buku'    => $books['nomor_buku'] ?? null,
+			'isbn'    => $books['isbn'] ?? null,
 			'judul_buku'    => $books['judul_buku'] ?? null,
 			'penerbit'      => $books['penerbit'] ?? null,
 			'pengarang'     => $books['pengarang'] ?? null,
@@ -141,7 +141,7 @@ class BooksController extends Controller
 	 */
 	// public function show($string)
 	// {
-	// 	$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
+	// 	$list_buku = Buku::select('id_buku', 'isbn', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
 	// 		->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 	// 		->where('judul_buku', 'like', '%' . $string . '%')
 	// 		->orWhere('pengarang', 'like', '%' . $string . '%')
@@ -185,7 +185,7 @@ class BooksController extends Controller
 
 		// Validasi form input sesuai kebutuhan
 		$request->validate([
-			'nomor_buku'    => 'required',
+			'isbn'    => 'required',
 			'judul_buku'    => 'required',
 			'penerbit'      => 'required',
 			'pengarang'     => 'required',
@@ -197,7 +197,7 @@ class BooksController extends Controller
 		]);
 
 		// Update book properties
-		$book->nomor_buku = $request->input('nomor_buku');
+		$book->isbn = $request->input('isbn');
 		$book->judul_buku = $request->input('judul_buku');
 		$book->penerbit = $request->input('penerbit');
 		$book->pengarang = $request->input('pengarang');
@@ -291,8 +291,8 @@ class BooksController extends Controller
 		// Query untuk mendapatkan informasi peminjaman buku berdasarkan nomor buku
 		$result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
 			->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
-			->select('peminjaman_buku.nomor_buku', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
-			->where('peminjaman_buku.nomor_buku', $nomorBuku)
+			->select('peminjaman_buku.isbn', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
+			->where('peminjaman_buku.isbn', $nomorBuku)
 			->whereIn('peminjaman_buku.status', [0, 1]) // Memilih buku dengan status 0 (pending) atau 1 (sedang dipinjam)
 			->get();
 
@@ -310,7 +310,7 @@ class BooksController extends Controller
 
 	public function BookByCategory($cat_id)
 	{
-		$list_buku = Buku::select('id_buku', 'nomor_buku', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
+		$list_buku = Buku::select('id_buku', 'isbn', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
 			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
 			->where('kategoribuku.id', $cat_id) // Use the correct table name
 			->orderBy('id_buku')
@@ -357,7 +357,7 @@ class BooksController extends Controller
 				// Buat format baru untuk buku termasuk nama kategori
 				$formattedBooks[] = [
 					'id_buku' => $item->id_buku,
-					'nomor_buku' => $item->nomor_buku,
+					'isbn' => $item->isbn,
 					'judul_buku' => $item->judul_buku,
 					'pengarang' => $item->pengarang,
 					'tahun_terbit' => $item->tahun_terbit,
