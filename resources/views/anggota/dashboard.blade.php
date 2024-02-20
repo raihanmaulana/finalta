@@ -13,7 +13,7 @@
                 tab Status
                 Peminjaman. Buku yang ingin dipinjam dapat diambil di Perpustakaan SMA Negeri 1 Tunjungan</p>
             <p>Hubungi Admin jika Anda memiliki kendala</p>
-            <p>Kontak Admin : 08XX-XXXX-XXXX</p>
+            <p>Kontak Admin : 0852-0189-4820</p>
         </div>
     </div>
 </div>
