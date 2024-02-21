@@ -4,9 +4,10 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Kelola Anggota</h3>
+            <h3>Kelola Galeri</h3>
         </div>
         <div class="module-body">
+            <a href="{{ URL::route('galeri.create') }}" style="margin-bottom:10px" class="btn btn-inverse">Tambah Galeri</a>
             <table class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>

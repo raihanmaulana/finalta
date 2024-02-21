@@ -493,7 +493,8 @@ transition: all .2s ease-in-out;
 .btn-primary {
 	color: #fff;
 	background-color: #248aaf;
-	border-color: #20799a
+	border-color: #20799a;
+	margin-bottom:10px
 }
 .btn-primary.active, .btn-primary:active, .btn-primary:focus, .btn-primary:hover, .open>.btn-primary.dropdown-toggle {
 	color: #fff;

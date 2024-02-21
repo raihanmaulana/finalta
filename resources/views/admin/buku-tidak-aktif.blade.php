@@ -58,16 +58,16 @@
                             <td>{{ $books->kategori->kategori }}</td>
                             <td><a class="btn btn-warning">{{ $books->stok }}</td>
                             <td>
-                                <form action="{{ route('books.activate', $books->id_buku) }}" method="POST">
+                                <form id="aktifForm{{ $books->id_buku }}" action="{{ route('books.activate', $books->id_buku) }}" method="POST">
                                     @csrf
                                     @method('POST')
-                                    <button type="submit" class="btn btn-success">Aktifkan</button>
+                                    <button type="button" class="btn btn-success" onclick="activateBook({{ $books->id_buku }})">Aktifkan</button>
                                 </form>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="10" class="text-center">Tidak ada buku</td>
+                            <td colspan="10" class="text-center">Tidak ada buku yang nonaktif</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -81,4 +81,5 @@
 
 @section('custom_bottom_script')
 <script type="text/javascript" src="{{ asset('static/custom/js/script.statusbuku.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @endsection

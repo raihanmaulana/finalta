@@ -32,7 +32,7 @@
                     <label for="gambar_galeri">Gambar:</label>
                     <input type="file" class="form-control-file" id="gambar_galeri" name="gambar_galeri">
                 </div>
-                <button type="submit" class="btn btn-primary">Tambah Gambar</button>
+                <button type="submit" class="btn btn-primary">Tambah Galeri</button>
             </form>
         </div>
     </div>

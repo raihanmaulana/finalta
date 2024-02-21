@@ -124,3 +124,28 @@ document
             tbody.appendChild(noResultRow);
         }
     });
+
+function activateBook(id) {
+    Swal.fire({
+        title: "Konfirmasi",
+        text: "Apakah anda yakin ingin mengaktifkan buku ini?",
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Ya",
+        cancelButtonText: "Batal",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Berhasil!",
+                icon: "success",
+                showConfirmButton: false,
+                timer: 2000, // Mengatur timer selama 2 detik (2000 milidetik)
+            });
+            setTimeout(function () {
+                document.getElementById("aktifForm" + id).submit();
+            }, 2000); // Menunda submit form selama 2 detik setelah tampilan SweetAlert muncul
+        }
+    });
+}
