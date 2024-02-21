@@ -26,8 +26,6 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
 Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
-
-Route::get('/dump/galeri', [GaleriController::class, 'index'])->name('galeri.index');
 Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
 
 Route::get('/', [BukuTamuUmumController::class, 'viewform'])->name('guestbook.view'); // This sets the guestbook page as the default route
@@ -242,8 +240,19 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/admin/profile/change-password', [HomeController::class, 'showChangePasswordForm'])->name('admin.profile.change-password');
 	Route::post('/admin/profile/change-password', [HomeController::class, 'changePassword'])->name('admin.profile.change-password.post');
 
+	Route::get('/kelola-galeri', [GaleriController::class, 'manage'])->name('galeri.manage');
+
 	Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 	Route::post('/galeri/create', [GaleriController::class, 'store'])->name('galeri.store');
+	// Route untuk menampilkan halaman edit galeri
+	Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
+
+	// Route untuk menyimpan perubahan galeri yang sudah diedit
+	Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
+	Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
+	Route::get('/galeri/{id}', 'GaleriController@show')->name('galeri.show');
+
+
 
 	// Render Guestbook View
 	Route::get('/bukutamu-umum', [BukuTamuUmumController::class, 'viewbukutamuumum'])->name('bukutamuumum.view');

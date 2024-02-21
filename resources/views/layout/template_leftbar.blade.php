@@ -17,7 +17,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{ URL::route('galeri.create') }}">
+                <a href="{{ URL::route('galeri.manage') }}">
                     <i class="menu-icon icon-list-ul"></i>Kelola Galeri
                 </a>
             </li>
