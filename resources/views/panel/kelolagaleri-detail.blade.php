@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="mt-3">
-                <a href="{{ route('galeri.manage') }}" class="btn btn-inverse">Kembali ke Halaman Manage</a>
+                <a href="{{ route('galeri.manage') }}" class="btn btn-inverse">Kembali</a>
             </div>
         </div>
     </div>
