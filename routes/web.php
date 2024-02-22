@@ -259,7 +259,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/bukutamu', [BukuTamuUmumController::class, 'viewbukutamu'])->name('bukutamu.view');
 	// Update Buku
 	Route::get('/books/{id}/edit', 'BooksController@edit')->name('books.edit');
-	Route::put('/books/{id}', 'BooksController@update')->name('books.update');
+	Route::put('/books/{id}', [BooksController::class, 'update'])->name('books.update');
 
 	Route::post('/buku-tidak-aktif/{id}/activate', [BooksController::class, 'activateBook'])->name('books.activate');
 	Route::post('/books/{id}/deactivate', [BooksController::class, 'deactivateBook'])->name('books.deactivate');
