@@ -181,6 +181,7 @@
             </select>
 
             <a href="{{ URL::route('admin.tambah-anggota') }}" style="margin-bottom:10px" class="btn btn-inverse">Tambah Nomor Anggota</a>
+            <a href="{{ URL::route('verifikasi-anggota') }}" style="margin-bottom:10px" class="btn btn-inverse">Daftar Nomor Anggota</a>
             <table id="anggotaTable" class="table table-striped table-bordered table-condensed">
                 <thead>
                     <tr>

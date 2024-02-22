@@ -11,4 +11,9 @@ class VerifikasiAnggota extends Model
     protected $fillable = [
         'nomor_anggota'
     ];
+
+    public function anggotaPerpustakaan()
+    {
+        return $this->hasOne(AnggotaPerpustakaan::class, 'nomor_anggota', 'nomor_anggota');
+    }
 }

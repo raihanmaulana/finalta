@@ -23,8 +23,9 @@ use App\Http\Controllers\AnggotaAuthController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 
+
 Route::get('/password/reset/{token}', 'ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
+// Route::post('/password/reset', 'ResetPasswordController@reset')->name('password.update');
 
 Route::get('/books/by-category/{kategori}', 'PublicController@filterByCategory')->name('books.by_category');
 
@@ -282,6 +283,7 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::put('/admin/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])->name('admin.peminjaman.kembalikan');
 
 
+	Route::get('/verifikasi-anggota', 'AdminController@daftarnomoranggota')->name('verifikasi-anggota');
 
 
 	//View Kembalikan Buku

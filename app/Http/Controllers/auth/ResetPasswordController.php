@@ -35,40 +35,40 @@ class ResetPasswordController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
      */
-    public function reset(Request $request)
-    {
-        $request->validate($this->rules(), $this->validationErrorMessages());
+    // public function reset(Request $request)
+    // {
+    //     $request->validate($this->rules(), $this->validationErrorMessages());
 
-        // Retrieve the user by the provided token
-        $user = User::where('email', $request->email)->first();
+    //     // Retrieve the user by the provided token
+    //     $user = User::where('email', $request->email)->first();
 
-        if (!$user) {
-            // Handle case when user is not found
-            return $this->sendResetFailedResponse($request, 'User not found');
-        }
+    //     if (!$user) {
+    //         // Handle case when user is not found
+    //         return $this->sendResetFailedResponse($request, 'User not found');
+    //     }
 
-        // Reset the user's password
-        $this->resetPassword($user, $request->password);
+    //     // Reset the user's password
+    //     $this->resetPassword($user, $request->password);
 
-        // Fire the PasswordReset event if your application needs it
-        event(new PasswordReset($user));
+    //     // Fire the PasswordReset event if your application needs it
+    //     event(new PasswordReset($user));
 
-        return $this->sendResetResponse($request, 'Your password has been reset!');
-    }
+    //     return $this->sendResetResponse($request, 'Your password has been reset!');
+    // }
 
 
-    public function showResetForm(Request $request, $token = null)
-    {
-        return view('auth.passwords.reset')->with(
-            ['token' => $token, 'email' => $request->email]
-        );
-    }
+    // public function showResetForm(Request $request, $token = null)
+    // {
+    //     return view('auth.passwords.reset')->with(
+    //         ['token' => $token, 'email' => $request->email]
+    //     );
+    // }
 
-    // Override fungsi ini untuk menentukan ke mana user akan diarahkan setelah berhasil reset password
-    protected function redirectTo()
-    {
-        return '/signin'; // Ganti '/home' sesuai dengan halaman yang diinginkan
-    }
+    // // Override fungsi ini untuk menentukan ke mana user akan diarahkan setelah berhasil reset password
+    // protected function redirectTo()
+    // {
+    //     return '/signin'; // Ganti '/home' sesuai dengan halaman yang diinginkan
+    // }
 
     // use ResetsPasswords;
 

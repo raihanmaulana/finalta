@@ -37,4 +37,9 @@ class AnggotaPerpustakaan extends Authenticatable
     {
         return $this->hasMany(PeminjamanBuku::class, 'id_anggota');
     }
+
+    public function verifikasiAnggota()
+    {
+        return $this->belongsTo(VerifikasiAnggota::class, 'nomor_anggota', 'nomor_anggota');
+    }
 }

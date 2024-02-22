@@ -69,7 +69,6 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
-                                <th>ID Buku</th>
                                 <th>ISBN</th>
                                 <th>Judul Buku</th>
                                 <th>Pengarang</th>
@@ -115,14 +114,13 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 
-<script type="text/template" id="search_issue">
+<!-- <script type="text/template" id="search_issue">
     @include('underscore.search_issue')
-</script>
+</script> -->
 <script type="text/template" id="caribuku_offline">
     @include('underscore.caribuku_offline')
 </script>
-</script>
-<script type="text/template" id="search_anggota">
+<!-- <script type="text/template" id="search_anggota">
     @include('underscore.search_anggota')
-</script>
+</script> -->
 @stop

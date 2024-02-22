@@ -13,6 +13,12 @@ class AdminController extends Controller
         return view('admin.tambah-anggota');
     }
 
+    public function daftarnomoranggota()
+    {
+        $verifikasiAnggota = VerifikasiAnggota::all();
+        return view('admin.daftar_nomoranggota', compact('verifikasiAnggota'));
+    }
+
     public function addMember(Request $request)
     {
         $request->validate([

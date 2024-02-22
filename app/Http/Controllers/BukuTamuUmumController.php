@@ -29,14 +29,14 @@ class BukuTamuUmumController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
-            'message' => 'required',
+            'nama' => 'required',
+            'asal_daerah' => 'required',
         ]);
 
         try {
             BukuTamuUmum::create([
-                'name' => $request->input('name'),
-                'message' => $request->input('message'),
+                'nama' => $request->input('nama'),
+                'asal_daerah' => $request->input('asal_daerah'),
             ]);
         } catch (\Exception $e) {
             // Log the error

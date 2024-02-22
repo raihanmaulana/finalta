@@ -1,4 +1,5 @@
 <tr>
+	<td><%= obj.isbn %></td>
 	<td><%= obj.judul_buku %></td>
 	<td><%= obj.pengarang %></td>
 	<td><%= obj.kategori %></td>

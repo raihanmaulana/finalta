@@ -26,7 +26,8 @@
                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ $galeri->deskripsi }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                <button type="submit" class="btn btn-inverse">Simpan Perubahan</button>
+                <a href="{{ route('galeri.manage') }}" class="btn btn-inverse">Kembali</a>
             </form>
         </div>
     </div>

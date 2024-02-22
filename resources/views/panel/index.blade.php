@@ -47,6 +47,7 @@
                     <table class="table table-striped table-bordered table-condensed" style="display: none;">
                         <thead>
                             <tr>
+                                <th>ISBN</th>
                                 <th>Judul Buku</th>
                                 <th>Pengarang</th>
                                 <th>Kategori</th>
