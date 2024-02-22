@@ -1,5 +1,3 @@
-<!-- searchResults.blade.php -->
-
 @foreach ($books as $book)
 <div class="col-6 col-md-4 col-lg-2 col-xl-2" data-aos="zoom-in-up">
     <div class="card text-center" style="width: 170px;">

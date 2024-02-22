@@ -9,7 +9,7 @@
             <h3>Edit Buku</h3>
         </div>
         <div class="module-body">
-            <form class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', ['id' => $book->id_buku]) }}" enctype="multipart/form-data">
+            <form id="editBooksForm" class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', ['id' => $book->id_buku]) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -100,7 +100,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn btn-inverse">Simpan</button>
+                        <button type="button" class="btn btn-inverse" onclick="editBooks()">Simpan</button>
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>
@@ -108,4 +108,39 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function editBooks() {
+        // Menggunakan AJAX untuk mengirim permintaan POST
+        $.ajax({
+            url: "{{ route('books.update', ['id' => $book->id_buku]) }}",
+            type: "POST",
+            data: $('#editBooksForm').serialize(), // Mengambil data dari formulir
+            success: function(response) {
+                // Jika permintaan berhasil
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: "Buku Berhasil Diperbarui!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                });
+                setTimeout(function() {
+                    // Redirect ke halaman profil setelah 2 detik
+                    window.location.href = "{{ route('all-books') }}";
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: "Gagal!",
+                    text: "Buku gagal diperbarui!",
+                    icon: "error",
+                    showConfirmButton: true,
+                });
+            }
+
+        });
+    }
+</script>
 @endsection

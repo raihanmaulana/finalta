@@ -36,8 +36,8 @@ class GaleriController extends Controller
         // Validasi data yang diterima
         $request->validate([
             'judul' => 'required|string|max:255',
-            'gambar_galeri' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Hanya menerima file gambar dengan format tertentu dan maksimal ukuran 2MB
             'deskripsi' => 'required|string|max:255',
+            'gambar_galeri' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Hanya menerima file gambar dengan format tertentu dan maksimal ukuran 2MB
         ]);
 
         // Simpan gambar ke dalam folder storage/galeri
@@ -46,8 +46,8 @@ class GaleriController extends Controller
         // Buat entri baru di database untuk galeri
         Galeri::create([
             'judul' => $request->judul,
-            'gambar_galeri' => $gambarPath,
             'deskripsi' => $request->deskripsi,
+            'gambar_galeri' => $gambarPath,
         ]);
 
         return redirect()->route('galeri.create')->with('success', 'Galeri berhasil disimpan.');
@@ -65,8 +65,9 @@ class GaleriController extends Controller
 
         $request->validate([
             'judul' => 'required|string|max:255',
-            'gambar_galeri' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'deskripsi' => 'required|string|max:255',
+            'gambar_galeri' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+
         ]);
 
         if ($request->hasFile('gambar_galeri')) {

@@ -10,8 +10,10 @@
             <h3>Tambah Buku</h3>
         </div>
         <div class="module-body">
-            <form class="form-horizontal row-fluid" method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
+            <form id="addBooksForm" class="form-horizontal row-fluid" method="POST" action="{{ route('book.store') }}" enctype="multipart/form-data">
                 @csrf
+                @method('POST')
+
                 <div class="control-group">
                     <label class="control-label">Judul Buku</label>
                     <div class="controls">
@@ -112,7 +114,7 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="submit" class="btn btn-inverse" id="addbooks">Tambah Buku</button>
+                        <button type="button" class="btn btn-inverse" onclick="addBooks()">Tambah Buku</button>
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>
@@ -123,4 +125,40 @@
 @stop
 
 @section('custom_bottom_script')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<!-- JavaScript untuk menampilkan SweetAlert2 saat berhasil atau gagal mengubah kata sandi -->
+<script>
+    function addBooks() {
+        // Menggunakan AJAX untuk mengirim permintaan POST
+        $.ajax({
+            url: "{{ route('book.store') }}",
+            type: "POST",
+            data: $('#addBooksForm').serialize(), // Mengambil data dari formulir
+            success: function(response) {
+                // Jika permintaan berhasil
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: "Buku Berhasil Ditambahkan.",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                });
+                setTimeout(function() {
+                    // Redirect ke halaman profil setelah 2 detik
+                    window.location.href = "{{ route('all-books') }}";
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: "Gagal!",
+                    text: "Buku gagal ditambahkan!",
+                    icon: "error",
+                    showConfirmButton: true,
+                });
+            }
+
+        });
+    }
+</script>
 @stop

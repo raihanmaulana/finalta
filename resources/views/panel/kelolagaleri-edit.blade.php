@@ -7,7 +7,7 @@
             <h3>Edit Galeri</h3>
         </div>
         <div class="module-body">
-            <form method="POST" action="{{ route('galeri.update', $galeri->id) }}" enctype="multipart/form-data">
+            <form id="editGaleriForm" method="POST" action="{{ route('galeri.update', $galeri->id) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -26,10 +26,45 @@
                     <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ $galeri->deskripsi }}</textarea>
                 </div>
 
-                <button type="submit" class="btn btn-inverse">Simpan Perubahan</button>
+                <button type="button" class="btn btn-inverse" onclick="editGaleri()">Simpan Perubahan</button>
                 <a href="{{ route('galeri.manage') }}" class="btn btn-inverse">Kembali</a>
             </form>
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    function editGaleri() {
+        // Menggunakan AJAX untuk mengirim permintaan POST
+        $.ajax({
+            url: "{{ route('galeri.update', $galeri->id) }}",
+            type: "POST",
+            data: $('#editGaleriForm').serialize(), // Mengambil data dari formulir
+            success: function(response) {
+                // Jika permintaan berhasil
+                Swal.fire({
+                    title: "Berhasil!",
+                    text: "Buku Berhasil Diperbarui!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                });
+                setTimeout(function() {
+                    // Redirect ke halaman profil setelah 2 detik
+                    window.location.href = "{{ route('galeri.manage') }}";
+                }, 2000);
+            },
+            error: function(xhr, status, error) {
+                Swal.fire({
+                    title: "Gagal!",
+                    text: "Buku gagal diperbarui!",
+                    icon: "error",
+                    showConfirmButton: true,
+                });
+            }
+
+        });
+    }
+</script>
 @endsection
