@@ -66,30 +66,32 @@
     </section>
 
     <div class="container">
-        {{-- <div class="row mt-3 mb-3" data-aos="zoom-out">
-            <h1 class="text-black text-shadow fw-bold text-center">Profile</h1>
-        </div> --}}
-        <div class="row" data-aos="zoom-in-up">
+        <div class="row px-2">
             <div class="col-12 col-md-12 col-lg-4">
                 <img src="{{ asset('css/images/bg5.jpg') }}" alt="Perpustakaan" style="width: 100%; height:85%;" />
             </div>
             <div class="col-12 col-md-12 col-lg-8">
                 <div style="text-align: justify; font-size: 15px;">
-                    <p> Perpustakaan sekolah adalah perpustakaan yang tergabung pada sebuah sekolah dikelola sepenuhnya oleh
+                    <p> Perpustakaan sekolah adalah perpustakaan yang tergabung pada sebuah sekolah dikelola sepenuhnya
+                        oleh
                         sekolah
                         yang bersangkutan dengan tujuan usaha membantu sekolah untuk mencapai tujuan khusus sekolah dan
                         tujuan
-                        pendidikan pada umumnya ... (Sulistyo Basuki, 1993). Di samping itu dalam penjelasan Undang – undang
-                        Pendidikan Nasional kita, di sebutkan bahwa salah satu sumber belajar di sekolah yang amat penting
+                        pendidikan pada umumnya ... (Sulistyo Basuki, 1993). Di samping itu dalam penjelasan Undang –
+                        undang
+                        Pendidikan Nasional kita, di sebutkan bahwa salah satu sumber belajar di sekolah yang amat
+                        penting
                         tetapi
-                        bukan satu - satunya adalah perpustakaan. Sebagai salah satu sumber belajar di sekolah perpustakaan
+                        bukan satu - satunya adalah perpustakaan. Sebagai salah satu sumber belajar di sekolah
+                        perpustakaan
                         membantu
                         tercapainya visi dan misi sekolah tersebut. Mengingat pentingnya peran perpustakaan sekolah maka
                         perlu
                         adanya suatu pengelolaan atau manajemen yang tepat dan cepat sehingga tidak sedikit perpustakaan
                         sekolah
                         benar-benar terwujud. Namun masalahnya sekarang adalah tidak sedikit perpustakaan sekolah yang
-                        pengelolaannya masih kurang profesional. perpustakaan sekolah mampu memenuhi kebutuhan penggunanya
+                        pengelolaannya masih kurang profesional. perpustakaan sekolah mampu memenuhi kebutuhan
+                        penggunanya
                         akan
                         berbagai pengetahuan dan informasi secara mudah dan cepat di era globalisasi ini. Untuk itu
                         diperlukan
@@ -98,7 +100,10 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="text-align: justify; font-size: 15px;">
+
+
+
+        <div class="row px-2" style="text-align: justify; font-size: 15px;">
             <p data-aos="zoom-in-right">Perpustakaan sebagai jantung sebuah lembaga pendidikan, sudah selayaknya mendapatkan
                 porsi yang
                 strategis
@@ -109,9 +114,7 @@
                 barang – barang tidak terpakai, bahkan tempat bermain saat tidak ada KBM. Hal ini tentu sangat
                 ironis
                 dan
-                tidak mendidik.</p>
-
-            <p data-aos="zoom-in-left">Dari berbagai sudut pemikiran diatas, Perpustakaan SMA N 1 Tunjungan berupaya
+                tidak mendidik. <br> <br> Dari berbagai sudut pemikiran diatas, Perpustakaan SMA N 1 Tunjungan berupaya
                 melakukan terobosan dan
                 revitalisasi peran dan fungsi perpustakaan sekolah untuk mendukung program dan visi dan misi
                 sekolah.
@@ -120,12 +123,15 @@
                 perpustakaan sekolah sebagai center of knowledge dapat terealisasi secara optimal.</p>
         </div>
     </div>
-
-    <!-- Perbaikan disini: ubah kelas dari slide-container swiper menjadi hanya swiper -->
-    <div class="container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#015892" fill-opacity="1"
+            d="M0,288L80,277.3C160,267,320,245,480,245.3C640,245,800,267,960,277.3C1120,288,1280,288,1360,288L1440,288L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z">
+        </path>
+    </svg>
+    <div class="container-fluid px-5" style="background-color:#015892">
         <div class="row" data-aos="zoom-in">
-            <div class="col-12 col-md-6 col-lg-3 my-auto">
-                <h1 class="text-black text-shadow fw-bold text-center">Katalog Buku</h1>
+            <div class="col-12 col-md-6 col-lg-3 mt-5 mt-md-5 my-lg-auto">
+                <h1 class="text-white text-shadow fw-bold text-center">Katalog Buku</h1>
                 <div class="text-center">
                     <a href="katalog" class="btn btn-warning">Selengkapnya ></a>
                 </div>
@@ -158,9 +164,14 @@
 
         </div>
     </div>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#015892" fill-opacity="1"
+            d="M0,128L80,117.3C160,107,320,85,480,85.3C640,85,800,107,960,101.3C1120,96,1280,64,1360,48L1440,32L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z">
+        </path>
+    </svg>
 
     <div class="container">
-        <div class="row g-3 mt-5">
+        <div class="row g-3">
             <div class="col-12 col-md-12 col-lg-6 px-5">
                 <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-up-right">Tujuan</h1>
                 <ol data-aos="zoom-out-right" style="text-align: justify; font-size: 15px;">
@@ -179,16 +190,17 @@
                 </ol>
             </div>
             <div class="col-12 col-md-12 col-lg-6 px-5">
-                <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-up-left">Visi</h1>
-                <p style="text-align: center;" data-aos="zoom-out-left">Terciptanya Peserta Didik, Guru, Karyawan SMA N 1
+                <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-up-right">Visi</h1>
+                <p style="text-align: center;" data-aos="zoom-out-right">Terciptanya Peserta Didik, Guru, Karyawan SMA N 1
                     Tunjungan yang
                     Berkualitas
                     dengan Budaya Membaca
                     dan
                     Belajar</p>
-                <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-up-left">Misi</h1>
-                <ol style="text-align: justify; font-size: 15px;" data-aos="zoom-out-left">
-                    <span class="ms-3"></span>
+
+                <h1 class="text-black text-shadow fw-bold text-center" data-aos="fade-up-right">Misi</h1>
+                <ol style="text-align: justify; font-size: 15px;" data-aos="zoom-out-right">
+
                     <li> Pusat Layanan Prima, Pusat Dokumentasi dan Informasi (PUSDOKINFO)</li>
                     <li>Pusat Pengembangan Minat Baca</li>
                     <li>Sarana Rekreasi Pendidikan yang Menyenangkan</li>
@@ -199,22 +211,12 @@
         </div>
     </div>
 
-
-    {{-- <span class="ms-3"></span>
-    <div class="container"
-        style="background: #fff; max-width: 100%; height: 80px; display: flex; justify-content: center; align-items: center;">
-        <h2 class="text-black text-shadow fw-semibold text-center">Struktur Organisasi</h2>
-    </div>
-    <span class="ms-3"></span>
-    <img src="css/images/struktur.jpg" alt="Perpustakaan" style="display: block; margin: 0 auto; width: 40%;" />
-    <span class="ms-3"></span> --}}
-
     <div class="container py-5">
         <div class="row" data-aos="zoom-in">
             <h1 class="text-black text-shadow fw-bold text-center">Video Profile</h1>
             <p class="text-black text-shadow text-center">Perpustakaan Yasa Waskitha SMA N 1 Tunjungan</p>
 
-            <div
+            <div class="mb-5"
                 style="position: relative; width: 60%; padding-bottom: 33.75%; /* 16:9 aspect ratio */ height: 0; overflow: hidden; border-radius: 16px; margin: auto;">
                 <iframe src="https://www.youtube.com/embed/C5tpb_zMOus" frameborder="0" width="100%" height="100%"
                     style="position: absolute; top: 0; left: 0; border: 0; border-radius: 16px;" allowfullscreen></iframe>
