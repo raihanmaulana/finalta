@@ -44,9 +44,7 @@
         </div>
     </div>
 </div>
-@stop
 
-@section('custom_bottom_script')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const passwordInput = document.querySelector('#password');
@@ -70,4 +68,4 @@
         });
     });
 </script>
-@endsection
+@stop

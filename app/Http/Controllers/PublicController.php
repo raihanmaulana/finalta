@@ -63,19 +63,6 @@ class PublicController extends Controller
         return view('public.filteredbooks', compact('books'));
     }
 
-    // public function search(Request $request)
-    // {
-    //     // Ambil keyword pencarian dari request
-    //     $keyword = $request->input('keyword');
-
-    //     // Lakukan pencarian berdasarkan judul buku atau pengarang
-    //     $books = Buku::where('judul_buku', 'like', "%$keyword%")
-    //         ->orWhere('pengarang', 'like', "%$keyword%")
-    //         ->get();
-
-    //     // Return view dengan data buku hasil pencarian
-    //     return view('public.semuabuku', compact('books'));
-    // }
 
     public function showForm()
     {
@@ -112,35 +99,35 @@ class PublicController extends Controller
 
         return $available;
     }
-    // public function cariBukuByJudulBuku($judulBuku)
-    // {
-    //     // Menggunakan operator LIKE dengan wildcard (%) di awal dan akhir kata kunci
-    //     $buku = Buku::with('kategori')->where('judul_buku', 'LIKE', '%' . $judulBuku . '%')->get();
+    public function cariBukuByJudulBuku($judulBuku)
+    {
+        // Menggunakan operator LIKE dengan wildcard (%) di awal dan akhir kata kunci
+        $buku = Buku::with('kategori')->where('judul_buku', 'LIKE', '%' . $judulBuku . '%')->get();
 
-    //     $formattedBooks = [];
+        $formattedBooks = [];
 
-    //     if ($buku->isNotEmpty()) {
-    //         foreach ($buku as $item) {
-    //             // Ambil nama kategori dari objek kategori
-    //             $kategori = $item->kategori->kategori;
+        if ($buku->isNotEmpty()) {
+            foreach ($buku as $item) {
+                // Ambil nama kategori dari objek kategori
+                $kategori = $item->kategori->kategori;
 
-    //             $available = $this->calculateAvailableForBorrow($item->id_buku);
-    //             // Buat format baru untuk buku termasuk nama kategori
-    //             $formattedBooks[] = [
-    //                 'id_buku' => $item->id_buku,
-    //                 'isbn' => $item->isbn,
-    //                 'judul_buku' => $item->judul_buku,
-    //                 'pengarang' => $item->pengarang,
-    //                 'tahun_terbit' => $item->tahun_terbit,
-    //                 'kategori' => $kategori,
-    //                 'stok' => $item->stok,
-    //                 'tersedia' => $available
-    //             ];
-    //         }
-    //     }
+                $available = $this->calculateAvailableForBorrow($item->id_buku);
+                // Buat format baru untuk buku termasuk nama kategori
+                $formattedBooks[] = [
+                    'id_buku' => $item->id_buku,
+                    'isbn' => $item->isbn,
+                    'judul_buku' => $item->judul_buku,
+                    'pengarang' => $item->pengarang,
+                    'tahun_terbit' => $item->tahun_terbit,
+                    'kategori' => $kategori,
+                    'stok' => $item->stok,
+                    'tersedia' => $available
+                ];
+            }
+        }
 
-    //     return response()->json($formattedBooks);
-    // }
+        return response()->json($formattedBooks);
+    }
 
     public function searchByTitle(Request $request, $judul)
     {
@@ -204,9 +191,6 @@ class PublicController extends Controller
             return response()->json(['success' => false, 'message' => 'Nomor anggota tidak valid atau buku tidak tersedia.']);
         }
     }
-
-
-
 
     public function storeAnggota(Request $request)
     {

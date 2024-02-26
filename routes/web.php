@@ -244,8 +244,9 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/kelola-galeri', [GaleriController::class, 'manage'])->name('galeri.manage');
 
 	Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
-	Route::post('/galeri/create', [GaleriController::class, 'store'])->name('galeri.store');
-	// Route untuk menampilkan halaman edit galeri
+	Route::post('/galeri/store', 'GaleriController@store')->name('galeri.store');
+
+
 	Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
 
 	// Route untuk menyimpan perubahan galeri yang sudah diedit
