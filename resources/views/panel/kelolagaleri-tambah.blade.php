@@ -9,7 +9,7 @@
 <div class="content">
     <div class="module">
         <div class="module-head">
-            <h3>Ganti Kata Sandi</h3>
+            <h3>Tambah Galeri</h3>
         </div>
         <div class="module-body">
             <form id="tambahGaleriForm" action="{{ route('galeri.store') }}" method="POST">
@@ -33,8 +33,9 @@
                     <div class="span12">
                     </div>
                     <div class="span12">
-                        <button type="submit" style="margin-right:10px" class="btn btn-inverse">Tambah Galeri</button>
-                        <a href="{{ URL::route('galeri.manage') }}" class="btn btn-inverse">Batal</a>
+                        <button type="submit" style="margin-right:10px" class="btn btn-inverse">Ganti Kata Sandi</button>
+
+
                     </div>
                 </div>
             </form>

@@ -41,7 +41,7 @@
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>Nomor Anggota</th>
+                                <th class="hide-on-small">Nomor Anggota</th>
                                 <th>Nama Anggota</th>
                                 <th>Judul Buku</th>
                                 <th>Tanggal Peminjaman</th>
@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>{{ $loop->iteration + $bukuDikembalikan->perPage() * ($bukuDikembalikan->currentPage() - 1) }}
                                     </td>
-                                    <td>{{ $data->anggota->nomor_anggota }}</td>
+                                    <td class="hide-on-small">{{ $data->anggota->nomor_anggota }}</td>
                                     <td>{{ $data->anggota->nama_anggota }}</td>
                                     <td>{{ $data->buku->judul_buku }}</td>
                                     <td>{{ $data->tanggal_peminjaman ? $data->tanggal_peminjaman->format('Y-m-d H:i:s') : 'Belum Dikembalikan' }}
