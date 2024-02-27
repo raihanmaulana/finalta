@@ -33,9 +33,8 @@
                     <div class="span12">
                     </div>
                     <div class="span12">
-                        <button type="submit" style="margin-right:10px" class="btn btn-inverse">Ganti Kata Sandi</button>
-
-
+                        <button type="submit" style="margin-right:10px" class="btn btn-inverse">Tambah Galeri</button>
+                        <a href="{{ URL::route('galeri.manage') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>
             </form>

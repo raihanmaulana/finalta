@@ -44,9 +44,6 @@ class AccountController extends Controller
 			return Redirect::route('account-sign-in')
 				->with('global', 'Wrong Email or Wrong Password.');
 		}
-
-		// 	return Redirect::route('account-sign-in')
-		// 		->with('global', 'There is a problem. Have you activated your account?');
 	}
 
 	/* Submitting the Create User form (POST) */
@@ -80,9 +77,9 @@ class AccountController extends Controller
 		]);
 
 		if ($user) {
-			return response()->json(['success' => true]);
+			return redirect()->route('account-sign-in')->with('success', 'Akun Berhasil Dibuat.');
 		} else {
-			return response()->json(['success' => false]);
+			return redirect()->route('account-sign-in')->with('false', 'Akun Gagal Dibuat.');
 		}
 	}
 

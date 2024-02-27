@@ -10,10 +10,7 @@ use App\Notifications\AkunDibuatNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Exception;
-// namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
-// use Illuminate\Support\Facades\Auth;
 class AnggotaAuthController extends Controller
 {
     public function showLoginForm()
