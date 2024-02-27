@@ -33,7 +33,7 @@
 
 <body>
     <style>
-        @media (max-width: 1200px) {
+        @media (max-width: 990px) {
             .hide-on-small {
                 display: none;
             }
