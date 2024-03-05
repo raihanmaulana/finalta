@@ -5,48 +5,35 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\HomeController;
 use App\Models\Buku;
 use App\Models\PeminjamanBuku;
-use App\Models\Branch;
-use App\Models\Issue;
+use App\Models\AnggotaPerpustakaan;
 use App\Models\Kategori;
-use App\Models\Logs;
-use App\Models\Student;
-use App\Models\KategoriBuku;
-use App\Models\StudentCategories;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rules;
 use Mockery\Matcher\Type;
-use Illuminate\Http\UploadedFile;
 
-class BooksController extends Controller
+class BukuController extends Controller
 {
 	protected $filter_params;
 
 	public function __construct()
 	{
-
 		$this->filter_params = array('kategori_id');
+		$this->kategori_list = Kategori::select()->orderBy('kategori')->get();
+		$this->nomor_anggota = AnggotaPerpustakaan::select()->orderBy('nomor_anggota')->get();
+		$this->judul_buku = Buku::select()->orderBy('judul_buku')->get();
+		$this->isbn = PeminjamanBuku::select()->orderBy('isbn')->get();
 	}
 
-	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
+	public $kategori_list = array();
+	public $nomor_anggota = array();
+	public $judul_buku = array();
+	public $isbn = array();
+
+	public function create()
 	{
-		// ...
-		$list_buku = Buku::select('id_buku', 'isbn', 'judul_buku', 'penerbit', 'pengarang', 'tahun_terbit', 'stok', 'kategoribuku.kategori',)
-			->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
-			->orderBy('id_buku')->get();
-
-		// Loop melalui setiap buku dan tambahkan informasi available
-		foreach ($list_buku as $book) {
-			$book->available = $this->calculateAvailableForBorrow($book->id_buku);
-		}
-
-		return $list_buku;
+		return view('panel.addbook')->with('kategori_list', $this->kategori_list);
 	}
+
 
 	protected function calculateAvailableForBorrow($bookId)
 	{
@@ -74,52 +61,28 @@ class BooksController extends Controller
 
 	public function store(Request $request)
 	{
-		$books = $request->all();
-		$user_id = Auth::id();
-
-		// Validate isbn uniqueness
 		$request->validate([
-			'isbn' => [
-				'required',
-				'unique:buku,isbn', // Ensure isbn is unique in the 'buku' table
-			],
+			'isbn' => 'required', 'unique:buku,isbn',
+			'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
 		]);
-
-		// Get the latest id_buku
-		$latestBook = Buku::latest('id_buku')->first();
-
-		// Increment id_buku by 1
-		$newId = $latestBook ? $latestBook->id_buku + 1 : 1;
-
-		// Create the book
+		$imagePath = $request->file('image')->store('book_images', 'public');
 		$book = Buku::create([
-			'id_buku'       => $newId, // Use the calculated id_buku
-			'isbn'    => $books['isbn'] ?? null,
-			'judul_buku'    => $books['judul_buku'] ?? null,
-			'penerbit'      => $books['penerbit'] ?? null,
-			'pengarang'     => $books['pengarang'] ?? null,
-			'tahun_terbit'  => $books['tahun_terbit'] ?? null,
-			'deskripsi'  => $books['deskripsi'] ?? null,
-			'kategori_id'   => $books['kategori_id'] ?? null,
-			'stok'         => $books['stok'] ?? 0, // Add this line
-			'added_by'      => $user_id,
+			'isbn' => $request->isbn,
+			'judul_buku' => $request->judul_buku,
+			'penerbit' => $request->penerbit,
+			'pengarang' => $request->pengarang,
+			'tahun_terbit' => $request->tahun_terbit,
+			'deskripsi' => $request->deskripsi,
+			'kategori_id' => $request->kategori_id,
+			'stok' => $request->stok ?? 0,
+			'added_by' => auth()->id(),
 			'kondisi' => 1,
-			'tautan_buku'    => $books['tautan_buku'] ?? null,
-			'image'         => $books['image'] ?? null,
-
+			'tautan_buku' => $request->tautan_buku,
+			'image' => $imagePath,
 		]);
-		if ($request->hasFile('image')) {
-			$imagePath = $request->file('image')->store('book_images', 'public');
-			$book->image = $imagePath;
-		}
-
-
 		$book->hitungTersedia();
-
-		return redirect('/add-books')->with('success', 'Book and issues added successfully.');
+		return redirect('/kelola-buku')->with('success', 'Book and issues added successfully.');
 	}
-
-
 
 	public function KategoriBukuStore(Request $request)
 	{
@@ -137,58 +100,16 @@ class BooksController extends Controller
 	}
 
 
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	// public function show($string)
-	// {
-	// 	$list_buku = Buku::select('id_buku', 'isbn', 'judul_buku', 'pengarang', 'tahun_terbit', 'kategoribuku.kategori', 'stok')
-	// 		->join('kategoribuku', 'kategoribuku.id', '=', 'buku.kategori_id')
-	// 		->where('judul_buku', 'like', '%' . $string . '%')
-	// 		->orWhere('pengarang', 'like', '%' . $string . '%')
-	// 		->orderBy('id_buku')
-	// 		->get();
-
-	// 	foreach ($list_buku as $book) {
-	// 		$book->available = $this->calculateAvailableForBorrow($book->id_buku);
-	// 		$book->status_buku = ($book->available > 0) ? 'Available' : 'Not Available';
-	// 	}
-
-	// 	return $list_buku;
-	// }
-
-
-
-
-	// File: BooksController.php
-
 	public function edit($id)
 	{
 		$book = Buku::find($id);
-
-		if ($book == NULL) {
-			return view('error')->with('message', 'Invalid Book ID');
-		}
-
-		// Ambil data kategori untuk dropdown
-		$categories_list = Kategori::all();
-
-		return view('panel.editbook', compact('book', 'categories_list'));
+		$category = Kategori::all();
+		return view('panel.editbook', compact('book', 'category'));
 	}
 
 	public function update(Request $request, $id)
 	{
 		$book = Buku::find($id);
-
-		if ($book == NULL) {
-			return view('error')->with('message', 'Invalid Book ID');
-		}
-
-		// Validasi form input sesuai kebutuhan
 		$request->validate([
 			'isbn'    => 'required',
 			'judul_buku'    => 'required',
@@ -202,32 +123,28 @@ class BooksController extends Controller
 			'tautan_buku'    => 'sometimes|required',
 		]);
 
-		// Update book properties
-		$book->isbn = $request->input('isbn');
-		$book->judul_buku = $request->input('judul_buku');
-		$book->penerbit = $request->input('penerbit');
-		$book->pengarang = $request->input('pengarang');
-		$book->tahun_terbit = $request->input('tahun_terbit');
-		$book->deskripsi = $request->input('deskripsi');
-		$book->kategori_id = $request->input('kategori_id');
-		$book->stok = $request->input('stok');
 		if ($request->hasFile('image')) {
 			$imagePath = $request->file('image')->store('book_images', 'public');
 			$book->image = $imagePath;
-			$book->hitungTersedia();
 		}
 
-		$book->tautan_buku = $request->input('tautan_buku');
-
+		$book->isbn = $request->isbn;
+		$book->judul_buku = $request->judul_buku;
+		$book->penerbit = $request->penerbit;
+		$book->pengarang = $request->pengarang;
+		$book->tahun_terbit = $request->tahun_terbit;
+		$book->deskripsi = $request->deskripsi;
+		$book->kategori_id = $request->kategori_id;
+		$book->stok = $request->stok;
+		$book->tautan_buku = $request->tautan_buku;
 		$book->hitungTersedia();
-
 		$book->save();
 
-		return redirect('/all-books')->with('success', 'Book updated successfully.');
+		return redirect('/all-books')->with('success', 'Buku Berhasil Diperbarui.');
 	}
 
 
-	public function showDetail($id)
+	public function show($id)
 	{
 		$book = Buku::find($id);
 
@@ -247,7 +164,7 @@ class BooksController extends Controller
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroyBook($id)
+	public function destroy($id)
 	{
 		$book = Buku::findOrFail($id);
 
@@ -268,27 +185,16 @@ class BooksController extends Controller
 	 * @return Response
 	 */
 
-	public function renderAddBookCategory(Type $var = null)
+	public function createKategori(Type $var = null)
 	{
 		return view('panel.addbookcategory');
 	}
 
-
-	public function renderAddBooks()
+	public function index()
 	{
-		$db_control = new HomeController();
-
-		return view('panel.addbook')
-			->with('kategori_list', $db_control->kategori_list);
-	}
-
-	public function renderAllBooks()
-	{
-		$kategoriBuku = Kategori::all(); // Mengambil semua kategori buku
-		// Mendapatkan daftar tahun terbit buku
+		$kategoriBuku = Kategori::all();
 		$tahunTerbit = Buku::distinct('tahun_terbit')->pluck('tahun_terbit');
-		$books = Buku::all(); // Misalnya Book adalah model yang merepresentasikan buku
-
+		$books = Buku::all();
 		return view('panel.allbook', compact('kategoriBuku', 'tahunTerbit', 'books'));
 	}
 
@@ -330,7 +236,7 @@ class BooksController extends Controller
 		return $list_buku;
 	}
 
-	public function activateBook($id)
+	public function aktifkanBuku($id)
 	{
 		$book = Buku::findOrFail($id);
 		$book->kondisi = true;
@@ -339,7 +245,7 @@ class BooksController extends Controller
 		return redirect()->back()->with('success', 'Buku berhasil diaktifkan');
 	}
 
-	public function deactivateBook($id)
+	public function nonaktifkanBuku($id)
 	{
 		$book = Buku::findOrFail($id);
 		$book->kondisi = false;
@@ -379,7 +285,7 @@ class BooksController extends Controller
 	}
 
 
-	public function bukutidakaktif()
+	public function bukuNonaktif()
 	{
 		// Mengambil daftar buku yang tidak aktif
 		$bukuTidakaktif = Buku::where('kondisi', 0)->get();

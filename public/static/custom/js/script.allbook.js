@@ -129,14 +129,14 @@ document
 function editBook(button) {
     var bookId = $(button).data("id");
     // Redirect ke halaman edit menggunakan bookId
-    window.location.href = "/books/" + bookId + "/edit";
+    window.location.href = "/kelola-buku/" + bookId + "/edit";
 }
 
 // Fungsi untuk menampilkan detail buku
 function showBookDetail(button) {
     var bookId = $(button).data("id");
     // Redirect ke halaman detail menggunakan bookId
-    window.location.href = "/books/" + bookId + "/detail";
+    window.location.href = "/kelola-buku/" + bookId + "/detail";
 }
 
 // Menambahkan event listener untuk tombol-tombol aksi

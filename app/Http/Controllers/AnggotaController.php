@@ -8,6 +8,8 @@ use App\Models\Buku;
 use App\Models\Kategori;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Carbon\Carbon;
 
 class AnggotaController extends Controller
 {
@@ -93,27 +95,39 @@ class AnggotaController extends Controller
         return view('anggota.cari_buku', compact('result', 'kategori_list', 'keyword'));
     }
 
-    public function store(Request $request)
+    public function peminjamanStore(Request $request)
     {
         $request->validate([
             'id_buku' => 'required|exists:buku,id_buku',
         ]);
-
-        // Mendapatkan tanggal sekarang
-        $tanggalSekarang = now();
-
-        // Menambahkan waktu ke tanggal peminjaman (saat buku pertama kali berstatus = 1)
-        $tanggalPeminjaman = now(); //->addDays(7);
-
+        $buku = Buku::findOrFail($request->input('id_buku'));
+        if ($buku->kondisi != 1) {
+            throw ValidationException::withMessages(['id_buku' => 'Buku tidak aktif dan tidak dapat dipinjam.']);
+        }
+        if ($buku->tersedia <= 0) {
+            throw ValidationException::withMessages(['id_buku' => 'Stok buku habis. Peminjaman tidak dapat dilakukan.']);
+        }
+        $existingPeminjaman = auth()->user('anggota')->peminjaman()
+            ->where('id_buku', $buku->id_buku)
+            ->whereIn('status', [0, 1])
+            ->first();
+        if ($existingPeminjaman && $existingPeminjaman->status == 1) {
+            return redirect()->route('anggota.list')->with('error', 'Anda sudah meminjam buku ini dan permintaan Anda sudah disetujui.');
+        }
+        if ($existingPeminjaman && $existingPeminjaman->status == 0) {
+            return redirect()->route('anggota.list')->with('error', 'Anda sudah membuat permintaan peminjaman untuk buku ini. Harap tunggu persetujuan admin.');
+        }
+        $tanggalPeminjaman = Carbon::now();
         auth()->user('anggota')->peminjaman()->create([
             'id_buku' => $request->input('id_buku'),
-            'status' => 0, // Status pending
-            'tanggal_peminjaman' => $tanggalPeminjaman, // Menyimpan tanggal peminjaman
-            'tanggal_pengembalian' => $tanggalSekarang //->addDays(7), // Menyimpan tanggal kembali
+            'isbn' => $buku->isbn,
+            'status' => 0,
+            'tanggal_peminjaman' => $tanggalPeminjaman,
         ]);
-
         return redirect()->route('anggota.list')->with('success', 'Permintaan peminjaman berhasil diajukan.');
     }
+
+
     public function showPeminjamanForm()
     {
         // dd(auth()->user());

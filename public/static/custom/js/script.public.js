@@ -1,5 +1,5 @@
 function loadSearchedBooks(judulBuku) {
-    var url = "/cari-buku/" + encodeURIComponent(judulBuku);
+    var url = "/offline/cari-buku/" + encodeURIComponent(judulBuku);
 
     var table = $("#buku-results"),
         table_parent_div = table.parents("table"),
@@ -34,7 +34,7 @@ function loadSearchedBooks(judulBuku) {
 function showBookDetail(button) {
     var bookId = $(button).data("id");
     // Redirect to the detail page using the bookId
-    window.location.href = "/cari-buku/" + bookId + "/detail";
+    window.location.href = "/offline/cari-buku/" + bookId + "/detail";
 }
 
 function findBorrowedBook(nomorBuku) {
@@ -80,39 +80,6 @@ function findBorrowedBook(nomorBuku) {
         },
         error: function (xhr, status, error) {
             console.error("Error:", xhr.responseText); // Tambahkan pesan debug untuk melihat pesan error
-        },
-        beforeSend: function () {
-            table.css({ opacity: 0.4 });
-        },
-        complete: function () {
-            table.css({ opacity: 1.0 });
-        },
-    });
-}
-
-function searchAnggotaByNumber(nomorAnggota) {
-    var url = "/cari-anggota/" + nomorAnggota;
-
-    var table = $("#anggota_perpustakaan-results"),
-        table_parent_div = table.parents("table"),
-        default_tpl = _.template($("#search_anggota").html());
-
-    table_parent_div.show();
-
-    $.ajax({
-        url: url,
-        success: function (data) {
-            if ($.isEmptyObject(data)) {
-                table.html(
-                    '<tr><td colspan="99">No such anggota found in library</td></tr>'
-                );
-            } else {
-                table.html("");
-                for (var anggotas in data) {
-                    var anggota = data[anggotas];
-                    table.append(default_tpl(anggota));
-                }
-            }
         },
         beforeSend: function () {
             table.css({ opacity: 0.4 });

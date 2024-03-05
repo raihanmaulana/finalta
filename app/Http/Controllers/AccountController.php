@@ -22,18 +22,15 @@ class AccountController extends Controller
 
 		]);
 		if (!$validator) {
-			// Redirect to the sign in page
 			return Redirect::route('account-sign-in')
 				->withErrors($validator)
-				->withInput();   // redirect the input
-
+				->withInput();
 		} else {
 
-			$remember = ($request->has('remember')) ? true : false;
 			$auth = Auth::attempt(array(
 				'username' => $request->get('username'),
 				'password' => $request->get('password')
-			), $remember);
+			));
 		}
 
 		if ($auth) {
@@ -42,7 +39,7 @@ class AccountController extends Controller
 		} else {
 
 			return Redirect::route('account-sign-in')
-				->with('global', 'Wrong Email or Wrong Password.');
+				->with('global', 'Email atau Password Anda Salah.');
 		}
 	}
 
@@ -95,7 +92,7 @@ class AccountController extends Controller
 		return view('account.create');
 	}
 
-	### Sign Out
+
 	public function getSignOut()
 	{
 		Auth::logout();

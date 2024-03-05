@@ -23,16 +23,13 @@ class AnggotaPerpustakaan extends Authenticatable
         'kelas',
         'password',
         'gambar'
-        // Tambahkan fillable lain jika diperlukan
     ];
 
-    // protected $fillable = [
-    //     'username', 'password',
-    // ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
+
     public function peminjaman()
     {
         return $this->hasMany(PeminjamanBuku::class, 'id_anggota');

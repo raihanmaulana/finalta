@@ -70,7 +70,7 @@
                                     <div class="card-title">
                                         <h2 style="font-size: 20px">Buku Tamu Umum</h2>
                                     </div>
-                                    <form method="post" action="{{ route('guestbook.store') }}" class="row-6">
+                                    <form method="post" action="{{ route('bukutamu.store') }}" class="row-6">
                                         @csrf
                                         <div class="mb-1">
                                             <label for="nama" class="form-label">Nama</label>

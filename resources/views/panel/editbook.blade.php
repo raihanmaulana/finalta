@@ -9,7 +9,7 @@
             <h3>Edit Buku</h3>
         </div>
         <div class="module-body">
-            <form id="editBooksForm" class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', ['id' => $book->id_buku]) }}" enctype="multipart/form-data">
+            <form id="editBooksForm" class="form-horizontal row-fluid" method="POST" action="{{ route('books.update', $book->id_buku) }}" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -100,7 +100,8 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="button" class="btn btn-inverse" onclick="editBooks()">Simpan</button>
+                        <button type="button" class="btn btn-inverse" onclick="editBuku({{ $book->id_buku }})">Simpan</button>
+
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>
@@ -109,12 +110,14 @@
     </div>
 </div>
 
+
+<!-- Sisipkan SweetAlert di sini jika belum dilakukan -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
-    function editBooks() {
+    function editBuku(id) {
         // Menggunakan AJAX untuk mengirim permintaan POST
         $.ajax({
-            url: "{{ route('books.update', ['id' => $book->id_buku]) }}",
+            url: "{{ route('books.update', ':id') }}".replace(':id', id),
             type: "POST",
             data: $('#editBooksForm').serialize(), // Mengambil data dari formulir
             success: function(response) {
@@ -139,8 +142,9 @@
                     showConfirmButton: true,
                 });
             }
-
         });
     }
 </script>
+
+
 @endsection

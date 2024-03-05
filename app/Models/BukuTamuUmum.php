@@ -35,10 +35,6 @@ class BukuTamuUmum extends Model
      *
      * @return string
      */
-    // public function getCreatedAtAttribute()
-    // {
-    //     return $this->attributes['created_at']->format('Y-m-d H:i:s');
-    // }
 
     /**
      * Get the date of the guestbook entry's last update.

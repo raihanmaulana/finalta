@@ -27,7 +27,7 @@ class AnggotaAuthController extends Controller
             'nomor_anggota' => 'required|string',
             'password' => 'required|string|min:8', // Kata sandi harus minimal 8 karakter
         ], [
-            'password.min' => 'Password must be at least 8 characters.', // Pesan kesalahan khusus
+            'password.min' => 'Kata Sandi Minimal 8 Karakter', // Pesan kesalahan khusus
         ]);
 
         if (Auth::guard('anggota')->attempt($credentials)) {
@@ -74,7 +74,7 @@ class AnggotaAuthController extends Controller
             'username' => $request->input('username'),
             'nomor_hp' => $request->input('nomor_hp'),
             'email' => $request->input('email'),
-            'password' => bcrypt($request->input('password')),
+            'password' => Hash::make($request->input('password')),
             'jurusan' => $request->input('jurusan'),
             'kelas' => $request->input('kelas'),
         ]);

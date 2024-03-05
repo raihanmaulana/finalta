@@ -1,6 +1,9 @@
 @extends('layout.index')
 
 @section('custom_top_script')
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Sisipkan SweetAlert di sini jika belum dilakukan -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @stop
 
 @section('content')
@@ -114,51 +117,58 @@
 
                 <div class="control-group">
                     <div class="controls">
-                        <button type="button" class="btn btn-inverse" onclick="addBooks()">Tambah Buku</button>
+                        <button type="submit" style="margin-right:10px" class="btn btn-inverse">Tambah Buku</button>
                         <a href="{{ URL::route('all-books') }}" class="btn btn-inverse">Batal</a>
                     </div>
                 </div>
-            </form>
         </div>
+        </form>
     </div>
+</div>
 </div>
 @stop
 
 @section('custom_bottom_script')
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!-- JavaScript untuk menampilkan SweetAlert2 saat berhasil atau gagal mengubah kata sandi -->
 <script>
-    function addBooks() {
-        // Menggunakan AJAX untuk mengirim permintaan POST
-        $.ajax({
-            url: "{{ route('book.store') }}",
-            type: "POST",
-            data: $('#addBooksForm').serialize(), // Mengambil data dari formulir
-            success: function(response) {
-                // Jika permintaan berhasil
-                Swal.fire({
-                    title: "Berhasil!",
-                    text: "Buku Berhasil Ditambahkan.",
-                    icon: "success",
-                    showConfirmButton: false,
-                    timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
-                });
-                setTimeout(function() {
-                    // Redirect ke halaman profil setelah 2 detik
-                    window.location.href = "{{ route('all-books') }}";
-                }, 2000);
-            },
-            error: function(xhr, status, error) {
-                Swal.fire({
-                    title: "Gagal!",
-                    text: "Buku gagal ditambahkan!",
-                    icon: "error",
-                    showConfirmButton: true,
-                });
-            }
+    $(document).ready(function() {
+        $('#addBooksForm').submit(function(e) {
+            e.preventDefault(); // Mencegah formulir dikirim menggunakan metode biasa
 
+            // Mengumpulkan data formulir
+            var formData = new FormData(this);
+
+            // Mengirimkan data ke server menggunakan AJAX
+            $.ajax({
+                url: $(this).attr('action'),
+                type: $(this).attr('method'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    // Menampilkan pesan sukses jika operasi berhasil
+                    Swal.fire({
+                        position: "center",
+                        icon: "success",
+                        title: "Berhasil Menambahkan Buku!",
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(function() {
+                        // Setelah menampilkan pesan sukses, alihkan ke halaman kelola galeri
+                        window.location.href = "{{ route('all-books') }}";
+                    });
+                },
+                error: function(xhr, status, error) {
+                    // Menampilkan pesan kesalahan jika terjadi kesalahan
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Gagal Menambahkan Buku!',
+                    });
+                }
+            });
         });
-    }
+    });
 </script>
 @stop
