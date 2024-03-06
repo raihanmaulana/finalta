@@ -103,12 +103,13 @@ class BukuController extends Controller
 	public function edit($id)
 	{
 		$book = Buku::find($id);
-		$category = Kategori::all();
-		return view('panel.editbook', compact('book', 'category'));
+		$categories_list = Kategori::all();
+		return view('panel.editbook', compact('book', 'categories_list'));
 	}
 
 	public function update(Request $request, $id)
 	{
+		
 		$book = Buku::find($id);
 		$request->validate([
 			'isbn'    => 'required',
@@ -120,7 +121,7 @@ class BukuController extends Controller
 			'kategori_id'   => 'required|exists:kategoribuku,id',
 			'stok'          => 'required|numeric',
 			'image'         => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-			'tautan_buku'    => 'sometimes|required',
+			'tautan_buku'    => 'sometimes|nullable',
 		]);
 
 		if ($request->hasFile('image')) {
@@ -140,7 +141,7 @@ class BukuController extends Controller
 		$book->hitungTersedia();
 		$book->save();
 
-		return redirect('/all-books')->with('success', 'Buku Berhasil Diperbarui.');
+		return redirect('/kelola-buku')->with('success', 'Buku Berhasil Diperbarui.');
 	}
 
 

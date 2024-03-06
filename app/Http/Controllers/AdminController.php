@@ -68,7 +68,7 @@ class AdminController extends Controller
                 'updated_at' => now(), // Tambahkan waktu saat ini untuk updated_at
             ]);
 
-            return redirect()->route('admin.tambah-anggota')->with('success', 'Anggota berhasil ditambahkan.');
+            return redirect()->route('admin.tambah-anggota')->with('success', 'Nomor anggota berhasil ditambahkan.');
         } catch (\Exception $e) {
             return redirect()->route('admin.tambah-anggota')->with('error', $e->getMessage());
         }

@@ -133,7 +133,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
 	//Kelola Galeri
-	Route::get('/galeri/kelola', [GaleriController::class, 'index'])->name('galeri.manage');
+	Route::get('/galeri/kelola', [GaleriController::class, 'manage'])->name('galeri.manage');
 	Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 	Route::post('/galeri/store', [GaleriController::class, 'store'])->name('galeri.store');
 	Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
@@ -146,26 +146,28 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/bukutamu-umum', [BukuTamuController::class, 'bukuTamuUmum'])->name('bukutamuumum.view');
 	Route::get('/bukutamu', [BukuTamuController::class, 'viewBukuTamu'])->name('bukutamu.view');
 	Route::get('/bukutamu-anggota', [BukutamuController::class, 'bukuTamuAnggota'])->name('bukutamuanggota.view');
+	Route::get('/bukutamu-umum/filter', [BukuTamuController::class, 'bukutamuumumFilter'])->name('admin.bukutamuumumFilter');
+	Route::get('/bukutamu-anggota/filter', [BukuTamuController::class, 'bukutamuanggotaFilter'])->name('admin.bukutamuanggotaFilter');
 
 	// Kelola Buku
 	Route::get('/kelola-buku', [BukuController::class, 'index'])->name('all-books');
 	Route::get('/kelola-buku/tambah', [BukuController::class, 'create'])->name('add-books');
 	Route::post('/kelola-buku/tambah', [BukuController::class, 'store'])->name('book.store');
 	Route::get('/kelola-buku/tambah-kategori', [BukuController::class, 'createKategori'])->name('add-book-category');
-	Route::post('/kelola-buku/tambah-kategori', [BukuController::class, 'storeKategori'])->name('bookcategory.store');
+	Route::post('/kelola-buku/tambah-kategori', [BukuController::class, 'KategoriBukuStore'])->name('bookcategory.store');
 	Route::get('/kelola-buku/{id}/edit', [BukuController::class, 'edit'])->name('books.edit');
 	Route::put('/kelola-buku/{id}', [BukuController::class, 'update'])->name('books.update');
 	Route::post('/kelola-buku/{id}/activate', [BukuController::class, 'aktifkanBuku'])->name('books.activate');
 	Route::post('/kelola-buku/{id}/deactivate', [BukuController::class, 'nonaktifkanBuku'])->name('books.deactivate');
 	Route::get('/kelola-buku/nonaktif', [BukuController::class, 'bukuNonaktif'])->name('tidakaktif.index');
-	Route::get('/kelola-buku/{id}/detail', [BukuController::class, 'detail'])->name('books.detail');
+	Route::get('/kelola-buku/{id}/detail', [BukuController::class, 'show'])->name('books.detail');
 	// Route::delete('/kelola-buku/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
 
 
 	//Kelola Peminjaman
 	Route::get('/peminjaman/permintaan', [PeminjamanBukuController::class, 'daftarPermintaanPeminjaman'])->name('admin.peminjaman.daftar');
-	Route::put('/peminjaman/{id}/approve', [PeminjamanBukuController::class, 'approve'])->name('admin.peminjaman.approve');
-	Route::put('/peminjaman/{id}/reject', [PeminjamanBukuController::class, 'reject'])->name('admin.peminjaman.reject');
+	Route::put('/peminjaman/{id}/setujuiPeminjaman', [PeminjamanBukuController::class, 'setujuiPeminjaman'])->name('admin.peminjaman.approve');
+	Route::put('/peminjaman/{id}/tolakPeminjaman', [PeminjamanBukuController::class, 'tolakPeminjaman'])->name('admin.peminjaman.reject');
 	Route::put('/peminjaman/{id}/kembalikan', [PeminjamanBukuController::class, 'kembalikanBukuAnggota'])->name('admin.peminjaman.kembalikan');
 	Route::get('/peminjaman/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 	Route::get('/peminjaman/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');

@@ -47,7 +47,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="button" class="btn btn-success"
-                                                onclick="approvePeminjaman({{ $peminjaman->id }})">Setujui</button>
+                                                onclick="setujuiPeminjaman({{ $peminjaman->id }})">Setujui</button>
                                         </form>
                                         <!-- Tombol Tolak -->
                                         <form id="rejectForm{{ $peminjaman->id }}"
@@ -55,7 +55,7 @@
                                             @csrf
                                             @method('PUT')
                                             <button type="button" class="btn btn-danger"
-                                                onclick="rejectPeminjaman({{ $peminjaman->id }})">Tolak</button>
+                                                onclick="tolakPeminjaman({{ $peminjaman->id }})">Tolak</button>
                                         </form>
                                     @else
                                         <span class="text-success">Sudah Disetujui</span>
@@ -79,7 +79,7 @@
 
     <!-- JavaScript untuk menampilkan SweetAlert2 saat tombol Setujui ditekan -->
     <script>
-        function approvePeminjaman(id) {
+        function setujuiPeminjaman(id) {
             Swal.fire({
                 title: 'Konfirmasi',
                 text: 'Apakah Anda yakin ingin menyetujui peminjaman ini?',
@@ -105,7 +105,7 @@
         }
 
         // Fungsi untuk menampilkan SweetAlert2 saat tombol Tolak ditekan
-        function rejectPeminjaman(id) {
+        function tolakPeminjaman(id) {
             Swal.fire({
                 title: 'Konfirmasi',
                 text: 'Apakah Anda yakin ingin menolak peminjaman ini?',

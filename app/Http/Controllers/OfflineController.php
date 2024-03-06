@@ -90,7 +90,7 @@ class OfflineController extends Controller
             return response()->json(['success' => false, 'message' => 'Gagal menyimpan entri bukutamu_anggota.'], 500);
         }
 
-        return response()->json(['success' => true, 'message' => 'Buku Tamu Anggota berhasil disimpan.'], 200);
+        return response()->json(['success' => true, 'message' => 'Anggota berhasil masuk.'], 200);
     }
     public function cariBukuByJudulBuku($judulBuku)
     {
