@@ -51,7 +51,7 @@
             </ul>
             <form class="d-flex">
                 <a class="btn btn-primary me-2" href="anggota/login" role="button">Anggota</a>
-                <a class="btn btn-outline-primary" href="signin" role="button">Admin</a>
+                <a class="btn btn-outline-primary" href="sign-in" role="button">Admin</a>
             </form>
 
         </div>

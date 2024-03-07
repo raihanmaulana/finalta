@@ -28,7 +28,7 @@
                         <textarea class="form-control" id="deskripsi" name="deskripsi" rows="3" required>{{ $galeri->deskripsi }}</textarea>
                     </div>
 
-                    <button type="button" class="btn btn-inverse" onclick="editGaleri()">Simpan</button>
+                    <button type="submit" class="btn btn-inverse" onclick="editGaleri()">Simpan</button>
                     <a href="{{ route('galeri.manage') }}" class="btn btn-inverse">Kembali</a>
                 </form>
             </div>
@@ -47,7 +47,7 @@
                     // Jika permintaan berhasil
                     Swal.fire({
                         title: "Berhasil!",
-                        text: "Buku Berhasil Diperbarui!",
+                        text: "Galeri Berhasil Diperbarui!",
                         icon: "success",
                         showConfirmButton: false,
                         timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
@@ -60,7 +60,7 @@
                 error: function(xhr, status, error) {
                     Swal.fire({
                         title: "Gagal!",
-                        text: "Buku gagal diperbarui!",
+                        text: "Galeri gagal diperbarui!",
                         icon: "error",
                         showConfirmButton: true,
                     });

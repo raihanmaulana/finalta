@@ -39,11 +39,11 @@ function filterBooks() {
     }
 
     for (i = 0; i < tr.length; i++) {
-        tdPengarang = tr[i].getElementsByTagName("td")[5];
-        tdTitle = tr[i].getElementsByTagName("td")[3];
-        tdNumber = tr[i].getElementsByTagName("td")[2];
-        tdCategory = tr[i].getElementsByTagName("td")[7];
-        tdYear = tr[i].getElementsByTagName("td")[6];
+        tdPengarang = tr[i].getElementsByTagName("td")[4];
+        tdTitle = tr[i].getElementsByTagName("td")[2];
+        tdNumber = tr[i].getElementsByTagName("td")[1];
+        tdCategory = tr[i].getElementsByTagName("td")[6];
+        tdYear = tr[i].getElementsByTagName("td")[5];
 
         if (tdTitle || tdNumber || tdPengarang || tdCategory || tdYear) {
             txtValuePengarang =

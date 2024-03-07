@@ -38,7 +38,7 @@ class PublicController extends Controller
 
     public function semuabuku()
     {
-        $books = Buku::all();
+        $books = Buku::paginate(30);
         $kategoriBuku = Kategori::all();
 
         return view('public.semuabuku', compact('books', 'kategoriBuku'));

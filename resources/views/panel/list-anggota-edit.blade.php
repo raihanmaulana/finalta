@@ -7,7 +7,8 @@
                 <h3>Edit Anggota</h3>
             </div>
             <div class="module-body">
-                <form method="POST" action="{{ route('list-anggota-updateAnggota', ['id' => $anggota->id_anggota]) }}">
+                <form id="editAnggotaForm" method="POST"
+                    action="{{ route('list-anggota-updateAnggota', ['id' => $anggota->id_anggota]) }}">
                     @csrf
                     @method('PUT')
 
@@ -54,7 +55,8 @@
 
                     <div class="control-group">
                         <div class="controls">
-                            <button type="submit" class="btn btn-inverse">Simpan</button>
+                            <button type="submit" class="btn btn-inverse"
+                                onclick="editAnggota({{ $anggota->id_anggota }})">Simpan</button>
                             <a href="{{ URL::route('list-anggota') }}" class="btn btn-inverse">Batal</a>
                         </div>
                     </div>
@@ -109,5 +111,39 @@
                 $('#kelas').val(defaultKelas);
             }
         });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script>
+        function editAnggota(id) {
+            // Menggunakan AJAX untuk mengirim permintaan POST
+            $.ajax({
+                url: "{{ route('list-anggota-updateAnggota', ':id') }}".replace(':id', id),
+                type: "POST",
+                data: $('#editAnggotaForm').serialize(), // Mengambil data dari formulir
+                success: function(response) {
+                    // Jika permintaan berhasil
+                    Swal.fire({
+                        title: "Berhasil!",
+                        text: "Anggota Berhasil Diperbarui!",
+                        icon: "success",
+                        showConfirmButton: false,
+                        timer: 2000 // Mengatur timer selama 2 detik (2000 milidetik)
+                    });
+                    setTimeout(function() {
+                        // Redirect ke halaman profil setelah 2 detik
+                        window.location.href = "{{ route('list-anggota') }}";
+                    }, 2000);
+                },
+                error: function(xhr, status, error) {
+                    Swal.fire({
+                        title: "Gagal!",
+                        text: "Anggota gagal diperbarui!",
+                        icon: "error",
+                        showConfirmButton: true,
+                    });
+                }
+            });
+        }
     </script>
 @endsection
