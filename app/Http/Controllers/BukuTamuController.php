@@ -100,19 +100,14 @@ class BukuTamuController extends Controller
     {
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
-    
-        // Start with a base query
         $query = BukuTamuUmum::query();
-    
-        // Check if month and year are set
+
         if ($bulan && $tahun) {
             $query->whereYear('created_at', $tahun)
                 ->whereMonth('created_at', $bulan);
         }
-    
-        // Execute the query and paginate the results
         $bukutamu_umum = $query->paginate(10);
-    
+
         return view('admin.bukutamuumum', compact('bukutamu_umum'));
     }
 
@@ -120,20 +115,19 @@ class BukuTamuController extends Controller
     {
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
-    
+
         // Start with a base query
         $query = BukuTamuAnggota::query();
-    
+
         // Check if month and year are set
         if ($bulan && $tahun) {
             $query->whereYear('created_at', $tahun)
                 ->whereMonth('created_at', $bulan);
         }
-    
+
         // Execute the query and paginate the results
         $bukutamuAnggota = $query->paginate(10);
-    
+
         return view('admin.bukutamuanggota', compact('bukutamuAnggota'));
     }
-    
 }

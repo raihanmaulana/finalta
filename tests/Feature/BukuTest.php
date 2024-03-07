@@ -1,12 +1,13 @@
 <?php
 
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;
 use App\Models\Buku;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class BukuTest extends TestCase
 {
-    use DatabaseTransactions;
+    use RefreshDatabase, WithFaker;
 
     public function test_index()
     {

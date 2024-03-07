@@ -201,16 +201,7 @@ class AnggotaController extends Controller
         return response()->json(['error' => 'Anggota not found'], 404);
     }
 
-    public function cariAnggotaByNomorAnggota($nomorAnggota)
-    {
-        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->first();
 
-        if ($anggota) {
-            return response()->json([$anggota]);
-        } else {
-            return response()->json([]);
-        }
-    }
 
     public function riwayatPeminjaman()
     {

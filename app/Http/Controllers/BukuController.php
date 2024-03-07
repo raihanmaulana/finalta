@@ -49,9 +49,6 @@ class BukuController extends Controller
 		return $available;
 	}
 
-
-
-
 	/**
 	 * Store a newly created resource in storage.
 	 *
@@ -109,7 +106,7 @@ class BukuController extends Controller
 
 	public function update(Request $request, $id)
 	{
-		
+
 		$book = Buku::find($id);
 		$request->validate([
 			'isbn'    => 'required',
@@ -200,27 +197,6 @@ class BukuController extends Controller
 	}
 
 
-	public function findBorrowedBook($nomorBuku)
-	{
-		// Query untuk mendapatkan informasi peminjaman buku berdasarkan nomor buku
-		$result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
-			->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
-			->select('peminjaman_buku.isbn', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
-			->where('peminjaman_buku.isbn', $nomorBuku)
-			->whereIn('peminjaman_buku.status', [0, 1]) // Memilih buku dengan status 0 (pending) atau 1 (sedang dipinjam)
-			->get();
-
-		// Mengisi nilai default untuk status jika status null
-		foreach ($result as $item) {
-			if (is_null($item->status)) {
-				$item->status = -1; // Misalnya -1 sebagai nilai default
-			}
-		}
-
-		return response()->json($result);
-	}
-
-
 
 	public function BookByCategory($cat_id)
 	{
@@ -255,37 +231,6 @@ class BukuController extends Controller
 		return redirect()->back()->with('success', 'Buku berhasil dinonaktifkan');
 	}
 
-	public function cariBukuByJudulBuku($judulBuku)
-	{
-		// Menggunakan operator LIKE dengan wildcard (%) di awal dan akhir kata kunci
-		$buku = Buku::with('kategori')->where('judul_buku', 'LIKE', '%' . $judulBuku . '%')->get();
-
-		$formattedBooks = [];
-
-		if ($buku->isNotEmpty()) {
-			foreach ($buku as $item) {
-				// Ambil nama kategori dari objek kategori
-				$kategori = $item->kategori->kategori;
-
-				$available = $this->calculateAvailableForBorrow($item->id_buku);
-				// Buat format baru untuk buku termasuk nama kategori
-				$formattedBooks[] = [
-					'id_buku' => $item->id_buku,
-					'isbn' => $item->isbn,
-					'judul_buku' => $item->judul_buku,
-					'pengarang' => $item->pengarang,
-					'tahun_terbit' => $item->tahun_terbit,
-					'kategori' => $kategori,
-					'stok' => $item->stok,
-					'tersedia' => $available
-				];
-			}
-		}
-
-		return response()->json($formattedBooks);
-	}
-
-
 	public function bukuNonaktif()
 	{
 		// Mengambil daftar buku yang tidak aktif
@@ -295,14 +240,5 @@ class BukuController extends Controller
 		$tahunTerbit = Buku::distinct('tahun_terbit')->pluck('tahun_terbit');
 
 		return view('admin.buku-tidak-aktif', compact('bukuTidakaktif', 'kategoriBuku', 'tahunTerbit'));
-	}
-
-	public function activate($id)
-	{
-		$book = Buku::findOrFail($id);
-		$book->kondisi = 1;
-		$book->save();
-
-		return redirect()->route('inactive-books.index')->with('success', 'Buku berhasil diaktifkan.');
 	}
 }

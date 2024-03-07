@@ -43,6 +43,64 @@ class HomeController extends Controller
         return view('panel.bookdetail-home', compact('book', 'category'));
     }
 
+    public function cariBukuByJudulBuku($judulBuku)
+    {
+        $buku = Buku::with('kategori')->where('judul_buku', 'LIKE', '%' . $judulBuku . '%')->get();
+
+        $formattedBooks = [];
+
+        if ($buku->isNotEmpty()) {
+            foreach ($buku as $item) {
+                $kategori = $item->kategori->kategori;
+                $available = $this->calculateAvailableForBorrow($item->id_buku);
+                $formattedBooks[] = [
+                    'id_buku' => $item->id_buku,
+                    'isbn' => $item->isbn,
+                    'judul_buku' => $item->judul_buku,
+                    'pengarang' => $item->pengarang,
+                    'tahun_terbit' => $item->tahun_terbit,
+                    'kategori' => $kategori,
+                    'stok' => $item->stok,
+                    'tersedia' => $available
+                ];
+            }
+        }
+
+        return response()->json($formattedBooks);
+    }
+
+    protected function calculateAvailableForBorrow($bookId)
+    {
+        // Menghitung jumlah buku yang dipinjam
+        $totalBorrowed = PeminjamanBuku::where('id_buku', '=', $bookId)->where('status', '=', 1)->count();
+
+        // Mendapatkan stok buku
+        $stok = Buku::where('id_buku', '=', $bookId)->value('stok');
+
+        // Menghitung jumlah buku yang tersedia
+        $available = max(0, $stok - $totalBorrowed);
+
+        return $available;
+    }
+
+    public function findBorrowedBook($nomorBuku)
+    {
+        $result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
+            ->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
+            ->select('peminjaman_buku.isbn', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
+            ->where('peminjaman_buku.isbn', $nomorBuku)
+            ->whereIn('peminjaman_buku.status', [0, 1])
+            ->get();
+
+        foreach ($result as $item) {
+            if (is_null($item->status)) {
+                $item->status = -1;
+            }
+        }
+
+        return response()->json($result);
+    }
+
     public function search(Request $request)
     {
         $searchQuery = $request->input('search_query');
@@ -52,6 +110,19 @@ class HomeController extends Controller
 
         return response()->json($books);
     }
+
+    public function cariAnggotaByNomorAnggota($nomorAnggota)
+    {
+        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->first();
+
+        if ($anggota) {
+            return response()->json([$anggota]);
+        } else {
+            return response()->json([]);
+        }
+    }
+
+
     public function index()
     {
         return view('panel.index')
