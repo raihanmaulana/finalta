@@ -37,13 +37,13 @@ class AnggotaController extends Controller
         }
     }
 
-    public function editProfil($id)
+    public function editProfile($id)
     {
         $anggota = AnggotaPerpustakaan::find($id);
         return view('anggota.edit_profil', compact('anggota'));
     }
 
-    public function updateProfil(Request $request, $id)
+    public function updateProfile(Request $request, $id)
     {
         $request->validate([
             'nama_anggota' => 'required',
