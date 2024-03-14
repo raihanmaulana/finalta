@@ -95,7 +95,6 @@ Route::group(['middleware' => 'guest'], function () {
 });
 
 
-
 Route::group(['middleware' => ['auth']], function () {
 
 	// Create an account (POST) 
@@ -105,9 +104,6 @@ Route::group(['middleware' => ['auth']], function () {
 	// Create an account (GET) 
 	Route::get('/create', [AccountController::class, 'getCreate'])
 		->name('account-create');
-
-
-
 
 
 	// Halaman Home
@@ -130,10 +126,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::delete('/list-anggota/{id}', [AdminController::class, 'destroy'])->name('list-anggota-delete');
 
 
-
-
 	//Kelola Galeri
-	Route::get('/galeri/kelola', [GaleriController::class, 'manage'])->name('galeri.manage');
+	Route::get('/galeri/kelola', [GaleriController::class, 'index'])->name('galeri.manage');
 	Route::get('/galeri/create', [GaleriController::class, 'create'])->name('galeri.create');
 	Route::post('/galeri/store', [GaleriController::class, 'store'])->name('galeri.store');
 	Route::get('/galeri/{id}/edit', [GaleriController::class, 'edit'])->name('galeri.edit');
@@ -163,7 +157,6 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/kelola-buku/{id}/detail', [BukuController::class, 'show'])->name('books.detail');
 	// Route::delete('/kelola-buku/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
 
-
 	//Kelola Peminjaman
 	Route::get('/peminjaman/permintaan', [PeminjamanBukuController::class, 'daftarPermintaanPeminjaman'])->name('admin.peminjaman.daftar');
 	Route::put('/peminjaman/{id}/setujuiPeminjaman', [PeminjamanBukuController::class, 'setujuiPeminjaman'])->name('admin.peminjaman.approve');
@@ -172,12 +165,10 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/peminjaman/buku-dipinjam', [PeminjamanBukuController::class, 'bukuDipinjam'])->name('admin.buku-dipinjam');
 	Route::get('/peminjaman/buku-dikembalikan', [PeminjamanBukuController::class, 'bukuDikembalikan'])->name('admin.buku-dikembalikan');
 
-
 	//Kelola Home (index)
 	Route::get('/cari-anggota/{nomorAnggota}', [HomeController::class, 'cariAnggotaByNomorAnggota']);
 	Route::get('/find-issued-book/{nomorBuku}', [HomeController::class, 'findBorrowedBook']);
 	Route::get('/search-books/{judulBuku}', [HomeController::class, 'cariBukubyJudulBuku']);
-
 
 	// Sign out (GET) 
 	Route::get(

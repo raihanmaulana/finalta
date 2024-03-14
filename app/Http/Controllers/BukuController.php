@@ -60,9 +60,12 @@ class BukuController extends Controller
 	{
 		$request->validate([
 			'isbn' => 'required', 'unique:buku,isbn',
-			'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+			'image' => 'sometimes|image|mimes:jpeg,png,jpg,gif|max:2048',
 		]);
-		$imagePath = $request->file('image')->store('book_images', 'public');
+		$imagePath = null;
+		if ($request->hasFile('image')) {
+			$imagePath = $request->file('image')->store('book_images', 'public');
+		}
 		$book = Buku::create([
 			'isbn' => $request->isbn,
 			'judul_buku' => $request->judul_buku,

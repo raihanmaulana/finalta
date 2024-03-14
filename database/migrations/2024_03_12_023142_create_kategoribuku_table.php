@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddNomorAnggotaTobukutamu_umumTable extends Migration
+class CreateKategoriBukuTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddNomorAnggotaTobukutamu_umumTable extends Migration
      */
     public function up()
     {
-        Schema::table('bukutamu_umum', function (Blueprint $table) {
-            $table->string('nomor_anggota')->nullable()->after('message');
+        Schema::create('kategoribuku', function (Blueprint $table) {
+            $table->id('id');
+            $table->string('kategori');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ class AddNomorAnggotaTobukutamu_umumTable extends Migration
      */
     public function down()
     {
-        Schema::table('bukutamu_umum', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('kategoribuku');
     }
 }

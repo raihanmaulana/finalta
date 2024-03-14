@@ -88,7 +88,7 @@ class BukuTamuController extends Controller
             ]);
         } catch (\Exception $e) {
             // Log the error
-            \Illuminate\Support\Facades\Log::error('Error saving guestbook entry: ' . $e->getMessage());
+            Log::error('Error saving guestbook entry: ' . $e->getMessage());
             // Return an error response or redirect back with an error message
             return redirect()->back()->with('error', 'Failed to save the guestbook entry.');
         }

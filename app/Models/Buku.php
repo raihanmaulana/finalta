@@ -23,10 +23,7 @@ class Buku extends Model
     {
         return $value;
     }
-    public function issues()
-    {
-        return $this::count();
-    }
+
     public function hitungTersedia()
     {
         // Menghitung jumlah buku yang dapat dipinjam (stok dikurangi jumlah buku yang dipinjam)

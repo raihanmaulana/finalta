@@ -91,11 +91,8 @@
                 <div class="control-group">
                     <label class="control-label" for="image">Gambar Buku</label>
                     <div class="controls">
-                        <input type="file" id="image" name="image" class="span8" required>
+                        <input type="file" id="image" name="image" class="span8">
                     </div>
-                    @error('image')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
                 </div>
 
                 <div class="control-group">

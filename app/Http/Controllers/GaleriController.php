@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 class GaleriController extends Controller
 {
-    public function index()
-    {
-        $galeri = Galeri::latest()->get();
-        return view('public.galeri', compact('galeri'));
-    }
+    // public function index()
+    // {
+    //     $galeri = Galeri::latest()->get();
+    //     return view('public.galeri', compact('galeri'));
+    // }
 
-    public function manage()
+    public function index()
     {
         $galeri = Galeri::latest()->get();
         return view('panel.kelolagaleri', compact('galeri'));
