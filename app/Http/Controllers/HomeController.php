@@ -51,7 +51,12 @@ class HomeController extends Controller
 
         if ($buku->isNotEmpty()) {
             foreach ($buku as $item) {
-                $kategori = $item->kategori->kategori;
+                // Cek apakah properti "kategori" tersedia pada objek $item
+                if ($item->kategori) {
+                    $kategori = $item->kategori->kategori;
+                } else {
+                    $kategori = null;
+                }
                 $available = $this->calculateAvailableForBorrow($item->id_buku);
                 $formattedBooks[] = [
                     'id_buku' => $item->id_buku,
@@ -59,12 +64,13 @@ class HomeController extends Controller
                     'judul_buku' => $item->judul_buku,
                     'pengarang' => $item->pengarang,
                     'tahun_terbit' => $item->tahun_terbit,
-                    'kategori' => $kategori,
+                    'kategori' => $kategori, // Menggunakan nilai "kategori" yang mungkin null
                     'stok' => $item->stok,
                     'tersedia' => $available
                 ];
             }
         }
+
 
         return response()->json($formattedBooks);
     }
