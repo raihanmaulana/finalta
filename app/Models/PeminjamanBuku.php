@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PeminjamanBuku extends Model
 {
+    use HasFactory;
     protected $table = 'peminjaman_buku'; // Nama tabel dalam database
 
     protected $fillable = [

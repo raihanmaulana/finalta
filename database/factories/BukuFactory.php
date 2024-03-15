@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Factories;
+
 use App\Models\Buku;
 use App\Models\PeminjamanBuku;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,24 +23,27 @@ class BukuFactory extends Factory
     public function definition()
     {
         return [
-            'isbn' => $this->faker->isbn1234, // Gunakan faker untuk menghasilkan nomor ISBN acak
-            'judul_buku' => $this->faker->sentence, // Gunakan faker untuk menghasilkan judul acak
-            'penerbit' => $this->faker->company, // Gunakan faker untuk menghasilkan nama penerbit acak
-            'pengarang' => $this->faker->name, // Gunakan faker untuk menghasilkan nama pengarang acak
-            'tahun_terbit' => $this->faker->year, // Gunakan faker untuk menghasilkan tahun terbit acak
-            'kategori_id' => 1, // Ganti dengan ID kategori yang valid
-            'added_by' => 1, // Ganti dengan ID pengguna yang valid
-            'stok' => $this->faker->numberBetween(0, 100), // Gunakan faker untuk menghasilkan stok acak
+            'isbn' => $this->faker->unique()->numberBetween(100000, 999999),
+            'judul_buku' => $this->faker->sentence,
+            'penerbit' => $this->faker->company,
+            'pengarang' => $this->faker->name,
+            'tahun_terbit' => $this->faker->year,
+            'kategori_id' => 1,
+            'added_by' => 1,
+            'stok' => $this->faker->numberBetween(0, 100),
             'tersedia' => function (array $attributes) {
-                // Menghitung nilai tersedia berdasarkan stok buku yang dihasilkan oleh faker
-                $totalBorrowed = PeminjamanBuku::where('id_buku', '=', $attributes['id_buku'])->where('status', '=', 1)->count();
-                $tersedia = max(0, $attributes['stok'] - $totalBorrowed);
-                return $tersedia;
+                $id_buku = $attributes['id_buku'] ?? null; // Ambil nilai id_buku jika tersedia
+                if ($id_buku) {
+                    $totalBorrowed = PeminjamanBuku::where('id_buku', '=', $id_buku)->where('status', '=', 1)->count();
+                    return max(0, $attributes['stok'] - $totalBorrowed);
+                } else {
+                    return $attributes['stok']; // Jika id_buku tidak tersedia, gunakan stok langsung
+                }
             },
-            'kondisi' => $this->faker->boolean, // Gunakan faker untuk menghasilkan kondisi acak
-            'image' => null, // Kosongkan gambar
-            'tautan_buku' => null, // Kosongkan tautan buku
-            'deskripsi' => $this->faker->paragraph, // Gunakan faker untuk menghasilkan deskripsi acak
+            'kondisi' => $this->faker->boolean,
+            'image' => null,
+            'tautan_buku' => null,
+            'deskripsi' => $this->faker->paragraph,
         ];
     }
 }

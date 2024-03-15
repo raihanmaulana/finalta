@@ -86,6 +86,10 @@ class PeminjamanBukuController extends Controller
             Mail::to($peminjaman->anggota->email)->send(new PeminjamanDisetujui($peminjaman));
 
             return redirect()->route('admin.peminjaman.daftar')->with('success', 'Permintaan peminjaman disetujui.');
+        } else {
+            // Tambahkan respons yang sesuai jika peminjaman tidak memiliki status 0
+            // Misalnya, Anda bisa mengarahkan pengguna ke halaman lain atau memberikan pesan yang sesuai
+            return redirect()->route('admin.peminjaman.daftar')->with('error', 'Peminjaman tidak dapat disetujui.');
         }
     }
 

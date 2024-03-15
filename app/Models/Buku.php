@@ -3,13 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Buku extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'id_buku', 'isbn', 'judul_buku',
         'penerbit', 'pengarang', 'tahun_terbit', 'kategori_id', 'added_by',
-        'stok', 'image', 'status_buku', 'tersedia', 'kondisi', 'tautan_buku', 'deskripsi'
+        'stok', 'image', 'tersedia', 'kondisi', 'tautan_buku', 'deskripsi'
     ];
 
     public $timestamps = true;
