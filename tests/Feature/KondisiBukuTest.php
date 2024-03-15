@@ -32,4 +32,26 @@ class KondisiBukuTest extends TestCase
         // Periksa bahwa pesan sukses tersedia di sesi flash
         $response->assertSessionHas('success', 'Buku berhasil diaktifkan');
     }
+
+    public function test_nonaktifkanBuku()
+    {
+
+        $user = User::factory()->create();
+        $this->actingAs($user);
+        // Persiapkan data
+        $buku = Buku::factory()->create(['kondisi' => true]);
+
+        // Panggil route untuk mengaktifkan buku
+        $response = $this->post(route('books.deactivate', ['id' => $buku->id_buku]));
+
+        // Periksa bahwa respons adalah redirect
+        $response->assertStatus(302);
+        $response->assertRedirect(route('all-books'));
+
+        // Periksa bahwa kondisi buku telah diubah menjadi true dalam database
+        $this->assertEquals(false, $buku->fresh()->kondisi);
+
+        // Periksa bahwa pesan sukses tersedia di sesi flash
+        $response->assertSessionHas('success', 'Buku berhasil dinonaktifkan');
+    }
 }
