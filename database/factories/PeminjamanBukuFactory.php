@@ -18,7 +18,7 @@ class PeminjamanBukuFactory extends Factory
         return [
             'id_buku' => $id_buku, // Berikan nilai id buku yang valid
             'isbn' => $this->faker->unique()->numberBetween(100000, 999999),
-            'id_anggota' => 1, // Ganti dengan ID anggota yang valid
+            'id_anggota' => 53, // Ganti dengan ID anggota yang valid
             'status' => 0,
             'tanggal_peminjaman' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'tanggal_pengembalian' => $this->faker->dateTimeBetween('now', '+1 month'),
