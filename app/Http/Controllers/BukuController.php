@@ -224,7 +224,7 @@ class BukuController extends Controller
 		$book->kondisi = true;
 		$book->save();
 
-		return redirect()->back()->with('success', 'Buku berhasil diaktifkan');
+		return redirect()->route('all-books')->with('success', 'Buku berhasil diaktifkan');
 	}
 
 	public function nonaktifkanBuku($id)
@@ -233,7 +233,7 @@ class BukuController extends Controller
 		$book->kondisi = false;
 		$book->save();
 
-		return redirect()->back()->with('success', 'Buku berhasil dinonaktifkan');
+		return redirect()->route('all-books')->with('success', 'Buku berhasil dinonaktifkan');
 	}
 
 	public function bukuNonaktif()
