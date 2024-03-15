@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'nama' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'username' => $this->faker->userName,
-            'password' => bcrypt('password'), // Anda mungkin ingin mengubah 'password' menjadi sandi yang lebih kuat
+            'password' => bcrypt('password'),
         ];
     }
 }

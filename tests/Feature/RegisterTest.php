@@ -8,43 +8,39 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class RegisterTest extends TestCase
 {
-    use RefreshDatabase; // Menggunakan trait RefreshDatabase agar database di-reset setelah setiap pengujian
+    use DatabaseTransactions; // Menggunakan trait RefreshDatabase agar database di-reset setelah setiap pengujian
 
 
     /** @test */
-    public function test_create()
+    public function test_create_berhasil()
     {
-        $user = User::factory()->create();
 
+        $user = User::factory()->create();
         $this->actingAs($user);
 
         $userData = [
-            'nama' => 'Raihan Maulana',
-            'username' => 'raihan',
-            'email' => 'raihan@example.com',
+            'nama' => 'Test User',
+            'username' => 'testuser',
+            'email' => 'test@example.com',
             'password' => 'password123',
             'password_again' => 'password123',
         ];
 
-        // Mengirim permintaan POST dan menangkap respons
         $response = $this->post('/create', $userData);
 
-        // Memeriksa status respons
         $response->assertStatus(302);
-
-        // Memastikan bahwa akun telah dibuat dengan benar di dalam database
-        $this->assertDatabaseHas('users', [
-            'username' => 'raihan',
-            'email' => 'raihan@example.com',
-            'nama' => 'Raihan Maulana',
-        ]);
-
         $response->assertRedirect(route('account-sign-in'));
+        $this->assertEquals('Akun Berhasil Dibuat.', session('success'));
 
-        $this->assertEquals('Akun Berhasil Dibuat.', session('sucsess'));
+        $this->assertDatabaseHas('users', [
+            'username' => 'testuser',
+            'email' => 'test@example.com',
+            'nama' => 'Test User',
+        ]);
     }
 
 

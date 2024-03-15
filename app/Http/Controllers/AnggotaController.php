@@ -187,19 +187,6 @@ class AnggotaController extends Controller
         }
     }
 
-    public function getAnggotaInfo($nomorAnggota)
-    {
-        $anggota = AnggotaPerpustakaan::where('nomor_anggota', $nomorAnggota)->first();
-
-        if ($anggota) {
-            return response()->json([
-                'nama_anggota' => $anggota->nama_anggota,
-                'email' => $anggota->email,
-            ]);
-        }
-
-        return response()->json(['error' => 'Anggota not found'], 404);
-    }
 
 
 

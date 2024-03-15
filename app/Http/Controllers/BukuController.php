@@ -23,9 +23,11 @@ class BukuController extends Controller
 		$this->judul_buku = Buku::select()->orderBy('judul_buku')->get();
 		$this->isbn = PeminjamanBuku::select()->orderBy('isbn')->get();
 	}
+	public $nomor_anggota = array();
+
 
 	public $kategori_list = array();
-	public $nomor_anggota = array();
+
 	public $judul_buku = array();
 	public $isbn = array();
 
