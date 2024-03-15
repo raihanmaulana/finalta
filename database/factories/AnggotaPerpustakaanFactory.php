@@ -12,7 +12,7 @@ class AnggotaPerpustakaanFactory extends Factory
     public function definition()
     {
         return [
-            'nama_anggota' => $this->faker->name,
+            'nama_anggota' => $this->faker->firstName() . ' ' . $this->faker->lastName(),
             'nomor_anggota' => $this->faker->unique()->numberBetween(100000, 999999),
             'username' => $this->faker->unique()->userName,
             'nomor_hp' => $this->faker->phoneNumber,
