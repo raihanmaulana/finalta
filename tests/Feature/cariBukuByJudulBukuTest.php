@@ -16,6 +16,7 @@ class CariBukuByJudulBukuTest extends TestCase
     {
         $user = User::factory()->create();
         $this->actingAs($user);
+
         $buku = Buku::factory()->create([
             'judul_buku' => 'Harry Potter', // Judul buku yang akan dicari
         ]);

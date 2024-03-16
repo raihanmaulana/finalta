@@ -89,12 +89,12 @@ class HomeController extends Controller
         return $available;
     }
 
-    public function findBorrowedBook($nomorBuku)
+    public function findBorrowedBook($isbn)
     {
         $result = PeminjamanBuku::join('anggota_perpustakaan', 'peminjaman_buku.id_anggota', '=', 'anggota_perpustakaan.id_anggota')
             ->join('buku', 'peminjaman_buku.id_buku', '=', 'buku.id_buku')
             ->select('peminjaman_buku.isbn', 'anggota_perpustakaan.nomor_anggota', 'anggota_perpustakaan.nama_anggota', 'peminjaman_buku.status')
-            ->where('peminjaman_buku.isbn', $nomorBuku)
+            ->where('peminjaman_buku.isbn', $isbn)
             ->whereIn('peminjaman_buku.status', [0, 1])
             ->get();
 

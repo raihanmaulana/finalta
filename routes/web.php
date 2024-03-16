@@ -167,7 +167,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 	//Kelola Home (index)
 	Route::get('/cari-anggota/{nomorAnggota}', [HomeController::class, 'cariAnggotaByNomorAnggota']);
-	Route::get('/find-issued-book/{nomorBuku}', [HomeController::class, 'findBorrowedBook']);
+	Route::get('/find-borrowed-book/{isbn}', [HomeController::class, 'findBorrowedBook']);
 	Route::get('/search-books/{judulBuku}', [HomeController::class, 'cariBukubyJudulBuku']);
 
 	// Sign out (GET) 

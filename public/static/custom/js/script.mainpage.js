@@ -37,8 +37,8 @@ function showBookDetail(button) {
     window.location.href = "/home/" + bookId + "/detail";
 }
 
-function findBorrowedBook(nomorBuku) {
-    var url = "/find-issued-book/" + nomorBuku;
+function findBorrowedBook(isbn) {
+    var url = "/find-borrowed-book/" + isbn;
 
     var table = $("#issue-results"),
         table_parent_div = table.parents("table"),
