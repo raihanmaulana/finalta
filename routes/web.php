@@ -158,8 +158,8 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::view('/kelola-buku/kelola-kategori', 'panel.list-kategori')->name('list-kategori');
 	Route::get('/kelola-buku/kelola-kategori/tambah-kategori', [BukuController::class, 'createKategori'])->name('add-book-category');
 	Route::post('/kelola-buku/kelola-kategori/tambah-kategori', [BukuController::class, 'KategoriBukuStore'])->name('bookcategory.store');
-	Route::view('/kelola-buku/kelola-pengarang', 'panel.list-pengarang')->name('list-pengarang');
-	Route::view('/kelola-buku/kelola-pengarang/tambah-pengarang', 'panel.tambah-pengarang')->name('tambah-pengarang');
+	Route::view('/kelola-buku/kelola-pengarang', 'panel.list-penulis')->name('list-pengarang');
+	Route::view('/kelola-buku/kelola-pengarang/tambah-pengarang', 'panel.tambah-penulis')->name('tambah-pengarang');
 	// Route::delete('/kelola-buku/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
 
 	//Kelola Peminjaman
