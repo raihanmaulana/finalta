@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseTransactions;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\AnggotaPerpustakaan;
 use App\Models\User;
 use App\Models\Buku;

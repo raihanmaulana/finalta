@@ -31,7 +31,7 @@ class tolakPeminjamanTest extends TestCase
         Mail::fake();
 
         // Membuat peminjaman buku dengan status 0
-        $peminjaman = PeminjamanBuku::factory()->create(['status' => 0]);
+        $peminjaman = PeminjamanBuku::factory()->create(['status' => 1]);
 
         // Menjalankan fungsi tolakPeminjaman untuk peminjaman yang dibuat
         $response = $this->put("/peminjaman/{$peminjaman->id}/tolakPeminjaman");

@@ -9,10 +9,11 @@ use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Galeri;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class GaleriTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use DatabaseTransactions, WithFaker;
 
     /** @test */
     public function test_index()
