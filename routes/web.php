@@ -147,14 +147,19 @@ Route::group(['middleware' => ['auth']], function () {
 	Route::get('/kelola-buku', [BukuController::class, 'index'])->name('all-books');
 	Route::get('/kelola-buku/tambah', [BukuController::class, 'create'])->name('add-books');
 	Route::post('/kelola-buku/tambah', [BukuController::class, 'store'])->name('book.store');
-	Route::get('/kelola-buku/tambah-kategori', [BukuController::class, 'createKategori'])->name('add-book-category');
-	Route::post('/kelola-buku/tambah-kategori', [BukuController::class, 'KategoriBukuStore'])->name('bookcategory.store');
 	Route::get('/kelola-buku/{id}/edit', [BukuController::class, 'edit'])->name('books.edit');
 	Route::put('/kelola-buku/{id}', [BukuController::class, 'update'])->name('books.update');
 	Route::post('/kelola-buku/{id}/activate', [BukuController::class, 'aktifkanBuku'])->name('books.activate');
 	Route::post('/kelola-buku/{id}/deactivate', [BukuController::class, 'nonaktifkanBuku'])->name('books.deactivate');
 	Route::get('/kelola-buku/nonaktif', [BukuController::class, 'bukuNonaktif'])->name('tidakaktif.index');
 	Route::get('/kelola-buku/{id}/detail', [BukuController::class, 'show'])->name('books.detail');
+
+	//tambahan revisi sidang
+	Route::view('/kelola-buku/kelola-kategori', 'panel.list-kategori')->name('list-kategori');
+	Route::get('/kelola-buku/kelola-kategori/tambah-kategori', [BukuController::class, 'createKategori'])->name('add-book-category');
+	Route::post('/kelola-buku/kelola-kategori/tambah-kategori', [BukuController::class, 'KategoriBukuStore'])->name('bookcategory.store');
+	Route::view('/kelola-buku/kelola-pengarang', 'panel.list-pengarang')->name('list-pengarang');
+	Route::view('/kelola-buku/kelola-pengarang/tambah-pengarang', 'panel.tambah-pengarang')->name('tambah-pengarang');
 	// Route::delete('/kelola-buku/{id}/delete', 'BooksController@destroyBook')->name('books.destroy');
 
 	//Kelola Peminjaman

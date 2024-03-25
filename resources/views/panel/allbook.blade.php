@@ -33,12 +33,14 @@
                             @endforeach
                         </select>
                         <!-- Tombol tambah kategori dan tambah buku -->
-                        <a href="{{ URL::route('add-book-category') }}" style="margin-bottom:10px"
-                            class="btn btn-inverse">Tambah Kategori</a>
+                        <a href="{{ URL::route('list-pengarang') }}" style="margin-bottom:10px"
+                            class="btn btn-inverse">Kelola Pengarang</a>
+                        <a href="{{ URL::route('list-kategori') }}" style="margin-bottom:10px"
+                            class="btn btn-inverse">Kelola Kategori</a>
                         <a href="{{ URL::route('add-books') }}" style="margin-bottom:10px" class="btn btn-inverse">Tambah
                             Buku</a>
                         <a href="{{ URL::route('tidakaktif.index') }}" style="margin-bottom:10px"
-                            class="btn btn-inverse">Buku Non Aktif</a>
+                            class="btn btn-inverse">Buku Nonaktif</a>
                     </div>
                     <!-- Tabel daftar buku -->
                     <!-- Tabel daftar buku -->
